@@ -1,0 +1,90 @@
+p.form-title
+{
+    font-family: 'Open Sans' , sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    color: #FFFFFF;
+    margin-top: 5%;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+form
+{
+    width: 300px;
+    margin: 0 auto;
+}
+
+
+
+form.register input[type="text"], form.register input[type="password"], form.register input[type="email"] 
+{
+    width: 100%;
+    margin: 0;
+    padding: 5px 10px;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid #FFFFFF;
+    outline: 0;
+    font-style: italic;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    color: #FFFFFF;
+    outline: 0;
+}
+
+
+form.register label
+{
+    font-size: 15px;
+    font-style: italic;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 16px;
+    outline: 0;
+    cursor: pointer;
+    letter-spacing: 1px;
+    color: #2ecc71;
+    
+}
+
+form.register input[type="submit"]
+{
+    width: 100%;
+    font-size: 15px;
+    font-style: italic;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 16px;
+    outline: 0;
+    cursor: pointer;
+    letter-spacing: 1px;
+    color: #FFFFFF;
+    background-color: #dba63d ;
+}
+
+form.register input[type="submit"]:hover
+{
+    transition: background-color 0.5s ease;
+}
+
+
+form.register label, form.register a
+{
+    font-size: 12px;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+
+form.register a
+{
+    transition: color 0.5s ease;
+}
+
+form.register a:hover
+{
+    color: #2ecc71;
+}

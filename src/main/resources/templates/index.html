@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Welcome</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/one-page-wonder.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        //$("#secondarytext").hide();
+
+        $("#searchnow").click(function(){
+        $("#initialtext").hide();
+        $("#secondarytext").show();
+    });
+    $("#backnow").click(function(){
+        $("#secondarytext").hide();
+        $("#initialtext").show();
+    });
+    });
+    </script>
+    <link href="css/search.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">Air SA&B</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="register.html">Sign up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Log in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="masthead">
+        <div class="overlay">
+            <div class="container">
+                <div id="initialtext">
+                    <h1 class="display-1 text-white">Air S A & B </h1>
+                    <h2 class="display-4 text-white">Rent an apartment now</h2>
+                    <button id="searchnow" class="btn btn-outline-warning " data-wow-delay="0.5s">Search Now</button>
+                </div>
+                <div id="secondarytext" style="display:none;">
+                    <h2 class="display-6 text-white"> Fill the form below and browse the results</h2>
+                    <form class="searchform">
+                        <input type="text" placeholder="City" > <br>
+                        <input type="text" name="arrival" id="datepicker" placeholder="Arrival Date"> 
+                        <input  type="text" name="depart" id="datepicker" placeholder="Departure Date"> <br>
+                        <input type="number" name="num" min="1" placeholder="Persons">
+                        <input type="submit" value="Submit" class="btn  btn-sm" />
+                    </form>
+                    <br>
+                    <button id="backnow" class="btn btn-outline-secondary " data-wow-delay="0.5s">Back</button>
+                </div>
+                
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="row align-items-center">
+                <!--div class="col-md-6 order-2">
+                    <div class="p-5">
+                        <img class="img-fluid rounded-circle" src="https://unsplash.it/500/500?image=836" alt="">
+                    </div>
+                </div-->
+                <div class="col order-1">
+                    <div class="p-5">
+                        <h3 class="display-4">Welcome!</h3>
+                        <p>If you are tired of the hotels and their typical accomodation ,there is a placce for you. Here you can rent any apartment or studio in every city that is available within the app. It's easy! Just pick the dates and the city you are interested in and you can choose from many results. You can also talk with owners to establish any preferances for your stay in their place. There are useful filters to eliminate the results and ,hopefully, get all you ask for in one apartment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container" id="about"> 
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="p-5">
+                        <img class="img-fluid rounded-circle" src="images/team.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-5">
+                        <h3 class="display-4">About us</h3>
+                        <p>We are newly formed team that is willing to work in this project with passion. Stavrina and Arianna created this web application for your ease and comfort. Now you can book a place to stay whenever on vacation or job travel ,avoiding those cold hotel rooms that lack the sense of feeling at home. Hope you enjoy it! </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container" id="contact">
+            <div class="row align-items-center">
+                <div class="col-md-6 order-2">
+                    <div class="p-5">
+                        <img class="img-fluid rounded-circle" src="images/contact.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-6 order-1">
+                    <div class="p-5">
+                        <h2 class="display-4">Contact us</h2>
+                        <p>For any question ,email us at <em> airsab@gmail.com </em>. We will respond to you as soon as possible with all the information you need. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-3 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; AirSA&B 2017</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
+    <!-- Include jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+
+<script type="text/javascript">
+jQuery(function(){
+    jQuery($(":input[id^='datepicker']")).datepicker({
+        inline: true,
+        showOtherMonths: true
+    });
+});
+</script>
+
+</body>
+
+</html>

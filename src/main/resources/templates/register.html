@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Sign up</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+     <link href="css/one-page-wonder.css" rel="stylesheet">
+    <link href="css/register.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">Air SA&B</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="index.html">Home </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="register.html">Sign up <span class="sr-only">(current)</span> </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="login.html">Log in </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html#contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="masthead">
+        <div class="overlay">
+            <div class="container">
+                
+                    <p class="form-title"> Complete the form below to create an account</p>
+                    <form class="register" method="POST">
+                        <input  name="name" id="name" required="required" placeholder="Name"   type="text"/>
+                        <input  name="surname" id="surname" required="required" placeholder="Surname"  type="text"/>
+                        <input  name="email" id="email" required="required"   placeholder="Email"  type="email" />
+                        <input  name="telephone" id="telephone" required="required"  placeholder="Telephone"   type="text" />
+
+                        <label class="btn btn-sm">Owner <input type="radio" name="q1" value="0" > </label> 
+                        <label class="btn btn-sm">       Renter<input type="radio" name="q1" value="1"/></label>
+    
+                        
+                        <input type="text" placeholder="Username" /> 
+                        <input type="password" placeholder="Password" required="required" onchange="form.passwordsignup_confirm.pattern = this.value;"/> 
+                        <input  name="passwordsignup_confirm" id="passwordsignup_confirm"  required="required"  placeholder="Confirm Password" type="password" />
+                        <input type="submit" value="Register" class="btn  btn-sm" />
+                        
+                    </form>
+                
+            </div>
+        </div>
+    </header>
+
+    <!-- Footer -->
+    <footer class="py-3 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; AirSA&B 2017</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+

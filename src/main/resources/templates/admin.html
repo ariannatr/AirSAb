@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Admin Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/one-page-wonder.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     <script>
+    $(document).ready(function(){
+        //$("#secondarytext").hide();
+
+        $("#searchnow").click(function(){
+        $("#initialtext").hide();
+        $("#secondarytext").show();
+    });
+    $("#backnow").click(function(){
+        $("#secondarytext").hide();
+        $("#initialtext").show();
+    });
+    });
+    </script>
+    <link href="css/search.css" rel="stylesheet">    
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">Air SA&B</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+
+            <ul class="navbar-nav nav-pills ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link disabled" style="color:#dba63d;" >admin</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" >Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Users</a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="users.html#ownersView" >Owners</a>
+                      <a class="dropdown-item" href="users.html#rentersView">Renters</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="users.html">All</a>
+                    </div>
+                </li>
+                
+            </ul>
+        </div>
+    </nav>
+
+    <header class="masthead">
+        <div class="overlay">
+            <div class="container">
+                <div id="initialtext">
+                    <h1 class="display-1 text-white">Air S A & B </h1>
+                    <h2 class="display-4 text-white">Rent an apartment now</h2>
+                    <button id="searchnow" class="btn btn-outline-warning " data-wow-delay="0.5s">Search Now</button>
+                </div>
+                <div id="secondarytext" style="display:none;">
+                    <h2 class="display-6 text-white"> Fill the form below and browse the results</h2>
+                    <form class="searchform">
+                        <input type="text" placeholder="City" > <br>
+                        <input type="text" name="arrival" id="datepicker" placeholder="Arrival Date"> 
+                        <input  type="text" name="depart" id="datepicker" placeholder="Departure Date"> <br>
+                        <input type="number" name="num" min="1" placeholder="Persons">
+                        <input type="submit" value="Submit" class="btn  btn-sm" />
+                    </form>
+                    <br>
+                    <button id="backnow" class="btn btn-outline-secondary " data-wow-delay="0.5s">Back</button>
+                </div>
+                
+            </div>
+        </div>
+    </header>
+
+    
+
+    
+
+    <!-- Footer -->
+    <footer class="py-3 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; AirSA&B 2017</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+
+    <script type="text/javascript">
+    jQuery(function(){
+    jQuery($(":input[id^='datepicker']")).datepicker({
+        inline: true,
+        showOtherMonths: true
+    });
+    });
+    </script>
+
+
+</body>
+
+</html>
