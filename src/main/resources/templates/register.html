@@ -17,6 +17,8 @@
      <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
     <link th:href="@{css/register.css}" rel="stylesheet" type="text/css" media="all">
 
+
+
 </head>
 <body>
 
@@ -52,20 +54,21 @@
             <div class="container">
                 
                     <p class="form-title"> Complete the form below to create an account</p>
-                    <form class="register" method="POST" th:action="@{/register}"/>
+                    <form class="register" method="POST"  th:action="@{/register}"   />
                         <input  name="name" id="name" required="required" placeholder="Name"   type="text"/>
                         <input  name="surname" id="surname" required="required" placeholder="Surname"  type="text"/>
                         <input  name="email" id="email" required="required"   placeholder="Email"  type="email" />
                         <input  name="telephone" id="telephone" required="required"  placeholder="Telephone"   type="text" />
 
-                        <label class="btn btn-sm">Owner <input type="checkbox" name="q1" value="0" > </label>
-                        <label class="btn btn-sm">Renter<input type="checkbox" name="q2" value="1"/></label>
+                        <label class="btn btn-sm">Owner <input type="checkbox"  id="ownertype" name="owner" value="1" onclick="validate()" /> </label>
+                        <label class="btn btn-sm">Renter<input type="checkbox"  id="rentertype" name="renter" value="2" onclick="validate2()"/></label>
+                        <input  name="type" id="type" required="required"  type="hidden" />
     
                         
                         <input type="text" name="username" id="username" placeholder="Username" />
                         <input type="password" name="password" id="passsword" placeholder="Password" required="required" onchange="form.passwordsignup_confirm.pattern = this.value;"/>
                         <input  name="passwordsignup_confirm" id="passwordsignup_confirm"  required="required"  placeholder="Confirm Password" type="password" />
-                        <input type="submit" value="register" class="btn  btn-sm" />
+                        <input type="submit" value="register" class="btn  btn-sm" onclick="complete()"/>
                         
                     </form>
                 
@@ -85,6 +88,28 @@
     <script th:src="@{/vendor/popper/popper.min.js}"></script>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
 
+    <script type="text/javascript">
+        var typ=0;
+        function validate(){
+            var remember = document.getElementById('ownertype');
+            if(remember.checked)
+                typ=typ+1 ;
+            else
+                typ=typ-1;
+        }
+        function validate2(){
+            var remember2 = document.getElementById('rentertype');
+            if(remember2.checked)
+                typ=typ+2 ;
+            else
+                typ=typ-2;
+        }
+
+        function complete(){
+            alert(typ);
+            document.getElementById('type').value=typ;
+        }
+    </script>
 </body>
 </html>
 
