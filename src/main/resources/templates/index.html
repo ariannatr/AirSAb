@@ -9,10 +9,10 @@
     <title>Welcome</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" type="text/css" media="all">
 
     <!-- Custom styles for this template -->
-    <link href="css/one-page-wonder.css" rel="stylesheet">
+    <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
@@ -29,7 +29,7 @@
     });
     });
     </script>
-    <link href="css/search.css" rel="stylesheet">
+    <link th:href="@{/css/search.css}" rel="stylesheet" type="text/css" media="all">
 
 </head>
 
@@ -44,13 +44,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" th:href="@{/index}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="register.html">Sign up</a>
+                    <a class="nav-link" th:href="@{/register}">Sign up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="login.html">Log in</a>
+                    <a class="nav-link" th:href="@{/login}">Log in</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#about">About</a>
@@ -75,7 +75,7 @@
                     <form class="searchform">
                         <input type="text" placeholder="City" > <br>
                         <input type="text" name="arrival" id="datepicker" placeholder="Arrival Date"> 
-                        <input  type="text" name="depart" id="datepicker" placeholder="Departure Date"> <br>
+                        <input  type="text" name="depart" id="datepicker2" placeholder="Departure Date"> <br>
                         <input type="number" name="num" min="1" placeholder="Persons">
                         <input type="submit" value="Submit" class="btn  btn-sm" />
                     </form>
@@ -110,13 +110,15 @@
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <div class="p-5">
-                        <img class="img-fluid rounded-circle" src="images/team.jpg" alt="">
+                        <img class="img-fluid rounded-circle" th:src="@{/images/team.jpg}" alt="">
                     </div>
-                </div>
-                <div class="col-md-6">
+
                     <div class="p-5">
                         <h3 class="display-4">About us</h3>
-                        <p>We are newly formed team that is willing to work in this project with passion. Stavrina and Arianna created this web application for your ease and comfort. Now you can book a place to stay whenever on vacation or job travel ,avoiding those cold hotel rooms that lack the sense of feeling at home. Hope you enjoy it! </p>
+                        <p>We are newly formed team that is willing to work in this project with passion. Stavrina and
+                            Arianna created this web application for your ease and comfort. Now you can book a place to
+                            stay whenever on vacation or job travel ,avoiding those cold hotel rooms that lack the sense
+                            of feeling at home. Hope you enjoy it! </p>
                     </div>
                 </div>
             </div>
@@ -128,7 +130,7 @@
             <div class="row align-items-center">
                 <div class="col-md-6 order-2">
                     <div class="p-5">
-                        <img class="img-fluid rounded-circle" src="images/contact.jpg" alt="">
+                        <img class="img-fluid rounded-circle" th:src="@{/images/contact.jpg}" alt="">
                     </div>
                 </div>
                 <div class="col-md-6 order-1">
@@ -150,9 +152,9 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/popper/popper.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/popper/popper.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
 
 
     <!-- Include jQuery -->
@@ -160,7 +162,7 @@
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
 
 
 <script type="text/javascript">

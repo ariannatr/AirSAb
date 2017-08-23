@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org">
 <head>
 
     <meta charset="utf-8">
@@ -9,10 +9,10 @@
     <title>Admin Page</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" type="text/css" media="all"/>
 
     <!-- Custom styles for this template -->
-    <link href="css/one-page-wonder.css" rel="stylesheet">
+    <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
      <script>
@@ -29,7 +29,7 @@
     });
     });
     </script>
-    <link href="css/search.css" rel="stylesheet">    
+    <link th:href="@{/css/search.css}" rel="stylesheet" type="text/css" media="all"/>
 
 </head>
 
@@ -48,7 +48,7 @@
                     <a class="nav-link disabled" style="color:#dba63d;" >admin</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" >Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" th:href="@{/admin}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Users</a>
@@ -56,7 +56,7 @@
                       <a class="dropdown-item" href="users.html#ownersView" >Owners</a>
                       <a class="dropdown-item" href="users.html#rentersView">Renters</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="users.html">All</a>
+                      <a class="dropdown-item" th:href="@{/users}">All</a>
                     </div>
                 </li>
                 
@@ -77,7 +77,7 @@
                     <form class="searchform">
                         <input type="text" placeholder="City" > <br>
                         <input type="text" name="arrival" id="datepicker" placeholder="Arrival Date"> 
-                        <input  type="text" name="depart" id="datepicker" placeholder="Departure Date"> <br>
+                        <input  type="text" name="depart" id="datepicker2" placeholder="Departure Date"> <br>
                         <input type="number" name="num" min="1" placeholder="Persons">
                         <input type="submit" value="Submit" class="btn  btn-sm" />
                     </form>
@@ -102,12 +102,12 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/popper/popper.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/popper/popper.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all"/>
 
 
     <script type="text/javascript">

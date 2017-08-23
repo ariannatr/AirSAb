@@ -45,8 +45,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/index").permitAll()
 				.antMatchers("/register").anonymous()
 				.antMatchers("/usernameCheck").anonymous()
-                .antMatchers("/register_prov").anonymous()
-                .antMatchers("/about").permitAll()
+                .antMatchers("/login").anonymous()
+                .antMatchers("/users").permitAll()
                 .antMatchers("/error").permitAll()
                 .antMatchers("/activity").permitAll()
                 .antMatchers("/google_map").permitAll()
@@ -58,7 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/category_submit").permitAll()//has t be admin
                 .antMatchers("/profile").hasRole("1")//hasAuthority("1")//be a parent
                 .antMatchers("/profileProvider").hasRole("2")//be a Provider
-				.antMatchers("/admin").hasRole("0")
+				.antMatchers("/admin").permitAll()
                 .anyRequest()//be admin
 				.authenticated().and().csrf().disable()
                 .formLogin()
@@ -95,7 +95,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 	    web.ignoring()
-	       .antMatchers("/fragments/**","/resources/**","/static/**", "/css/**", "/js/**", "/images/**","/scripts/**");
+	       .antMatchers("/fragments/**","/resources/**","/static/**", "/css/**", "/js/**", "/images/**","/scripts/**","/vendor/**");
 		web.ignoring().antMatchers("/the_js_path/**");
 	}
 

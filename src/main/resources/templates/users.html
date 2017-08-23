@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org">
 <head>
 
     <meta charset="utf-8">
@@ -9,10 +9,10 @@
     <title>Users</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"  rel="stylesheet" type="text/css" media="all"/>
 
     <!-- Custom styles for this template -->
-    <link href="css/one-page-wonder.css" rel="stylesheet">
+    <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    <script type="text/javascript">
@@ -48,7 +48,7 @@
                     <a class="nav-link disabled" style="color:#dba63d;" >admin</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="admin.html">Home </a>
+                    <a class="nav-link" th:href="@{/admin}">Home </a>
                 </li>
                 <li class="nav-item active dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown"  href="" role="button" aria-haspopup="true" aria-expanded="false">Users</a>
@@ -56,7 +56,7 @@
                       <a class="dropdown-item" href="users.html#ownersView" onclick="location.reload()">Owners</a>
                       <a class="dropdown-item" href="users.html#rentersView" onclick="location.reload()">Renters</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="users.html" onclick="location.reload()">All</a>
+                      <a class="dropdown-item" th:href="@{/users}" onclick="location.reload()">All</a>
                     </div>
                 </li>
                 
@@ -161,9 +161,9 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/popper/popper.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/popper/popper.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
 
     
 
