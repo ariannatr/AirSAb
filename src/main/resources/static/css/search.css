@@ -12,14 +12,13 @@ p.form-title
 
 form
 {
-    width: 300px;
+    width: 700px;
     margin: 0 auto;
 }
 
  
 form.searchform input[type="text"] ,form.searchform input[type="number"]
 {
-    width: 100%;
     margin: 0;
     padding: 5px 10px;
     background: 0;
@@ -27,10 +26,10 @@ form.searchform input[type="text"] ,form.searchform input[type="number"]
     border-bottom: 1px solid #FFFFFF;
     outline: 0;
     font-style: italic;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 500;
     letter-spacing: 1px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     color: #FFFFFF;
     outline: 0;
 }
@@ -52,8 +51,8 @@ form.searchform label
 
 form.searchform input[type="submit"]
 {
-    width: 100%;
-    font-size: 15px;
+    width: 50%;
+    font-size: 16px;
     font-style: italic;
     text-transform: uppercase;
     font-weight: 500;
