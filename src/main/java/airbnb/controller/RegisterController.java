@@ -33,9 +33,8 @@ public class RegisterController {
 
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@ModelAttribute("users") @ Valid  UsersEntity user,RedirectAttributes redirectAttributes) {
+    public ModelAndView createNewUser(@ModelAttribute("users") UsersEntity user, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
-
         System.out.print("tha apothikeusouem ton xristi "+user.getUsername());
         UsersEntity userExists = userService.findByUsername(user.getUsername());
         if (userExists != null) {
@@ -54,10 +53,10 @@ public class RegisterController {
             }
             else
                 userService.saveUser(user, parent,"");*/
+            System.out.println("apothikeuw ton xristi me username "+user.getUsername()+" kai type "+user.getType());
 
             userService.saveUser(user);
 
-            System.out.println("apothikeuw ton xristi me username "+user.getUsername());
          //   Authentication authentication = authenticationFacade.getAuthentication();
            // System.out.println("Authentication name is"+authentication.getName());
 

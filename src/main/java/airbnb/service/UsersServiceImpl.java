@@ -1,6 +1,7 @@
 package airbnb.service;
 
 import airbnb.repository.*;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -17,13 +18,13 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     private UserRepository userRepository;
 
-   /* @Qualifier("renterRepository")
+    @Qualifier("renterRepository")
     @Autowired
-    private RenterRepository renterRepository;*/
+    private RenterRepository renterRepository;
 
-    /*@Qualifier("ownerRepository")
+    @Qualifier("ownerRepository")
     @Autowired
-    private OwnerRepository ownerRepository;*/
+    private OwnerRepository ownerRepository;
 
 
     @Autowired
@@ -74,9 +75,35 @@ public class UsersServiceImpl implements UsersService {
     public void saveUser(UsersEntity user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         System.out.println("Creating user..." + user.getPassword());
-        //user.setType(1);
+
 
         userRepository.save(user);
+        if(user.getType()==1)
+        {
+            OwnerEntity owner=new OwnerEntity();
+            owner.setUsersByUsersUsername(user);
+            owner.setUsersUsername(user.getUsername());
+            owner.setApproval(0);
+            ownerRepository.save(owner);
+        }
+        else if(user.getType()==2)
+        {
+            RenterEntity renter=new RenterEntity();
+            renter.setUsersByUsersUsername(user);
+            renter.setUsersUsername(user.getUsername());
+            renterRepository.save(renter);
+        }
+        else if(user.getType()==3){
+            OwnerEntity owner=new OwnerEntity();
+            owner.setUsersByUsersUsername(user);
+            owner.setUsersUsername(user.getUsername());
+            owner.setApproval(0);
+            RenterEntity renter=new RenterEntity();
+            renter.setUsersUsername(user.getUsername());
+            renter.setUsersByUsersUsername(user);
+            ownerRepository.save(owner);
+            renterRepository.save(renter);
+        }
         //CookiesEntity cookie = new CookiesEntity();
         System.out.println("Creating parent user...");
 

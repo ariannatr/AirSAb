@@ -31,6 +31,8 @@
           <element id="library" level="project" name="Gradle: org.hibernate:hibernate-entitymanager:5.2.10.Final" />
           <element id="library" level="project" name="Gradle: cglib:cglib:2.2.2" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:1.5.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework.security:spring-security-web:3.2.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework.security:spring-security-config:3.2.3.RELEASE" />
           <element id="library" level="project" name="Gradle: biz.paluch.redis:lettuce:3.5.0.Final" />
           <element id="library" level="project" name="Gradle: org.thymeleaf.extras:thymeleaf-extras-springsecurity3:2.1.1.RELEASE" />
           <element id="library" level="project" name="Gradle: xerces:xercesImpl:2.10.0" />
@@ -65,6 +67,8 @@
           <element id="library" level="project" name="Gradle: net.bytebuddy:byte-buddy:1.6.6" />
           <element id="library" level="project" name="Gradle: asm:asm:3.3.1" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot:1.5.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: aopalliance:aopalliance:1.0" />
+          <element id="library" level="project" name="Gradle: org.springframework.security:spring-security-core:4.2.2.RELEASE" />
           <element id="library" level="project" name="Gradle: io.reactivex:rxjava:1.1.6" />
           <element id="library" level="project" name="Gradle: io.netty:netty-common:4.0.37.Final" />
           <element id="library" level="project" name="Gradle: io.netty:netty-transport:4.0.37.Final" />
@@ -92,10 +96,6 @@
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.8.8" />
           <element id="library" level="project" name="Gradle: ch.qos.logback:logback-core:1.1.11" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-web/3.2.3.RELEASE/715b0357d6585d5730cad91a263b8848ae19caa6/spring-security-web-3.2.3.RELEASE.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-config/3.2.3.RELEASE/7274ca699e45bb9110ef5e801e0684ceb2e4d2db/spring-security-config-3.2.3.RELEASE.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/aopalliance/aopalliance/1.0/235ba8b489512805ac13a8f9ea77a1ca5ebe3e8/aopalliance-1.0.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-core/4.2.2.RELEASE/b4797b71d9f7d1a4b76b5d095ac20868369a8c31/spring-security-core-4.2.2.RELEASE.jar" />
         </element>
       </element>
     </root>
