@@ -74,7 +74,7 @@ public class UsersServiceImpl implements UsersService {
     public void saveUser(UsersEntity user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         System.out.println("Creating user..." + user.getPassword());
-        user.setType(1);
+        //user.setType(1);
 
         userRepository.save(user);
         //CookiesEntity cookie = new CookiesEntity();
