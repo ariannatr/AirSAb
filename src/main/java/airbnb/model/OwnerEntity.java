@@ -10,7 +10,7 @@ import java.util.Collection;
 @Table(name = "owner", schema = "mydb")
 public class OwnerEntity {
     private String usersUsername;
-    private byte approval;
+    private int approval;
   //  private Collection<ApartmentEntity> apartmentsByUsersUsername;
     private UsersEntity usersByUsersUsername;
 
@@ -26,11 +26,11 @@ public class OwnerEntity {
 
     @Basic
     @Column(name = "approval")
-    public byte getApproval() {
+    public int getApproval() {
         return approval;
     }
 
-    public void setApproval(byte approval) {
+    public void setApproval(int approval) {
         this.approval = approval;
     }
 
