@@ -52,7 +52,7 @@
             <div class="container">
                 <div >
                     <p class="form-title"> Complete the form below and log into your account</p>
-                    <form class="login">
+                    <form class="login" method="POST" th:action="@{/login}">
                         <input type="text" placeholder="Username" /> 
                         <input type="password" placeholder="Password" /> 
                         <input type="submit" value="Submit" class="btn  btn-sm" />

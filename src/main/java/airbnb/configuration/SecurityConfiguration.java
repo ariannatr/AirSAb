@@ -1,6 +1,7 @@
 package airbnb.configuration;
 
 
+import airbnb.authentication.MyDBAythenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,17 +26,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    @Autowired
-  //  private MyDBAythenticationService myDBAythenticationService;
+    @Autowired
+    private MyDBAythenticationService myDBAythenticationService;
 
 
-    /*@Autowired
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
                 .withUser("user").password("password").roles("USER");
         auth.userDetailsService(myDBAythenticationService).passwordEncoder(bCryptPasswordEncoder);
-    }*/
+    }
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
