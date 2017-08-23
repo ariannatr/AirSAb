@@ -31,45 +31,6 @@ public class MainController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@ModelAttribute("users") @Valid UsersEntity user, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws IOException {
-        ModelAndView modelAndView = new ModelAndView();
-        UsersEntity userExists = userService.findByUsername(user.getUsername());
-        if (userExists != null) {
-            bindingResult
-                    .rejectValue("username", "error.user",
-                            "There is already a user registered with the username provided");
-        }
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("success","false");
-            modelAndView.setViewName("redirect:/register");
-        } else {
-
-           /* if (!uploadingFile.isEmpty()) {
-                File file = new File(uploadingdir + uploadingFile.getOriginalFilename());
-
-                userService.saveUser(user, parent, "/image/" + uploadingFile.getOriginalFilename());
-                uploadingFile.transferTo(file);
-            }
-            else
-                userService.saveUser(user, parent,""); */
-
-            userService.saveUser(user);
-
-            Authentication authentication = authenticationFacade.getAuthentication();
-            System.out.println("Authentication name is"+authentication.getName());
-
-            if(!authentication.getName().equals("anonymousUser")) {
-                modelAndView.addObject("uname", authentication.getName());
-                UsersEntity userS = userService.findByUsername(authentication.getName());
-                modelAndView.addObject("type", String.valueOf(userS.getType()));
-            }
-
-            redirectAttributes.addFlashAttribute("success","true");
-            modelAndView.setViewName("redirect:/register");
-        }
-        return modelAndView;
-    }
 }
 
 

@@ -12,7 +12,7 @@ public interface UsersService {
    // public void saveUserProvider(UserEntity user, ProviderEntity provider);
  //  public void saveUserOwner(UsersEntity user, OwnerEntity owner);
     public UsersEntity findByUsernamePassword(String username, String Password);
-    public List<UsersEntity> findUsers();
+    //public List<UsersEntity> findUsers();
   //  public List<RenterEntity> getRenters();
     //public List<OwnerEntity> getOwners();
 

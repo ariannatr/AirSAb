@@ -52,7 +52,7 @@
             <div class="container">
                 
                     <p class="form-title"> Complete the form below to create an account</p>
-                    <form class="register" method="POST" th:action="@{/register}">
+                    <form class="register" method="POST" th:action="@{/register}"/>
                         <input  name="name" id="name" required="required" placeholder="Name"   type="text"/>
                         <input  name="surname" id="surname" required="required" placeholder="Surname"  type="text"/>
                         <input  name="email" id="email" required="required"   placeholder="Email"  type="email" />
@@ -65,7 +65,7 @@
                         <input type="text" name="username" id="username" placeholder="Username" />
                         <input type="password" name="password" id="passsword" placeholder="Password" required="required" onchange="form.passwordsignup_confirm.pattern = this.value;"/>
                         <input  name="passwordsignup_confirm" id="passwordsignup_confirm"  required="required"  placeholder="Confirm Password" type="password" />
-                        <input type="submit" value="Register" class="btn  btn-sm" />
+                        <input type="submit" value="register" class="btn  btn-sm" />
                         
                     </form>
                 

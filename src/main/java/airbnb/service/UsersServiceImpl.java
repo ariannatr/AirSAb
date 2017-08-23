@@ -3,6 +3,7 @@ package airbnb.service;
 import airbnb.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import airbnb.model.*;
@@ -86,10 +87,10 @@ public class UsersServiceImpl implements UsersService {
         System.out.println("Done.");
     }
 
-    @Override
-    public List<UsersEntity> findUsers(){
+  /*  @Override
+    public Page<UsersEntity> findUsers(){
         return userRepository.findAll();
-    }
+    }*/
 
     /*@Override
     public void saveUserProvider(UserEntity user, ProviderEntity provider) {
