@@ -134,33 +134,33 @@ public class UsersServiceImpl implements UsersService {
         System.out.println("Done.");
     }*/
 
-/*
+
     @Override
-    public void updateUserParent(ParentEntity parenton,ParentEntity parent,UserEntity useron,UserEntity user){
-        if(!parent.getEmail().replaceAll(" ","").equals("")){
-            parenton.setEmail(parent.getEmail());
+    public void updateUser(UsersEntity useron,UsersEntity user){
+        if(!user.getEmail().replaceAll(" ","").equals("")){
+            useron.setEmail(user.getEmail());
         }
-        if(!parent.getName().replaceAll(" ","").equals(""))
+        if(!user.getName().replaceAll(" ","").equals(""))
         {
-            parenton.setName(parent.getName());
+            useron.setName(user.getName());
         }
-        if(!parent.getSurname().replaceAll(" ","").equals(""))
+        if(!user.getSurname().replaceAll(" ","").equals(""))
         {
-            parenton.setSurname(parent.getSurname());
+            useron.setSurname(user.getSurname());
         }
 
-        if(!parent.getTelephone().replaceAll(" ","").equals(""))
+        if(!String.valueOf(user.getTelephone()).replaceAll(" ","").equals(""))
         {
-            parenton.setTelephone(parent.getTelephone());
+            useron.setTelephone(user.getTelephone());
         }
         if(!user.getPassword().replaceAll(" ","").equals(""))
         {
             useron.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
         userRepository.save(useron);
-        parentRepository.save(parenton);
+
     }
-*/
+
 
 
 /*

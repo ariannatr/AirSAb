@@ -1,0 +1,91 @@
+p.table-title
+{
+    font-family: 'Open Sans' , sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    color: #FFFFFF;
+    margin-top: 5%;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+p.table-subtitle
+{
+    font-family: 'Open Sans' , sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    color: #FFFFFF;
+    margin:0 auto;
+    text-transform: uppercase;
+
+}
+
+table
+{
+    width: 70%;
+    margin: 0 auto;
+}
+
+
+
+table td
+{
+    width: 70%;
+    margin: 0;
+    padding: 5px 10px;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid #030811;
+    outline: 0;
+    font-style: italic;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    color: solid #030811;
+    outline: 0;
+}
+
+
+table td.mylabel
+{
+    width: 30%;
+    margin: 0;
+    padding: 5px 10px;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid #030811;
+    outline: 0;
+    font-style: italic;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+
+    margin-bottom: 12px;
+    color: solid #030811;
+
+}
+
+
+form.update input[type="text"], form.update input[type="password"], form.update input[type="email"]
+{
+    width: 100%;
+    margin: 0;
+
+    background: 0;
+    border: 0;
+
+    outline: 0;
+
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+
+    color: solid black;
+
+}
+
+

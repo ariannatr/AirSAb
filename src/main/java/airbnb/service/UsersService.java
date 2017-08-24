@@ -19,7 +19,7 @@ public interface UsersService {
    // public  RenterEntity findRenter(RenterPK renterPk);
    // public OwnerEntity findProvider(OwnerPK ownerPk);
 
-  //  public void updateUser(ParentEntity parenton,ParentEntity parent,UsersEntity useron,UsersEntity user);
+    public void updateUser(UsersEntity useron,UsersEntity user);
 
     //public void updateUserProvider(ProviderEntity provideron,ProviderEntity provider,UserEntity useron,UserEntity user);
     // public void approveProvider(OwnerEntity ownerEntity);

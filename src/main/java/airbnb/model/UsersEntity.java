@@ -135,4 +135,6 @@ public class UsersEntity {
     public void setRenterByUsername(RenterEntity renterByUsername) {
         this.renterByUsername = renterByUsername;
     }
+
+
 }
