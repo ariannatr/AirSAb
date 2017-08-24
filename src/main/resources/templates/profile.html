@@ -82,32 +82,28 @@
                                 <td class="mylabel"> Telephone   </td>
                                 <td> <input  name="telephone" id="telephone"   th:placeholder="${telephone}"   type="text" /> </td>
                             </tr>
-                            <tr>
+                            <!--tr>
                                 <td class="mylabel"> Role   </td>
                                 <td> Owner </td>
-                            </tr>
+                            </tr-->
                             <tr>
                                 <td class="mylabel"> Password   </td>
-                                <td> <input type="password" placeholder="*******"  onchange="form.passwordsignup_confirm.pattern = this.value;" name="password" id="password"/> </td>
+                                <td> <input type="password" placeholder="*******"  onchange="form.password_confirm.pattern = this.value;" name="password" id="password"/> </td>
                             </tr>
                             <tr>
                                 <td class="mylabel"> Confirm Password   </td>
-                                <td> <input type="passwordsignup_confirm" placeholder="*******"  /> </td>
+                                <td> <input name="password_confirm" name="password_confirm" placeholder="*******" type="password" /> </td>
                             </tr>
                         </table>
-
-
-
-
 
                         <!--label class="btn btn-sm">Owner <input type="checkbox" name="q1" value="0" > </label>
                         <label class="btn btn-sm">       Renter<input type="checkbox" name="q1" value="1"/></label-->
 
-                        <input type="submit" value="Update" class="btn  btn-outline-warning " />
+
                     </form>
                 </div>
                 <br>
-
+                <input type="submit" value="Update" class="btn  btn-outline-warning " />
                 <button id="backnow" class="btn btn-outline-secondary" data-wow-delay="0.5s" onclick="back()">Back</button>
             </div>
 

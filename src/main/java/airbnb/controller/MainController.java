@@ -68,7 +68,7 @@ public class MainController {
 
 
     @RequestMapping(value="/update", method = RequestMethod.POST)
-    public ModelAndView edit(@ModelAttribute("users") @Valid UsersEntity user )  {
+    public ModelAndView edit(@ModelAttribute("users") @Valid UsersEntity user,RedirectAttributes redirectAttributes )  {
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = authenticationFacade.getAuthentication();
         System.out.println("Authentication name is " + authentication.getName());
@@ -91,10 +91,16 @@ public class MainController {
                 modelAndView.addObject("type", "Owner and Renter");
             else
                 modelAndView.addObject("type", "Admin");
+            modelAndView.setViewName("redirect:/profile");
+            return modelAndView;
+        }
+        else
+        {
+            System.out.println("not allowed here");
+            redirectAttributes.addFlashAttribute("success","false");
+            modelAndView.setViewName("redirect:/register");
+            return modelAndView;
 
         }
-        modelAndView.setViewName("redirect:/profile");
-
-        return modelAndView;
     }
 }
