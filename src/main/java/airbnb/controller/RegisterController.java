@@ -1,5 +1,6 @@
 package airbnb.controller;
 
+import airbnb.authentication.IAuthenticationFacade;
 import airbnb.model.UsersEntity;
 import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ public class RegisterController {
 
     @Autowired
     private UsersService userService;
+
+    @Autowired
+    private IAuthenticationFacade authenticationFacade;
+
 
     @RequestMapping(value={"/register"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
     public ModelAndView register(){
