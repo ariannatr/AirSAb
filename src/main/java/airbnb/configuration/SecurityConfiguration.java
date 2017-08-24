@@ -49,14 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").anonymous()
                 .antMatchers("/users").permitAll()
                 .antMatchers("/error").permitAll()
-                .antMatchers("/activity").permitAll()
-                .antMatchers("/google_map").permitAll()
                 .antMatchers("/search","/search2").permitAll()
-                .antMatchers("/faq").permitAll()
-                .antMatchers("/activity_reg").hasRole("2")//be a provider
-                .antMatchers("/activityProvider").hasRole("2")
-				.antMatchers("/categories_form").permitAll()//has to be admin
-				.antMatchers("/category_submit").permitAll()//has t be admin
                 .antMatchers("/profile").hasRole("1")//hasAuthority("1")//be a parent
                 .antMatchers("/profileProvider").hasRole("2")//be a Provider
 				.antMatchers("/admin").permitAll()

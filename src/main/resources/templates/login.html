@@ -21,7 +21,7 @@
 <body>
 
     <!-- Navigation -->
-    <div th:replace="/fragments/navbar :: navbar('about')"></div>
+    <div th:replace="/fragments/navbar :: navbar('login')"></div>
 
     <header class="masthead">
         <div class="overlay">
@@ -42,12 +42,8 @@
     </header>
 
     <!-- Footer -->
-    <footer class="py-3 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; AirSA&B 2017</p>
-        </div>
-        <!-- /.container -->
-    </footer>
+    <div th:replace="/fragments/footer :: footer"></div>
+
     <!-- Bootstrap core JavaScript -->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{vendor/popper/popper.min.js}"></script>

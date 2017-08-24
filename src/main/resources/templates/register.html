@@ -23,7 +23,7 @@
 <body>
 
     <!-- Navigation -->
-    <div th:replace="/fragments/navbar :: navbar('about')"></div>
+    <div th:replace="/fragments/navbar :: navbar('register')"></div>
 
     <header class="masthead">
         <div class="overlay">
@@ -31,18 +31,18 @@
                 
                     <p class="form-title"> Complete the form below to create an account</p>
                     <form class="register" method="POST"  th:action="@{/register}"   />
-                        <input  name="name" id="name" required="required" placeholder="Name"   type="text"/>
-                        <input  name="surname" id="surname" required="required" placeholder="Surname"  type="text"/>
-                        <input  name="email" id="email" required="required"   placeholder="Email"  type="email" />
-                        <input  name="telephone" id="telephone" required="required"  placeholder="Telephone"   type="text" />
+                        <input  name="name" id="name" required="required" placeholder="Name"   type="text" path="name"/>
+                        <input  name="surname" id="surname" required="required" placeholder="Surname"  type="text" path="surname"/>
+                        <input  name="email" id="email" required="required"   placeholder="Email"  type="email" path="email"/>
+                        <input  name="telephone" id="telephone" required="required"  placeholder="Telephone"   type="text" path="telephone"/>
 
                         <label class="btn btn-sm">Owner <input type="checkbox"  id="ownertype" name="owner" value="1" onclick="validate()" /> </label>
                         <label class="btn btn-sm">Renter<input type="checkbox"  id="rentertype" name="renter" value="2" onclick="validate2()"/></label>
                         <input  name="type" id="type" required="required"  type="hidden" path="type"/>
     
                         
-                        <input type="text" name="username" id="username" placeholder="Username" />
-                        <input type="password" name="password" id="passsword" placeholder="Password" required="required" onchange="form.passwordsignup_confirm.pattern = this.value;"/>
+                        <input type="text" name="username" id="username" placeholder="Username" path="username"/>
+                        <input type="password" name="password" id="passsword" placeholder="Password" path="password" required="required" onchange="form.passwordsignup_confirm.pattern = this.value;"/>
                         <input  name="passwordsignup_confirm" id="passwordsignup_confirm"  required="required"  placeholder="Confirm Password" type="password" />
                         <input type="submit" value="register" class="btn  btn-sm" onclick="complete()"/>
                         
@@ -53,12 +53,7 @@
     </header>
 
     <!-- Footer -->
-    <footer class="py-3 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; AirSA&B 2017</p>
-        </div>
-        <!-- /.container -->
-    </footer>
+    <div th:replace="/fragments/footer :: footer"></div>
     <!-- Bootstrap core JavaScript -->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/vendor/popper/popper.min.js}"></script>

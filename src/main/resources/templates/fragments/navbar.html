@@ -6,36 +6,36 @@
 
 <div th:fragment="navbar(module)">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="#">Air SA&B</a>
+        <a class="navbar-brand" th:href="@{/index}">Air SA&B</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-                <div th:if ="${(uname == null) } ">
-                    <ul class="nav navbar-nav  navbar-right fl_right">
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/index}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/register}">Sign up</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/login}">Log in</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact</a>
-                        </li>
+
+            <div th:if ="${(uname == null) } " class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav nav-pills ml-auto ">
+                            <li class="nav-item" th:classappend="${module == 'home' ? 'active' : ''}">
+                                <a class="nav-link" th:href="@{/index}">Home</a>
+                            </li>
+                            <li class="nav-item" th:classappend="${module == 'register' ? 'active' : ''}">
+                                <a class="nav-link" th:href="@{/register}">Sign up</a>
+                            </li>
+                            <li class="nav-item" th:classappend="${module == 'login' ? 'active' : ''}">
+                                <a class="nav-link" th:href="@{/login}">Log in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/index#about}">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/index#contact}">Contact</a>
+                            </li>
+
                     </ul>
-                </div>
-                <div  th:if ="${(uname != null)}">
-                    <ul class="nav navbar-nav  navbar-right fl_right">
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/index}">Home</a>
-                        </li>
-                        <li class="nav-item dropdown">
+            </div>
+
+
+                <div  th:if ="${(uname != null)}" class="collapse navbar-collapse" id="navbarResponsive2">
+                    <ul class="navbar-nav nav-pills ml-auto  ">
+                        <li class="nav-item dropdown" th:classappend="${module == 'profile' ? 'active' : ''}">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false"><span th:text="${uname}"></span></a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Messages</a>
@@ -45,15 +45,22 @@
                                 <a class="dropdown-item" th:href="@{/logout}">Logout</a>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        <li>
+
+                        </li>
+                        <li class="nav-item" th:classappend="${module == 'home' ? 'active' : ''}">
+                            <a class="nav-link" th:href="@{/index}">Home</a>
+                        </li>
+
+                        <li class="nav-item" th:classappend="${module == 'about' ? 'active' : ''}">
                             <a class="nav-link" href="#about">About</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" th:classappend="${module == 'contact' ? 'active' : ''}">
                             <a class="nav-link" href="#contact">Contact</a>
                         </li>
                     </ul>
                 </div>
-        </div>
+
     </nav>
 </div>
 </body>
