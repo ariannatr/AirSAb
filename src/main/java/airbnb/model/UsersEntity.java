@@ -6,14 +6,14 @@ import javax.persistence.*;
  * Created by Arianna on 23/8/2017.
  */
 @Entity
-@Table(name = "users", schema = "mydb")
+@Table(name = "user", schema = "mydb")
 public class UsersEntity {
     private String username;
     private String password;
     private int type;
     private String name;
     private String surname;
-    private int telephone;
+    private String telephone;
     private String email;
     private OwnerEntity ownerByUsername;
     private RenterEntity renterByUsername;
@@ -70,11 +70,11 @@ public class UsersEntity {
 
     @Basic
     @Column(name = "telephone")
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
@@ -96,7 +96,7 @@ public class UsersEntity {
         UsersEntity that = (UsersEntity) o;
 
         if (type != that.type) return false;
-        if (telephone != that.telephone) return false;
+        if (telephone != null ? !telephone.equals(that.telephone) : that.telephone != null) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -113,7 +113,7 @@ public class UsersEntity {
         result = 31 * result + type;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        result = 31 * result + telephone;
+        result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }

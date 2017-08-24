@@ -37,7 +37,7 @@ public class RegisterController {
 
 
     @RequestMapping(value ="/register", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@ModelAttribute("users") @Valid UsersEntity user, RedirectAttributes redirectAttributes) {
+    public ModelAndView createNewUser(@ModelAttribute("user") @Valid UsersEntity user, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         System.out.print("tha apothikeusouem ton xristi "+user.getUsername());
         UsersEntity userExists = userService.findByUsername(user.getUsername());

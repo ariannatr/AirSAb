@@ -49,23 +49,22 @@ public class MainController {
             modelAndView.addObject("user",userS);
             int type=userS.getType();
                 if(type==1)
-                    modelAndView.addObject("type", "Renter");
+                    modelAndView.addObject("type1", "Renter");
                 else if(type==2)
-                    modelAndView.addObject("type", "Owner");
+                    modelAndView.addObject("type1", "Owner");
                 else if(type==3)
-                    modelAndView.addObject("type", "Owner and Renter");
+                    modelAndView.addObject("type1", "Owner and Renter");
                 else
-                    modelAndView.addObject("type", "Admin");
+                    modelAndView.addObject("type1", "Admin");
         }
         return modelAndView;
     }
 
 
     @RequestMapping(value="/update", method = RequestMethod.POST)
-    public ModelAndView edit(@ModelAttribute("users") @Valid UsersEntity user,RedirectAttributes redirectAttributes )  {
+    public ModelAndView edit(@ModelAttribute("user") @Valid UsersEntity user,RedirectAttributes redirectAttributes )  {
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = authenticationFacade.getAuthentication();
-        System.out.println("Authentication name is " + authentication.getName());
         if (!authentication.getName().equals("anonymousUser")) {
             modelAndView.addObject("uname", authentication.getName());
 
@@ -74,13 +73,13 @@ public class MainController {
             modelAndView.addObject("user",useron);
             int type=useron.getType();
             if(type==1)
-                modelAndView.addObject("type", "Renter");
+                modelAndView.addObject("type1", "Renter");
             else if(type==2)
-                modelAndView.addObject("type", "Owner");
+                modelAndView.addObject("type1", "Owner");
             else if(type==3)
-                modelAndView.addObject("type", "Owner and Renter");
+                modelAndView.addObject("type1", "Owner and Renter");
             else
-                modelAndView.addObject("type", "Admin");
+                modelAndView.addObject("type1", "Admin");
             modelAndView.setViewName("redirect:/profile");
             return modelAndView;
         }
