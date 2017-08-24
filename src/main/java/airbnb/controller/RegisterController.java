@@ -36,8 +36,8 @@ public class RegisterController {
     }
 
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@ModelAttribute("users")  UsersEntity user, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value ="/register", method = RequestMethod.POST)
+    public ModelAndView createNewUser(@ModelAttribute("users") @Valid UsersEntity user, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         System.out.print("tha apothikeusouem ton xristi "+user.getUsername());
         UsersEntity userExists = userService.findByUsername(user.getUsername());
@@ -60,15 +60,6 @@ public class RegisterController {
             System.out.println("apothikeuw ton xristi me username "+user.getUsername()+" kai type "+user.getType());
 
             userService.saveUser(user);
-
-         //   Authentication authentication = authenticationFacade.getAuthentication();
-           // System.out.println("Authentication name is"+authentication.getName());
-
-            /*if(!authentication.getName().equals("anonymousUser")) {
-                modelAndView.addObject("uname", authentication.getName());
-                UsersEntity userS = userService.findByUsername(authentication.getName());
-                modelAndView.addObject("type", String.valueOf(userS.getType()));
-            }*/
 
             redirectAttributes.addFlashAttribute("success","true");
             modelAndView.addObject("uname", user.getUsername());

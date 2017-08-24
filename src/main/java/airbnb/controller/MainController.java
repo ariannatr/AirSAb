@@ -12,8 +12,7 @@ import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import javax.validation.Valid;
-import org.springframework.validation.BindingResult;
-import java.io.IOException;
+
 
 /**
  * Created by Arianna on 22/8/2017.
@@ -38,8 +37,8 @@ public class MainController {
         return modelAndView;
     }
 
-    @RequestMapping(value={"/profile"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
-    public ModelAndView profile(@ModelAttribute("users") @Valid UsersEntity user){
+    @RequestMapping(value="/profile", method = RequestMethod.GET/*, produces= "application/javascript"*/)
+    public ModelAndView profile(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/profile");
         Authentication authentication = authenticationFacade.getAuthentication();
@@ -47,10 +46,7 @@ public class MainController {
             modelAndView.addObject("uname", authentication.getName());
             UsersEntity userS = userService.findByUsername(authentication.getName());
 
-            modelAndView.addObject("name", userS.getName());
-            modelAndView.addObject("surname", userS.getSurname());
-            modelAndView.addObject("email", userS.getEmail());
-            modelAndView.addObject("telephone", String.valueOf(userS.getTelephone()));
+            modelAndView.addObject("user",userS);
             int type=userS.getType();
                 if(type==1)
                     modelAndView.addObject("type", "Renter");
@@ -60,8 +56,6 @@ public class MainController {
                     modelAndView.addObject("type", "Owner and Renter");
                 else
                     modelAndView.addObject("type", "Admin");
-
-
         }
         return modelAndView;
     }
@@ -77,11 +71,7 @@ public class MainController {
 
             UsersEntity useron = userService.findByUsername(authentication.getName());
             userService.updateUser(useron,user);
-
-            modelAndView.addObject("name", useron.getName());
-            modelAndView.addObject("surname", useron.getSurname());
-            modelAndView.addObject("email", useron.getEmail());
-            modelAndView.addObject("telephone", String.valueOf(useron.getTelephone()));
+            modelAndView.addObject("user",useron);
             int type=useron.getType();
             if(type==1)
                 modelAndView.addObject("type", "Renter");
@@ -100,7 +90,6 @@ public class MainController {
             redirectAttributes.addFlashAttribute("success","false");
             modelAndView.setViewName("redirect:/register");
             return modelAndView;
-
         }
     }
 }

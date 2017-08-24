@@ -50,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users").permitAll()
                 .antMatchers("/error").permitAll()
                 .antMatchers("/search","/search2").permitAll()
-                .antMatchers("/profile").permitAll()
+                .antMatchers("/profile").hasAnyRole("0","1","2","3")
                 .antMatchers("/profileProvider").hasRole("2")//be a Provider
 				.antMatchers("/admin").permitAll()
                 .anyRequest()//be admin

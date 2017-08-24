@@ -37,19 +37,19 @@
                     <table>
                         <tr>
                             <td class="mylabel"> Name   </td>
-                            <td > <span th:text="${name}"></span></td>
+                            <td > <span th:text="${user.name}"></span></td>
                         </tr>
                         <tr>
                             <td class="mylabel"> Surname   </td>
-                            <td> <span th:text="${surname}"></span> </td>
+                            <td> <span th:text="${user.surname}"></span> </td>
                         </tr>
                         <tr>
                             <td class="mylabel"> Email  </td>
-                            <td> <span th:text="${email}"></span> </td>
+                            <td> <span th:text="${user.email}"></span> </td>
                         </tr>
                         <tr>
                             <td class="mylabel"> Telephone   </td>
-                            <td> <span th:text="${telephone}"></span> </td>
+                            <td> <span th:text="${user.telephone}"></span> </td>
                         </tr>
                         <tr>
                             <td class="mylabel"> Role   </td>
@@ -68,19 +68,19 @@
                         <table>
                             <tr>
                                 <td class="mylabel"> Name   </td>
-                                <td > <input  name="name" id="name"  th:placeholder="${name}"   type="text"/> </td>
+                                <td > <input  name="name" id="name"  th:placeholder="${user.name}" type="text"/> </td>
                             </tr>
                             <tr>
                                 <td class="mylabel"> Surname   </td>
-                                <td> <input  name="surname" id="surname"  th:placeholder="${surname}"  type="text"/> </td>
+                                <td> <input  name="surname" id="surname"  th:placeholder="${user.surname}"  type="text"/> </td>
                             </tr>
                             <tr>
                                 <td class="mylabel"> Email   </td>
-                                <td> <input  name="email" id="email"    th:placeholder="${email}"  type="email" /> </td>
+                                <td> <input  name="email" id="email"    th:placeholder="${user.email}"  type="email" /> </td>
                             </tr>
                             <tr>
                                 <td class="mylabel"> Telephone   </td>
-                                <td> <input  name="telephone" id="telephone"   th:placeholder="${telephone}"   type="text" /> </td>
+                                <td> <input  name="telephone" id="telephone"   th:placeholder="${user.telephone}"   type="text" /> </td>
                             </tr>
                             <!--tr>
                                 <td class="mylabel"> Role   </td>
@@ -98,13 +98,12 @@
 
                         <!--label class="btn btn-sm">Owner <input type="checkbox" name="q1" value="0" > </label>
                         <label class="btn btn-sm">       Renter<input type="checkbox" name="q1" value="1"/></label-->
-
-
+                        <br>
+                        <button type="submit" id="change" value="Update" class="btn  btn-outline-warning " >Update</button>
+                        <button id="backnow" class="btn btn-outline-secondary" data-wow-delay="0.5s" onclick="back()">Back</button>
                     </form>
                 </div>
-                <br>
-                <input type="submit" value="Update" class="btn  btn-outline-warning " />
-                <button id="backnow" class="btn btn-outline-secondary" data-wow-delay="0.5s" onclick="back()">Back</button>
+
             </div>
 
         </div>
@@ -115,9 +114,9 @@
 <!-- Footer -->
 <div th:replace="/fragments/footer :: footer"></div>
 <!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/popper/popper.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/popper/popper.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
 <script >
     function change(){
         $("#initialtext").hide();
