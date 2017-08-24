@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import javax.validation.constraints.AssertTrue;
 import java.io.IOException;
 
 /**
@@ -72,7 +71,8 @@ public class RegisterController {
             }*/
 
             redirectAttributes.addFlashAttribute("success","true");
-            modelAndView.setViewName("redirect:/register");
+            modelAndView.addObject("uname", user.getUsername());
+            modelAndView.setViewName("redirect:/index");
         }
         return modelAndView;
     }
