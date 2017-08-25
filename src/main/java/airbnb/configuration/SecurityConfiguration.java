@@ -51,16 +51,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/error").permitAll()
                 .antMatchers("/search","/search2").permitAll()
                 .antMatchers("/profile").hasAnyRole("0","1","2","3")
-                .antMatchers("/profileProvider").hasRole("2")//be a Provider
 				.antMatchers("/admin").permitAll()
-                .anyRequest()//be admin
+				.antMatchers("/renters").permitAll()
+				.antMatchers("/owners").permitAll()
+				.antMatchers("/accept","/accept/**").permitAll()
+				.anyRequest()//be admin
 				.authenticated().and().csrf().disable()
                 .formLogin()
 				.loginPage("/index")
                 .loginProcessingUrl("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .failureUrl("/index?success=false")
+                .failureUrl("/login?success=false")
                 .defaultSuccessUrl("/index")
                 .and()
                 .logout()
@@ -92,39 +94,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	       .antMatchers("/fragments/**","/resources/**","/static/**", "/css/**", "/js/**", "/images/**","/scripts/**","/vendor/**");
 		web.ignoring().antMatchers("/the_js_path/**");
 	}
-
-
-   /* @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-//        auth.inMemoryAuthentication()
-//                .withUser("admin").password("password").roles("USER","ADMIN")
-//                .and()
-//                .withUser("jaiprak").password("password").roles("USER","ADMIN");
-        JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
-        userDetailsService.setDataSource(datasource);
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-
-        auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
-        auth.jdbcAuthentication().dataSource(datasource);
-
-
-    }*/
-
-    /*@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests().anyRequest().fullyAuthenticated()
-                .and()
-                .httpBasic().and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http
-                .formLogin().failureUrl("/login?error")
-                .defaultSuccessUrl("/")
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
-                .permitAll();
-    }*/
 }

@@ -63,7 +63,7 @@ public class RegisterController {
 
             redirectAttributes.addFlashAttribute("success","true");
             modelAndView.addObject("uname", user.getUsername());
-            modelAndView.setViewName("redirect:/index");
+            modelAndView.setViewName("redirect:/register");
         }
         return modelAndView;
     }

@@ -30,6 +30,9 @@
             <div class="container">
                 
                     <p class="form-title"> Complete the form below to create an account</p>
+                    <div th:if ="${(success != null) and (success == 'true')}">
+                        <div class="alert alert-success" style="text-align: center;"> Your registration has been succesfully completed! <br>  <a  th:href="@{/index}">Back to homepage .</a></div>
+                    </div >
                     <form class="register" method="POST"  th:action="@{/register}"   />
                         <input  name="name" id="name" required="required" placeholder="Name"   type="text"/>
                         <input  name="surname" id="surname" required="required" placeholder="Surname"  type="text" />

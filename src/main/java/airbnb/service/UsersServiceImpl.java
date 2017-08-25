@@ -5,6 +5,7 @@ import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import airbnb.model.*;
@@ -114,6 +115,16 @@ public class UsersServiceImpl implements UsersService {
         System.out.println("Done.");
     }
 
+    @Override
+    public Page<OwnerEntity> findAllnotApproved(Pageable pageable){
+        return ownerRepository.findAllByApproval(0,pageable);
+    }
+
+    @Override
+    public OwnerEntity findOwnerByUsername(String username){
+        return ownerRepository.findByUsersUsername(username);
+    }
+
   /*  @Override
     public Page<UsersEntity> findUsers(){
         return userRepository.findAll();
@@ -161,8 +172,22 @@ public class UsersServiceImpl implements UsersService {
 
     }
 
+    @Override
+    public Page<UsersEntity> findAllPageable(Pageable pageable){
+        return userRepository.findAll(pageable);
+    }
 
+    @Override
+    public Page<UsersEntity> findAllRenters(Pageable pageable)
+    {
+        return userRepository.findByType(2,3,pageable);
+    }
 
+    @Override
+    public Page<UsersEntity> findAllOwners(Pageable pageable)
+    {
+        return userRepository.findByType(1,3,pageable);
+    }
 /*
     public List<RenterEntity> getRenters(){
         return renterRepository.findAll();
@@ -174,11 +199,11 @@ public class UsersServiceImpl implements UsersService {
 
    */
 
-/*
+
     @Override
-    public void approveProvider(OwnerEntity ownerEntity)
+    public void approveOwner(OwnerEntity ownerEntity)
     {
         ownerEntity.setApproval(1);
         ownerRepository.save(ownerEntity);
-    }*/
+    }
 }

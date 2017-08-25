@@ -28,12 +28,14 @@
             <div class="container">
                 <div >
                     <p class="form-title"> Complete the form below and log into your account</p>
+                    <div th:if ="${(param.success != null) and (param.success[0] == 'false')}">
+                        <div class="alert alert-warning" style="text-align: center;"> The infos you gave are incorrect ,please try again ! <br></div>
+                    </div >
                     <form class="login" method="POST" th:action="@{/login}">
                         <input type="text" name="username" id="username" placeholder="Username" />
                         <input type="password" name="password" id="password" placeholder="Password" />
                         <input type="submit" value="Submit" class="btn  btn-sm" />
                         <div >
-                        
                         </div>
                     </form>
                 </div>
