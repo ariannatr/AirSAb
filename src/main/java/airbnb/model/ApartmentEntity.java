@@ -1,17 +1,20 @@
 package airbnb.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Arianna on 23/8/2017.
- */
+*/
 
 @Entity
 @Table(name = "apartment", schema = "mydb")
-public class ApartmentEntity {
-    private int id;
+public class ApartmentEntity implements Serializable{
+
     private String description;
     private String name;
     private String country;
@@ -37,14 +40,12 @@ public class ApartmentEntity {
     private int smoking;
     private int baths;
     private int livingroom;
-    private String photos;
     private int events;
-    private  String owner;
-    private OwnerEntity ownerByOwner;
-    private Collection<ReservationEntity> reservations;
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id")
+    private int id;
     public int getId() {
         return id;
     }
@@ -253,15 +254,6 @@ public class ApartmentEntity {
         this.spaceArea = spaceArea;
     }
 
-    @Id
-    @Column(name = "owner")
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
 
     @Basic
     @Column(name = "minimumres")
@@ -314,16 +306,6 @@ public class ApartmentEntity {
     }
 
     @Basic
-    @Column(name = "photos")
-    public String getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(String photos) {
-        this.photos = photos;
-    }
-
-    @Basic
     @Column(name = "events")
     public int getEvents() {
         return events;
@@ -368,7 +350,6 @@ public class ApartmentEntity {
         if (finaldate != null ? !finaldate.equals(that.finaldate) : that.finaldate != null) return false;
         if (photo != null ? !photo.equals(that.photo) : that.photo != null) return false;
         if (owner != null ? !owner.equals(that.owner) : that.owner != null) return false;
-        if (photos != null ? !photos.equals(that.photos) : that.photos != null) return false;
 
         return true;
     }
@@ -405,29 +386,33 @@ public class ApartmentEntity {
         result = 31 * result + (int) smoking;
         result = 31 * result + baths;
         result = 31 * result + (int) livingroom;
-        result = 31 * result + (photos != null ? photos.hashCode() : 0);
         result = 31 * result + (int) events;
         return result;
     }
 
     @ManyToOne
     @JoinColumn(name = "owner", referencedColumnName = "users_username")
-    public OwnerEntity getOwnerByOwner() {
-        return ownerByOwner;
+    private OwnerEntity owner;
+
+    public OwnerEntity getOwner() {
+        return owner;
     }
 
-    public void setOwnerByOwner(OwnerEntity ownerByOwner) {
-        this.ownerByOwner = ownerByOwner;
+    public void setOwnerByOwner(OwnerEntity owner) {
+        this.owner = owner;
     }
+/*
+    @OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+    @JoinColumn(name = "reservation_id")
+    private Set<ReservationEntity> reservations= new HashSet<>(0);
 
-    @OneToMany(mappedBy = "apartment")
-    public Collection<ReservationEntity> getReservations() {
+    public Set<ReservationEntity> getReservations() {
         return reservations;
     }
 
-    public void setReservations(Collection<ReservationEntity> reservations) {
+    public void setReservations(Set<ReservationEntity> reservations) {
         this.reservations = reservations;
     }
-
-
+*/
 }
+

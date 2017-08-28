@@ -1,25 +1,33 @@
-package airbnb.model;
+/*package airbnb.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
- * Created by Arianna on 23/8/2017. */
+ * Created by Arianna on 23/8/2017.
 
 @Entity
 @Table(name = "reservation", schema = "mydb")
-public class ReservationEntity {
-    private String renterUsersUsername;
-    private int apartmentId;
-    private String apartmentOwner;
+public class ReservationEntity implements Serializable{
+   // private String renterUsersUsername;
     private Date startdate;
     private Date finaldate;
     private double totalCost;
-    private byte approval;
-    private RenterEntity renterByRenterUsersUsername;
-    private ApartmentEntity apartment;
+    private int approval;
 
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(name = "reservation_id", nullable = false)
+    private Integer reservation_id;
+    public Integer getReservation_id() {
+        return reservation_id;
+    }
+
+    public void setReservation_id(Integer reservation_id) {
+        this.reservation_id = reservation_id;
+    }
+   /* @ManyToOne
     @Column(name = "renter_users_username")
     public String getRenterUsersUsername() {
         return renterUsersUsername;
@@ -29,23 +37,16 @@ public class ReservationEntity {
         this.renterUsersUsername = renterUsersUsername;
     }
 
-    @Id
-    @Column(name = "apartment_id")
-    public int getApartmentId() {
-        return apartmentId;
-    }
 
-    public void setApartmentId(int apartmentId) {
-        this.apartmentId = apartmentId;
-    }
 
-    @Id
-    @Column(name = "apartment_owner")
-    public String getApartmentOwner() {
+    @ManyToOne
+    @JoinColumn(name = "apartment_owner", referencedColumnName = "owner")
+    private OwnerEntity apartmentOwner;
+    public OwnerEntity getApartmentOwner() {
         return apartmentOwner;
     }
 
-    public void setApartmentOwner(String apartmentOwner) {
+    public void setApartmentOwner(OwnerEntity apartmentOwner) {
         this.apartmentOwner = apartmentOwner;
     }
 
@@ -81,7 +82,7 @@ public class ReservationEntity {
 
     @Basic
     @Column(name = "approval")
-    public byte getApproval() {
+    public int getApproval() {
         return approval;
     }
 
@@ -96,11 +97,10 @@ public class ReservationEntity {
 
         ReservationEntity that = (ReservationEntity) o;
 
-        if (apartmentId != that.apartmentId) return false;
         if (Double.compare(that.totalCost, totalCost) != 0) return false;
         if (approval != that.approval) return false;
-        if (renterUsersUsername != null ? !renterUsersUsername.equals(that.renterUsersUsername) : that.renterUsersUsername != null)
-            return false;
+//        if (renterUsersUsername != null ? !renterUsersUsername.equals(that.renterUsersUsername) : that.renterUsersUsername != null)
+//            return false;
         if (apartmentOwner != null ? !apartmentOwner.equals(that.apartmentOwner) : that.apartmentOwner != null)
             return false;
         if (startdate != null ? !startdate.equals(that.startdate) : that.startdate != null) return false;
@@ -109,23 +109,12 @@ public class ReservationEntity {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = renterUsersUsername != null ? renterUsersUsername.hashCode() : 0;
-        result = 31 * result + apartmentId;
-        result = 31 * result + (apartmentOwner != null ? apartmentOwner.hashCode() : 0);
-        result = 31 * result + (startdate != null ? startdate.hashCode() : 0);
-        result = 31 * result + (finaldate != null ? finaldate.hashCode() : 0);
-        temp = Double.doubleToLongBits(totalCost);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (int) approval;
-        return result;
-    }
+
 
     @ManyToOne
     @JoinColumn(name = "renter_users_username", referencedColumnName = "users_username")
+    private RenterEntity renterByRenterUsersUsername;
+
     public RenterEntity getRenterByRenterUsersUsername() {
         return renterByRenterUsersUsername;
     }
@@ -135,7 +124,9 @@ public class ReservationEntity {
     }
 
     @ManyToOne
-    @JoinColumns({@JoinColumn(name = "apartment_id", referencedColumnName = "id"), @JoinColumn(name = "apartment_owner", referencedColumnName = "owner")})
+    @JoinColumn(name = "apartment_id")
+    private ApartmentEntity apartment;
+
     public ApartmentEntity getApartment() {
         return apartment;
     }
@@ -143,4 +134,19 @@ public class ReservationEntity {
     public void setApartment(ApartmentEntity apartment) {
         this.apartment = apartment;
     }
+
+    @Override
+    public int hashCode() {
+        int result=0;
+        long temp;
+//        result = renterUsersUsername != null ? renterUsersUsername.hashCode() : 0;
+        result = 31 * result + (apartmentOwner != null ? apartmentOwner.hashCode() : 0);
+        result = 31 * result + (startdate != null ? startdate.hashCode() : 0);
+        result = 31 * result + (finaldate != null ? finaldate.hashCode() : 0);
+        temp = Double.doubleToLongBits(totalCost);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) approval;
+        return result;
+    }
 }
+*/

@@ -2,7 +2,7 @@ package airbnb.controller;
 
 import airbnb.authentication.IAuthenticationFacade;
 import airbnb.model.UsersEntity;
-import airbnb.model.ApartmentEntity;
+//import airbnb.model.ApartmentEntity;
 import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,11 +21,8 @@ import javax.validation.Valid;
 @Controller
 public class ApartmentController {
 
-
     @Autowired
     private UsersService userService;
-
-
 
     @Autowired
     private IAuthenticationFacade authenticationFacade;
@@ -44,7 +41,7 @@ public class ApartmentController {
         return modelAndView;
     }
 
-    @RequestMapping(value ="/apartment_reg", method = RequestMethod.POST)
+   /* @RequestMapping(value ="/apartment_reg", method = RequestMethod.POST)
     public ModelAndView createNewApartment(@ModelAttribute("apartment") @Valid ApartmentEntity ap, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/apartment_reg");
@@ -68,8 +65,8 @@ public class ApartmentController {
             redirectAttributes.addFlashAttribute("success","true");
             modelAndView.addObject("uname", user.getUsername());
             modelAndView.setViewName("redirect:/register");
-        }*/
+        }
         redirectAttributes.addFlashAttribute("success","false");
         return modelAndView;
-    }
+    }*/
 }

@@ -2,6 +2,8 @@ package airbnb.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Arianna on 23/8/2017.
@@ -9,13 +11,13 @@ import java.util.Collection;
 @Entity
 @Table(name = "owner", schema = "mydb")
 public class OwnerEntity {
-    private String usersUsername;
+
     private int approval;
-  //  private Collection<ApartmentEntity> apartmentsByUsersUsername;
-    private UsersEntity usersByUsersUsername;
 
     @Id
     @Column(name = "users_username")
+    private String usersUsername;
+
     public String getUsersUsername() {
         return usersUsername;
     }
@@ -55,17 +57,23 @@ public class OwnerEntity {
         return result;
     }
 
-  /*  @OneToMany(mappedBy = "ownerByOwner")
-    public Collection<ApartmentEntity> getApartmentsByUsersUsername() {
-        return apartmentsByUsersUsername;
+    @OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+    @JoinColumn(name="owner")
+    private Set<ApartmentEntity> apartments=new HashSet<>(0);
+
+
+    public Set<ApartmentEntity> getApartments() {
+        return apartments;
     }
 
-    public void setApartmentsByUsersUsername(Collection<ApartmentEntity> apartmentsByUsersUsername) {
-        this.apartmentsByUsersUsername = apartmentsByUsersUsername;
-    }*/
+    public void setApartments(Set<ApartmentEntity> apartments) {
+        this.apartments = apartments;
+    }
 
     @OneToOne
     @JoinColumn(name = "users_username", referencedColumnName = "username")
+    private UsersEntity usersByUsersUsername;
+
     public UsersEntity getUsersByUsersUsername() {
         return usersByUsersUsername;
     }
@@ -73,4 +81,5 @@ public class OwnerEntity {
     public void setUsersByUsersUsername(UsersEntity usersByUsersUsername) {
         this.usersByUsersUsername = usersByUsersUsername;
     }
+
 }
