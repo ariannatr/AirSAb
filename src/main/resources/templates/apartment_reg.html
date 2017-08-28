@@ -45,8 +45,8 @@
                 <label class="divider">Important Info</label>
                 <br>
 
-                <input type="text" name="startdate" id="datepicker" style="width:45%"placeholder="Start Date">
-                <input  type="text" name="finaldate" id="datepicker" style="width:45%"placeholder="Final Date">
+                <input type="text" name="startdate" id="datepicker" style="width:45%" placeholder="Start Date">
+                <input  type="text" name="finaldate" id="datepicker" style="width:45%" placeholder="Final Date">
                 <input name="price" id="price" placeholder="Price /day" min="1" required="required" type="number"/>
                 <input name="capacity" placeholder="Capacity" required="required" type="number" min="1">
                 <input name="minimumres" placeholder="Minimum reservation's days" min="1" required="required" type="number"/>
@@ -99,6 +99,9 @@
 <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
 <script th:src="@{/vendor/popper/popper.min.js}"></script>
 <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
+
 
 <script type="text/javascript">
     jQuery(function(){
