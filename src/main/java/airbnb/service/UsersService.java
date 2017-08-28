@@ -10,17 +10,11 @@ import java.util.List;
 public interface UsersService {
     public UsersEntity findByUsername(String username);
     public OwnerEntity findOwnerByUsername(String username);
-   // public void saveUser(UsersEntity user, ParentEntity parent,String photopath);
+
    public void saveUser(UsersEntity user);
    // public void saveUserProvider(UserEntity user, ProviderEntity provider);
  //  public void saveUserOwner(UsersEntity user, OwnerEntity owner);
     public UsersEntity findByUsernamePassword(String username, String Password);
-    //public List<UsersEntity> findUsers();
-  //  public List<RenterEntity> getRenters();
-    //public List<OwnerEntity> getOwners();
-
-   // public  RenterEntity findRenter(RenterPK renterPk);
-   // public OwnerEntity findProvider(OwnerPK ownerPk);
 
     public void updateUser(UsersEntity useron,UsersEntity user);
     public Page<UsersEntity> findAllPageable(Pageable pageable);

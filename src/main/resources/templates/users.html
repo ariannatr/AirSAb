@@ -13,23 +13,9 @@
 
     <!-- Custom styles for this template -->
     <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all"/>
+    <link th:href="@{css/users.css}" rel="stylesheet" type="text/css" media="all">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-   <script type="text/javascript">
-   $(document).ready(function(){
-    if(window.location.hash) {
-      var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
-      // hash found
-      document.getElementById(hash).style.display = 'block';
-    }
-    else 
-    {
-        document.getElementById("allusers").style.display = 'block';
-    }
-
-    
-    });
-    </script>
 
 </head>
 
@@ -51,13 +37,13 @@
                     <a class="nav-link" th:href="@{/admin}">Home </a>
                 </li>
                 <li class="nav-item active dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown"  href="" role="button" aria-haspopup="true" aria-expanded="false">Users</a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown"  role="button" href="" aria-haspopup="true" aria-expanded="false">Users</a>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" th:href="@{/owners}" onclick="location.reload()">Owners</a>
-                      <a class="dropdown-item" th:href="@{/renters}" onclick="location.reload()">Renters</a>
-                      <a class="dropdown-item" th:href="@{/accept}">Requests</a>
+                      <a class="dropdown-item " th:href="@{/owners}">Owners</a>
+                      <a class="dropdown-item " th:href="@{/renters}">Renters</a>
+                      <a class="dropdown-item " th:href="@{/accept}">Requests</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" th:href="@{/users}" onclick="location.reload()">All</a>
+                      <a class="dropdown-item " th:href="@{/users}">All</a>
                     </div>
                 </li>
                 
@@ -65,119 +51,67 @@
         </div>
     </nav>
 
-    <header class="masthead" style="opacity:0.5;">
+    <header class="masthead">
         <div class="overlay" >
-                <div id="rentersView"  class="well" style="display:none;">
 
-                    <!--/*Table with info about each renter user*/-->
-                    <table class="table table-condensed">
-                        <thead>
-                            <tr>
-                                <th>Username</th>
-                                <th>Name</th>
-                                <th>Surname</th>
-                                <th>E-Mail</th>
-                                <th>Telephone</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="renter,iterStat : ${renterList}">
-                                <td th:text="${renter.pk.user.username}">Username</td>
-                                <td th:text="${renter.name}">Name</td>
-                                <td th:text="${renter.surname}">Surname</td>
-                                <td th:text="${renter.email}">E-Mail</td>
-                                <td th:text="${renter.telephone}">Telephone</td>
-                            </tr>
-                        </tbody>
-                    </table>
-        
-                </div>
-
-                <div id="ownersView"  class="well" style="display:none;">
-
-                    <!--/*Table with info about each owner user*/-->
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Username</th>
-                                <th>Name</th>
-                                <th>Surname</th>
-                                <th>E-Mail</th>
-                                <th>Telephone</th>
-                                <th style="width: 36px;"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="renter,iterStat : ${ownerList}">
-                                <td th:text="${owner.pk.user.username}">Username</td>
-                                <td th:text="${owner.name}">Name</td>
-                                <td th:text="${owner.surname}">Surname</td>
-                                <td th:text="${owner.email}">E-Mail</td>
-                                <td th:text="${owner.telephone}">Telephone</td>
-                                <td><button class="btn"> OK</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-        
-                </div>
                 <div th:if="${(requests == null)}">
-                    <div id="allusers"  class="well" style="display:none;">
+                    <div id="allusers"  class="well" style="display:block;">
 
                         <!--/*Table with info about each user*/-->
-                        <div id="initialtext">
-                            <p class="table-title"> Users <span th:text="${uname}"></span> Info</p>
+                        <div id="initialtextt">
+                            <p class="table-title"> Users Info</p>
                             <p class="table-subtitle"> Below you can see the info of all users registered.<p>
-                            <div  style="background-color:#e6eaf2; opacity:0.8; width:50%; margin:0 auto;">
-                                <table class="table table-condensed">
+                            <div  style="background-color:#e6eaf2; opacity:0.8; width:70%; margin:0 auto;">
+                                <table >
                                     <thead>
                                     <tr>
                                         <th>Username</th>
                                         <th>Name</th>
                                         <th>Surname</th>
                                         <th>E-Mail</th>
-
+                                        <th>Telephone</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="user : ${items}">
-                                        <td th:text="${user.username}">Username</td>
-                                        <td th:text="${user.name}">Name</td>
-                                        <td th:text="${user.surname}">Surname</td>
-                                        <td th:text="${user.email}">E-Mail</td>
+                                        <td><span th:text="${user.username}">U</span></td>
+                                        <td> <span th:text="${user.name}">N</span></td>
+                                        <td ><span th:text="${user.surname}">S</span></td>
+                                        <td><span th:text="${user.email}">E</span></td>
+                                        <td><span th:text="${user.telephone}">T</span></td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <br>
                         </div>
-                        <div th:replace="fragments/paginationbar :: paginationbar"></div>
+                        <!--div th:replace="fragments/paginationbar :: paginationbar"></div-->
 
                     </div>
                 </div>
                 <div th:if="${(requests != null) and (requests == 'true')}">
                     <div th:if="${(items==null)}">
-                        <div class="alert alert-success" style="text-align: center;"> There are no owners' requests </span>! <br>  </div>
+                        <div class="alert alert-success" style="text-align: center;"> There are no owners' requests ! <br>  </div>
                     </div>
                     <div th:if="${(items!=null)}">
-                        <div id="allusers"  class="well" style="display:none;">
+                        <div id="request"  class="well" >
 
-                            <!--/*Table with info about each user*/-->
-                            <div id="initialtext">
-                                <p class="table-title"> Users <span th:text="${uname}"></span> Info</p>
-                                <p class="table-subtitle"> Below you can see all the Owners' requests.<p>
+                            <!--/*Table with info approvals*/-->
+                            <div >
+                                <p class="table-title"> Owners' Requests</p>
                                 <div  style="background-color:#e6eaf2; opacity:0.8; width:50%; margin:0 auto;">
                                     <table class="table table-condensed">
                                         <thead>
                                         <tr>
                                             <th>Username</th>
-                                            <th style="width: 36px;"></th>
+                                            <th style="width: 30px;"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr th:each="user : ${items}">
                                             <form method="POST" th:action="@{/accept/{userID}(userID=${user.usersUsername})}">
                                                 <td th:text="${user.usersUsername}">Username</td>
-                                                <td><button class="btn btn-warning" type="submit">Approve</button></td>
+                                                <td><button class="btn btn-info" type="submit">Approve</button></td>
                                             </form>
                                         </tr>
                                         </tbody>
@@ -185,7 +119,7 @@
                                 </div>
                                 <br>
                             </div>
-                            <div th:replace="fragments/paginationbar :: paginationbar"></div>
+                            <!--div th:replace="fragments/paginationbar :: paginationbar"></div-->
                         </div>
                     </div>
                 </div>
