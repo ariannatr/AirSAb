@@ -15,7 +15,7 @@
 
     <!-- Custom styles for this template -->
     <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
-    <link th:href="@{css/register.css}" rel="stylesheet" type="text/css" media="all">
+    <link th:href="@{css/apartment_reg.css}" rel="stylesheet" type="text/css" media="all">
 
 
 
@@ -33,212 +33,60 @@
             <div th:if ="${(success != null) and (success == 'true')}">
                 <div class="alert alert-success" style="text-align: center;"> Your registration has been succesfully completed! <br>  <a  th:href="@{/index}">Back to homepage .</a></div>
             </div >
-            <form class="well form-horizontal"  method="POST"  th:action="@{/apartment}">
-
-                <!--<fieldset>-->
+            <form class="register"  method="POST"  th:action="@{/apartment}">
 
 
-                    <!--Activity Name-->
-                    <div class="form-group">
-                        <label >Apartment Name</label>
-                        <!--<div class="col-md-4 inputGroupContainer">-->
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                                <input  name="name" required="required" placeholder="Apartment Name" class="form-control"   maxlength="99" type="text">
-                            </div>
-                        <!--</div>-->
-                    </div>
-                    <br/>
+                <input  name="name" id="name" required="required" placeholder="Name"   type="text"/>
+                <input  name="description" id="description" required="required" placeholder="Description" maxlength="300" type="textarea"/>
+                <input  name="country" id="country" required="required" placeholder="Country" style="width:30%" type="text"/>
+                <input  name="town" id="town" required="required" placeholder="Town" style="width:30%" type="text"/>
+                <input  name="area" id="area" required="required" placeholder="Area" style="width:30%"  type="text"/>
+                <br>
+                <label class="divider">Important Info</label>
+                <br>
 
-                    <!--Activity Description-->
-                    <div class="form-group">
-                        <label  >Apartment Description </label>
-                        <!--<div class="col-md-4 inputGroupContainer">-->
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
-                                <textarea rows="6" name="description" required="required" placeholder="Description"  maxlength="300"class="form-control" ></textarea>
-                            </div>
-                        <!--</div>-->
-                    </div>
-                    <br/>
-
-
-                    <div class="form-group">
-                        <label  >Price per Day</label>
-                        <!--<div class="col-md-4 inputGroupContainer">-->
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
-                                <input name="price" placeholder="Price /day" min="1" class="form-control" required="required" type="number">
-                            </div>
-                        <!--</div>-->
-                    </div>
-                    <br/>
-
-                    <div class="form-group">
-                        <label >Maximum Number of people</label>
-                        <!--<div class="col-md-4 inputGroupContainer">-->
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                <input name="capacity" placeholder="Number of People" class="form-control" required="required" type="number" min="1">
-                            </div>
-                        <!--</div>-->
-                    </div>
-                    <br/>
-
-                    <div class="form-group">
-                        <label  >Start Date </label>
-                        <!--<div class="col-md-4 inputGroupContainer">-->
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                <input id="datepicker" name="startdate" placeholder="Start Date" class="form-control" required="required"type="text">
-                            </div>
-                        <!--</div>-->
-                    </div>
-
-                    <div class="form-group">
-                        <label  >Final Date</label>
-                        <!--<div class="col-md-4 inputGroupContainer">-->
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                <input id="datepicker" name="finaldate" placeholder="Final Date" class="form-control" required="required"type="text">
-                            </div>
-                        <!--</div>-->
-                    </div>
-                    <br/>
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label >Town</label>
-                        <!--<div class="col-md-4 selectContainer">-->
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                                <select name="town" class="form-control selectpicker" >
-                                    <option value=" " >Please,choose your Town</option>
-                                    <option>Αθήνα</option>
-                                    <option>Aιγάλεω</option>
-                                    <option >Άνω Λιόσια</option>
-                                    <option >Κηφισσιά</option>
-                                    <option> Χαλάνδρι</option>
-                                    <option>Καισιαριανή</option>
-                                    <option> Νέα Ιωνία</option>
-                                    <option> Ελληνικό</option>
-                                    <option> Γλυφάδα </option>
-                                    <option >Βούλα</option>
-                                    <option> Καλλιθεά</option>
-                                    <option> Πειραιάς</option>
-                                    <option> Περιστέρι</option>
-                                    <option >Γέρακας</option>
-                                    <option >Connecticut</option>
-                                    <option >Delaware</option>
-                                </select>
-                            </div>
-                        <!--</div>-->
-                    </div>
-                    <br/>
-
-                    <div class="form-group">
-                        <label >Country</label>
-                        <!--<div class="col-md-4 selectContainer">-->
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                                <select name="country" class="form-control selectpicker" >
-                                    <option value=" " >Please,choose your Country</option>
-                                    <option>Αθήνα</option>
-                                    <option>Aιγάλεω</option>
-                                    <option >Άνω Λιόσια</option>
-                                    <option >Κηφισσιά</option>
-                                    <option> Χαλάνδρι</option>
-                                    <option>Καισιαριανή</option>
-                                    <option> Νέα Ιωνία</option>
-                                    <option> Ελληνικό</option>
-                                    <option> Γλυφάδα </option>
-                                    <option >Βούλα</option>
-                                    <option> Καλλιθεά</option>
-                                    <option> Πειραιάς</option>
-                                    <option> Περιστέρι</option>
-                                    <option >Γέρακας</option>
-                                    <option >Connecticut</option>
-                                    <option >Delaware</option>
-                                </select>
-                            </div>
-                        <!--</div>-->
-                    </div>
-                    <br/>
-
-                    <!-- Select Basic -->
+                <input type="text" name="startdate" id="datepicker" style="width:45%"placeholder="Start Date">
+                <input  type="text" name="finaldate" id="datepicker" style="width:45%"placeholder="Final Date">
+                <input name="price" id="price" placeholder="Price /day" min="1" required="required" type="number"/>
+                <input name="capacity" placeholder="Capacity" required="required" type="number" min="1">
+                <input name="minimumres" placeholder="Minimum reservation's days" min="1" required="required" type="number"/>
+                <select required name="type" class="mine" >
+                    <option selected disabled>Choose type</option>
+                    <option value="0">Type 1</option>
+                    <option value="1">Type 2</option>
+                    <option value="2">Type 3</option>
+                    <option value="3">Type 4</option>
+                </select>
+                <br>
+                <label class="divider">Features</label>
+                <br>
+                <input type="number" name="floor"  id="floor" placeholder="Floor"/>
+                <input type="number" name="spacearea"  id="spacearea" placeholder="Space area" min="1"/>
+                <input type="number" name="baths"  id="baths" placeholder="Number of bathrooms" min="1"/>
+                <br>
 
 
-                    <div class="form-group">
-                        <label >Area</label>
-                        <!--<div class="col-md-4 inputGroupContainer">-->
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
-                                <input name="area" placeholder="Area" class="form-control" required="required" type="text">
-                            </div>
-                        <!--</div>-->
-                    </div>
-                    <br/>
+                <label class="btn btn-sm"> Parking <input type="checkbox" name="parking" value="1" > </label>
+                <label class="btn btn-sm"> Air Condition <input type="checkbox" name="ac" value="1"/></label>
+                <label class="btn btn-sm"> Internet <input type="checkbox" name="internet" value="1" > </label>
+                <label class="btn btn-sm"> Elevator <input type="checkbox" name="elevator" value="1" > </label>
+                <label class="btn btn-sm"> TV <input type="checkbox" name="tv" value="1" > </label>
+                <label class="btn btn-sm"> Kitchen <input type="checkbox" name="kitchen" value="1" > </label>
+                <label class="btn btn-sm"> Living Room <input type="checkbox" name="livingroom" value="1" > </label>
+                <label class="btn btn-sm"> Centarl Heating <input type="checkbox" name="heating" value="1" > </label>
+                <label class="btn btn-sm"> Pets Allowed <input type="checkbox" name="pets" value="1" > </label>
+                <label class="btn btn-sm"> Smoking Allowed <input type="checkbox" name="smoking" value="1" > </label>
+                <label class="btn btn-sm"> For Events <input type="checkbox" name="events" value="1" > </label>
 
-                    <div class="form-group">
-                        <label >Address Street</label>
-                        <!--<div class="col-md-4 inputGroupContainer">-->
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
-                                <input name="address" placeholder="Address Street" class="form-control" required="required" >
-                            </div>
-                        <!--</div>-->
-                    </div>
-                    <br/>
+                <br/>
 
-                    <!-- Text input-->
 
-                    <div class="form-group">
-                        <label >Street Number</label>
-                        <!--<div class="col-md-4 inputGroupContainer">-->
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                <input name="number" placeholder="Street Number" class="form-control" required="required" min=1 type="text">
-                            </div>
-                        <!--</div>-->
-                    </div>
-                    <br/>
+                <div class="form-group" align="center">
+                    <label  class="photo_upload" >Photos of the apartment </label>
+                    <input id="fileInput" type="file" name="uploadingFiles"  multiple>
+                </div>
 
-                    <!-- Text input-->
-
-                    <div class="form-group">
-                        <label >Postcode</label>
-                        <!--<div class="col-md-4 inputGroupContainer">-->
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                <input name="postcode" placeholder="Postcode,ex. 16451" maxlength="5" size="5"class="form-control" required="required" type="number">
-                            </div>
-                        <!--</div>-->
-                    </div>
-                    <br/>
-
-                    <!-- Select Basic -->
-
-                    <div class="form-group">
-                        <label>Type of apartment</label>
-                        <!--<div class="col-md-4 selectContainer">-->
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                                <select name="type" class="form-control selectpicker" >
-                                    <option value="0">Type 1</option>
-                                    <option value="1">Type 2</option>
-                                    <option value="2">Type 3</option>
-                                    <option value="3">Type 4</option>
-                                </select>
-                            </div>
-                        <!--</div>-->
-                    </div>
-                    <br/>
-
-                    <div class="form-group" align="center">
-                        <label  class="photo_upload" >Photos of the apartment </label>
-                        <input id="fileInput" type="file" name="uploadingFiles"  multiple>
-                    </div>
-                <!--</fieldset>-->
-                <input type="submit" value="register" class="btn  btn-sm" onclick="complete()"/>
+                <input type="submit" value="Submit" class="btn  btn-sm" />
             </form>
 
         </div>
@@ -252,28 +100,6 @@
 <script th:src="@{/vendor/popper/popper.min.js}"></script>
 <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
 
-<script type="text/javascript">
-    var typ=0;
-    function validate(){
-        var remember = document.getElementById('ownertype');
-        if(remember.checked)
-            typ=typ+1 ;
-        else
-            typ=typ-1;
-    }
-    function validate2(){
-        var remember2 = document.getElementById('rentertype');
-        if(remember2.checked)
-            typ=typ+2 ;
-        else
-            typ=typ-2;
-    }
-
-    function complete(){
-        document.getElementById('type').value=typ;
-    }
-
-</script>
 <script type="text/javascript">
     jQuery(function(){
         jQuery($(":input[id^='datepicker']")).datepicker({
