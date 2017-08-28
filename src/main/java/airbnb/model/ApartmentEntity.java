@@ -1,4 +1,4 @@
-/*package airbnb.model;
+package airbnb.model;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -6,10 +6,10 @@ import java.util.Collection;
 
 /**
  * Created by Arianna on 23/8/2017.
+ */
 
 @Entity
 @Table(name = "apartment", schema = "mydb")
-@IdClass(ApartmentEntityPK.class)
 public class ApartmentEntity {
     private int id;
     private String description;
@@ -24,22 +24,22 @@ public class ApartmentEntity {
     private int type;
     private int capacity;
     private String photo;
-    private byte parking;
-    private byte internet;
-    private byte ac;
-    private byte elevator;
-    private byte tv;
-    private byte kitchen;
-    private byte heating;
+    private int parking;
+    private int internet;
+    private int ac;
+    private int elevator;
+    private int tv;
+    private int kitchen;
+    private int heating;
     private int spaceArea;
-    private String owner;
     private int minimumres;
-    private byte pets;
-    private byte smoking;
+    private int pets;
+    private int smoking;
     private int baths;
-    private byte livingroom;
+    private int livingroom;
     private String photos;
-    private byte events;
+    private int events;
+    private  String owner;
     private OwnerEntity ownerByOwner;
     private Collection<ReservationEntity> reservations;
 
@@ -175,71 +175,71 @@ public class ApartmentEntity {
 
     @Basic
     @Column(name = "parking")
-    public byte getParking() {
+    public int getParking() {
         return parking;
     }
 
-    public void setParking(byte parking) {
+    public void setParking(int parking) {
         this.parking = parking;
     }
 
     @Basic
     @Column(name = "internet")
-    public byte getInternet() {
+    public int getInternet() {
         return internet;
     }
 
-    public void setInternet(byte internet) {
+    public void setInternet(int internet) {
         this.internet = internet;
     }
 
     @Basic
     @Column(name = "ac")
-    public byte getAc() {
+    public int getAc() {
         return ac;
     }
 
-    public void setAc(byte ac) {
+    public void setAc(int ac) {
         this.ac = ac;
     }
 
     @Basic
     @Column(name = "elevator")
-    public byte getElevator() {
+    public int getElevator() {
         return elevator;
     }
 
-    public void setElevator(byte elevator) {
+    public void setElevator(int elevator) {
         this.elevator = elevator;
     }
 
     @Basic
     @Column(name = "tv")
-    public byte getTv() {
+    public int getTv() {
         return tv;
     }
 
-    public void setTv(byte tv) {
+    public void setTv(int tv) {
         this.tv = tv;
     }
 
     @Basic
     @Column(name = "kitchen")
-    public byte getKitchen() {
+    public int getKitchen() {
         return kitchen;
     }
 
-    public void setKitchen(byte kitchen) {
+    public void setKitchen(int kitchen) {
         this.kitchen = kitchen;
     }
 
     @Basic
     @Column(name = "heating")
-    public byte getHeating() {
+    public int getHeating() {
         return heating;
     }
 
-    public void setHeating(byte heating) {
+    public void setHeating(int heating) {
         this.heating = heating;
     }
 
@@ -275,21 +275,21 @@ public class ApartmentEntity {
 
     @Basic
     @Column(name = "pets")
-    public byte getPets() {
+    public int getPets() {
         return pets;
     }
 
-    public void setPets(byte pets) {
+    public void setPets(int pets) {
         this.pets = pets;
     }
 
     @Basic
     @Column(name = "smoking")
-    public byte getSmoking() {
+    public int getSmoking() {
         return smoking;
     }
 
-    public void setSmoking(byte smoking) {
+    public void setSmoking(int smoking) {
         this.smoking = smoking;
     }
 
@@ -305,11 +305,11 @@ public class ApartmentEntity {
 
     @Basic
     @Column(name = "livingroom")
-    public byte getLivingroom() {
+    public int getLivingroom() {
         return livingroom;
     }
 
-    public void setLivingroom(byte livingroom) {
+    public void setLivingroom(int livingroom) {
         this.livingroom = livingroom;
     }
 
@@ -325,11 +325,11 @@ public class ApartmentEntity {
 
     @Basic
     @Column(name = "events")
-    public byte getEvents() {
+    public int getEvents() {
         return events;
     }
 
-    public void setEvents(byte events) {
+    public void setEvents(int events) {
         this.events = events;
     }
 
@@ -428,5 +428,6 @@ public class ApartmentEntity {
     public void setReservations(Collection<ReservationEntity> reservations) {
         this.reservations = reservations;
     }
+
+
 }
-*/

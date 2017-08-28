@@ -1,14 +1,13 @@
-/*package airbnb.model;
+package airbnb.model;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * Created by Arianna on 23/8/2017.
+ * Created by Arianna on 23/8/2017. */
 
 @Entity
 @Table(name = "reservation", schema = "mydb")
-@IdClass(ReservationEntityPK.class)
 public class ReservationEntity {
     private String renterUsersUsername;
     private int apartmentId;
@@ -145,4 +144,3 @@ public class ReservationEntity {
         this.apartment = apartment;
     }
 }
-*/

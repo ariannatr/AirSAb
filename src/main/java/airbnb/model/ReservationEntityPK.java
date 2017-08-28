@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * Created by Arianna on 23/8/2017.
- */
+
 public class ReservationEntityPK implements Serializable {
     private String renterUsersUsername;
     private int apartmentId;
@@ -66,3 +66,4 @@ public class ReservationEntityPK implements Serializable {
         return result;
     }
 }
+*/
