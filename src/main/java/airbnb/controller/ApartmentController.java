@@ -1,6 +1,7 @@
 package airbnb.controller;
 
 import airbnb.authentication.IAuthenticationFacade;
+import airbnb.model.ApartmentEntity;
 import airbnb.model.UsersEntity;
 //import airbnb.model.ApartmentEntity;
 import airbnb.service.UsersService;
@@ -41,32 +42,31 @@ public class ApartmentController {
         return modelAndView;
     }
 
-   /* @RequestMapping(value ="/apartment_reg", method = RequestMethod.POST)
+    @RequestMapping(value ="/apartment_reg", method = RequestMethod.POST)
     public ModelAndView createNewApartment(@ModelAttribute("apartment") @Valid ApartmentEntity ap, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/apartment_reg");
         Authentication authentication = authenticationFacade.getAuthentication();
      //   ApartmentEntity app=apartmentService.findByUsername(authentication.getName());
-        /*System.out.print("tha apothikeusouem ton xristi "+ap.getUsername());
-        UsersEntity userExists = userService.findByUsername(ap.getUsername());
-        if (userExists != null) {
-            System.out.println("this user already exists");
-            redirectAttributes.addFlashAttribute("success","false");
-            modelAndView.setViewName("redirect:/register");
-        }
-        else
-        {
-
-
-            System.out.println("apothikeuw ton xristi me username "+user.getUsername()+" kai type "+user.getType());
-
-            userService.saveUser(user);
-
-            redirectAttributes.addFlashAttribute("success","true");
-            modelAndView.addObject("uname", user.getUsername());
-            modelAndView.setViewName("redirect:/register");
-        }
+//       UsersEntity userExists = userService.findByUsername(ap.getUsername());
+//        if (userExists != null) {
+//            System.out.println("this user already exists");
+//            redirectAttributes.addFlashAttribute("success","false");
+//            modelAndView.setViewName("redirect:/register");
+//        }
+//        else
+//        {
+//
+//
+//            System.out.println("apothikeuw ton xristi me username "+user.getUsername()+" kai type "+user.getType());
+//
+//            userService.saveUser(user);
+//
+//            redirectAttributes.addFlashAttribute("success","true");
+//            modelAndView.addObject("uname", user.getUsername());
+//            modelAndView.setViewName("redirect:/register");
+//        }
         redirectAttributes.addFlashAttribute("success","false");
         return modelAndView;
-    }*/
+    }
 }

@@ -21,8 +21,8 @@ public class ApartmentEntity implements Serializable{
     private String town;
     private String area;
     private double price;
-    private Date startdate;
-    private Date finaldate;
+    private String startdate;
+    private String finaldate;
     private int floor;
     private int type;
     private int capacity;
@@ -116,21 +116,21 @@ public class ApartmentEntity implements Serializable{
 
     @Basic
     @Column(name = "startdate")
-    public Date getStartdate() {
+    public String getStartdate() {
         return startdate;
     }
 
-    public void setStartdate(Date startdate) {
+    public void setStartdate(String startdate) {
         this.startdate = startdate;
     }
 
     @Basic
     @Column(name = "finaldate")
-    public Date getFinaldate() {
+    public String getFinaldate() {
         return finaldate;
     }
 
-    public void setFinaldate(Date finaldate) {
+    public void setFinaldate(String finaldate) {
         this.finaldate = finaldate;
     }
 

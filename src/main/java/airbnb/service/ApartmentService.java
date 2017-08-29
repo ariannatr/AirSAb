@@ -1,4 +1,4 @@
-/*package airbnb.service;
+package airbnb.service;
 
 import airbnb.model.ApartmentEntity;
 import org.springframework.data.domain.Page;
@@ -10,4 +10,4 @@ import org.springframework.stereotype.Service;
 public interface ApartmentService {
     public ApartmentEntity findById(Integer id);
 
-}*/
+}
