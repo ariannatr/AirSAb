@@ -2,8 +2,10 @@ package airbnb.controller;
 
 import airbnb.authentication.IAuthenticationFacade;
 import airbnb.model.ApartmentEntity;
+import airbnb.model.OwnerEntity;
 import airbnb.model.UsersEntity;
 //import airbnb.model.ApartmentEntity;
+import airbnb.service.ApartmentService;
 import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,6 +28,9 @@ public class ApartmentController {
     private UsersService userService;
 
     @Autowired
+    private ApartmentService apartmentService;
+
+    @Autowired
     private IAuthenticationFacade authenticationFacade;
 
 
@@ -45,10 +50,11 @@ public class ApartmentController {
     @RequestMapping(value ="/apartment_reg", method = RequestMethod.POST)
     public ModelAndView createNewApartment(@ModelAttribute("apartment") @Valid ApartmentEntity ap, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/apartment_reg");
+
         Authentication authentication = authenticationFacade.getAuthentication();
+
      //   ApartmentEntity app=apartmentService.findByUsername(authentication.getName());
-//       UsersEntity userExists = userService.findByUsername(ap.getUsername());
+       OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
 //        if (userExists != null) {
 //            System.out.println("this user already exists");
 //            redirectAttributes.addFlashAttribute("success","false");
@@ -60,12 +66,13 @@ public class ApartmentController {
 //
 //            System.out.println("apothikeuw ton xristi me username "+user.getUsername()+" kai type "+user.getType());
 //
-//            userService.saveUser(user);
+           apartmentService.saveApartment(ap,owner);
 //
-//            redirectAttributes.addFlashAttribute("success","true");
+            redirectAttributes.addFlashAttribute("success","true");
 //            modelAndView.addObject("uname", user.getUsername());
 //            modelAndView.setViewName("redirect:/register");
 //        }
+        modelAndView.setViewName("redirect:/apartment_reg");
         redirectAttributes.addFlashAttribute("success","false");
         return modelAndView;
     }

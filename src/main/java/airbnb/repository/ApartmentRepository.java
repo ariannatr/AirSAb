@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 */
 
 @Repository("apartmentRepository")
-public interface ApartmentRepository extends PagingAndSortingRepository<ApartmentEntity,String> {
-   // ApartmentEntity findByUsername(String username);
+public interface ApartmentRepository extends PagingAndSortingRepository<ApartmentEntity,Integer> {
+    ApartmentEntity findById(Integer id);
 }
 
