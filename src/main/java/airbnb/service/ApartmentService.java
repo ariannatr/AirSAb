@@ -13,4 +13,5 @@ import java.security.acl.Owner;
 public interface ApartmentService {
     public ApartmentEntity findById(Integer id);
     public  void saveApartment(ApartmentEntity apartmentEntity, OwnerEntity ownerEntity);
+    public Page<ApartmentEntity> findOwnersAparts(OwnerEntity ownerEntity,Pageable pageable);
 }

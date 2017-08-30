@@ -1,5 +1,6 @@
 package airbnb.repository;
 
+import airbnb.model.ApartmentEntity;
 import airbnb.model.OwnerEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

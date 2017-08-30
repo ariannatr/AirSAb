@@ -5,6 +5,8 @@ import airbnb.model.OwnerEntity;
 import airbnb.repository.ApartmentRepository;
 import airbnb.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -36,6 +38,11 @@ public class ApartmentServiceImpl implements ApartmentService {
         Set<ApartmentEntity> apartmentEntitySet=ownerEntity.getApartments();
         apartmentEntitySet.add(apartmentEntity);
         ownerRepository.save(ownerEntity);
+    }
+
+    @Override
+    public Page<ApartmentEntity> findOwnersAparts(OwnerEntity ownerEntity, Pageable pageable){
+        return apartmentRepository.findAllByOwner(ownerEntity,pageable);
     }
 
 }

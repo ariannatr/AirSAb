@@ -2,6 +2,8 @@ package airbnb.repository;
 
 import airbnb.model.ApartmentEntity;
 import airbnb.model.OwnerEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository("apartmentRepository")
 public interface ApartmentRepository extends PagingAndSortingRepository<ApartmentEntity,Integer> {
     ApartmentEntity findById(Integer id);
+    Page<ApartmentEntity> findAllByOwner(OwnerEntity owner, Pageable pageable);
 }
 
