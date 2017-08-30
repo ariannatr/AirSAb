@@ -89,8 +89,8 @@ public class ApartmentController {
     }
 
 
-    @RequestMapping(value={"/apartment/{apartmentID}"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
-    public ModelAndView apartment_prof( @PathVariable("apartmentID") String apartmentID){
+    @RequestMapping(value="/apartment/{apartmentID}", method = RequestMethod.GET/*, produces= "application/javascript"*/)
+    public ModelAndView apartment_prof( @PathVariable("apartmentID") int apartmentID){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/apartment");
         Authentication authentication = authenticationFacade.getAuthentication();
@@ -101,7 +101,7 @@ public class ApartmentController {
             modelAndView.addObject("type", String.valueOf(user_type));
             /*Set<ApartmentEntity> aps=owner.getApartments();
             ApartmentEntity ap1=aps.iterator().next();*/
-            ApartmentEntity ap1=apartmentService.findById(Integer.parseInt(apartmentID));
+            ApartmentEntity ap1=apartmentService.findById(apartmentID);
             modelAndView.addObject("ap",ap1);
             modelAndView.addObject("ap_type",apartmentService.getType(ap1));
             ArrayList<String> features=apartmentService.getFeatures(ap1);
@@ -110,8 +110,8 @@ public class ApartmentController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/apartment_update/{apartmnetID}", method = RequestMethod.POST)
-    public ModelAndView apartment_update(@PathVariable("apartmentID") String apartmentID,@ModelAttribute("apartment") @Valid ApartmentEntity ap,RedirectAttributes redirectAttributes ) {
+    @RequestMapping(value="/apartment_update/{apartmentID}", method = RequestMethod.POST)
+    public ModelAndView apartment_update(@PathVariable("apartmentID") int apartmentID,@ModelAttribute("apartment") @Valid ApartmentEntity ap,RedirectAttributes redirectAttributes ) {
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = authenticationFacade.getAuthentication();
         if (!authentication.getName().equals("anonymousUser")) {
@@ -122,7 +122,7 @@ public class ApartmentController {
             modelAndView.addObject("type", String.valueOf(user_type));
 
           //  Set<ApartmentEntity> aps = owner.getApartments();
-            ApartmentEntity ap_old = apartmentService.findById(Integer.parseInt(apartmentID));
+            ApartmentEntity ap_old = apartmentService.findById(apartmentID);
 
             apartmentService.updateApartment(ap, ap_old);
 
@@ -131,6 +131,7 @@ public class ApartmentController {
             ArrayList<String> features = apartmentService.getFeatures(ap);
             modelAndView.addObject("features", features);
             redirectAttributes.addFlashAttribute("success", "true");
+            System.out.println("eftasa edw");
             modelAndView.setViewName("redirect:/apartment/"+apartmentID);
             return modelAndView;
         } else {
