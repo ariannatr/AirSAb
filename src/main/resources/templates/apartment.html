@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Apartment Profile</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"rel="stylesheet" type="text/css" media="all">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
+    <link th:href="@{/css/apartment_prof.css}" rel="stylesheet" type="text/css" media="all">
+</head>
+<body>
+    <!-- Navigation -->
+    <div th:replace="/fragments/navbar :: navbar('apartments')"></div>
+
+    <header class="masthead">
+        <div class="overlay">
+            <p class="table-title"> <span th:text="${ap.name}"></span></p>
+            <div class="container" style="background-color:#e6eaf2; opacity:0.8; width:90%; margin:0 auto;">
+
+
+                <div id="initialtext">
+                    <div >
+                        <br>
+                        <table >
+                            <tr>
+                                <td colspan="1"> <img th:src="@{/images/no_image.png}" alt="" border=3 height=200 width=200/>    </td>
+                                <td colspan="2"> <span th:text="${ap.country}"></span><br><span th:text="${ap.town}"></span><br><span th:text="${ap.area}"></span></td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="3">   <span th:text="${ap.description}"></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Start Date</strong> <br><span th:text="${ap.startdate}"></span> </td>
+                                <td><strong>Final Date</strong><br> <span th:text="${ap.finaldate}"></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Price per Day</strong><br><span th:text="${ap.price}"></span></td>
+                                <td><strong>Minimum Reservation</strong><br><span th:text="${ap.minimumres}"></span> days</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Type</strong><br><span th:text="${ap_type}"></span></td>
+                                <td><strong> Capacity</strong><br><span th:text="${ap.capacity}"></span >people</td>
+                                <td><strong>Space Area </strong><br><span th:text="${ap.spaceArea}"></span></td>
+                            </tr>
+                            <tr>
+                                <td > <strong> Floor</strong><br><span th:text="${ap.floor}"></span></td>
+                                <td > <strong> Number of bathrooms </strong><br><span th:text="${ap.baths}"></span></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    <br>
+
+                    <table>
+                        <tr>
+                            <td th:each="f : ${features}"><span th:text="${f}"></span></td>
+                        </tr>
+                    </table>
+
+                    </div>
+                    <br>
+                    <div th:if ="${(type == '1') or (type=='3')}">
+                        <button id="changenow" class="btn btn-outline-warning " data-wow-delay="0.5s" onclick="change()">Change</button>
+                        <br>
+                    </div>
+                </div>
+
+
+                <div id="secondarytext" style="display:none;">
+                    <p class="table-subtitle"> Complete the form below to update your apartment's info</p><br>
+                    <div  >
+                        <form  class="update" method="POST"   th:action="@{/apartment_update/{apartmentID}(apartmentID=${ap.id})}">
+                            <table>
+                                <tr>
+                                <td class="mylabel"><strong> Name</strong>   </td>
+                                <td><input  name="name" id="name"  th:placeholder="${ap.name}"  type="text"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="mylabel"> <strong>Description</strong>  </td>
+                                    <td><input  name="description" id="description"  th:placeholder="${ap.description}" maxlength="300" type="textarea"/></td>
+                                </tr>
+                            </table>
+                            <table>
+                                <tr>
+                                    <td style="width: 30%"><strong>Country</strong><br><input  name="country" id="country"  th:placeholder="${ap.country}"  type="text"/></td>
+                                    <td style="width: 30%"><strong>Town</strong><br><input  name="town" id="town"  th:placeholder="${ap.town}"  type="text"/></td>
+                                    <td style="width: 30%"><strong>Area</strong><br><input  name="area" id="area"  th:placeholder="${ap.area}"  type="text"/></td>
+                                </tr>
+                            </table>
+                            <table>
+                                <tr>
+                                    <td><strong>Start Date</strong><br> <input type="text" name="startdate" id="datepicker"  th:placeholder="${ap.startdate}"/></td>
+                                    <td><strong>Final Date</strong><br> <input  type="text" name="finaldate" id="datepicker" th:placeholder="${ap.finaldate}"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Price per day</strong><br> <input name="price" id="price" th:placeholder="${ap.price}" min="1"  type="number"/></td>
+                                    <td><strong>Minimum reservation</strong><br><input name="minimumres" th:placeholder="${ap.minimumres}" min="1"  type="number"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Capacity</strong><br> <input name="capacity" th:placeholder="${ap.capacity}"  type="number" min="1"></td>
+                                    <td><strong>Space Area</strong><br><input type="number" name="spaceArea"  id="spaceArea" th:placeholder="${ap.spaceArea}" min="1"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Floor</strong><br> <input type="number" name="floor"  id="floor" th:placeholder="${ap.floor}"/></td>
+                                    <td><strong>Number of bathrooms</strong><br><input type="number" name="baths"  id="baths" th:placeholder="${ap.baths}" min="0"/></td>
+                                </tr>
+                            </table>
+
+                                <select name="type" class="mine" >
+                                    <option th:if="${(ap.type=='0')?'selected':''}" value="0"> Private Residence</option>
+                                    <option th:if="${(ap.type=='1')?'selected':''}"  value="1"> Public Residence</option>
+                                    <option th:if="${(ap.type=='2')?'selected':''}"  value="2"> Whole Residence</option>
+                                </select>
+                                <br>
+
+
+                                <label class="btn btn-sm"> Parking <input type="checkbox" name="parking" th:checked="${ap.parking} == 1" value="1"> </label>
+                                <label class="btn btn-sm"> Air Condition <input type="checkbox" name="ac" th:checked="${ap.ac} == 1" value="1"/></label>
+                                <label class="btn btn-sm"> Internet <input type="checkbox" name="internet" th:checked="${ap.internet} == 1" value="1"  > </label>
+                                <label class="btn btn-sm"> Elevator <input type="checkbox" name="elevator" th:checked="${ap.elevator} == 1" value="1"  > </label>
+                                <label class="btn btn-sm"> TV <input type="checkbox" name="tv" th:checked="${ap.tv} == 1" value="1"> </label>
+                                <label class="btn btn-sm"> Kitchen <input type="checkbox" name="kitchen" th:checked="${ap.kitchen} == 1" value="1" > </label>
+                                <label class="btn btn-sm"> Living Room <input type="checkbox" name="livingroom" th:checked="${ap.livingroom} == 1" value="1" > </label>
+                                <label class="btn btn-sm"> Central Heating <input type="checkbox" name="heating" th:checked="${ap.heating} == 1" value="1" > </label>
+                                <label class="btn btn-sm"> Pets Allowed <input type="checkbox" name="pets" th:checked="${ap.pets} == 1" value="1"> </label>
+                                <label class="btn btn-sm"> Smoking Allowed <input type="checkbox" name="smoking" th:checked="${ap.smoking} == 1" value="1" > </label>
+                                <label class="btn btn-sm"> For Events <input type="checkbox" name="events" th:checked="${ap.events} == 1" value="1" > </label>
+
+                                <br/>
+                                <br>
+                            <button type="submit" id="change" value="Update" class="btn  btn-outline-warning " >Update</button>
+                            <button id="backnow" class="btn btn-outline-secondary" data-wow-delay="0.5s" onclick="back()">Back</button>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Footer -->
+    <div th:replace="/fragments/footer :: footer"></div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/popper/popper.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
+
+
+    <script type="text/javascript">
+        jQuery(function(){
+            jQuery($(":input[id^='datepicker']")).datepicker({
+                inline: true,
+                showOtherMonths: true
+            });
+        });
+    </script>
+    <script >
+        function change(){
+            $("#initialtext").hide();
+            $("#secondarytext").show();
+        }
+
+        function back(){
+            $("#secondarytext").hide();
+            $("#initialtext").show();
+        }
+    </script>
+
+</body>
+</html>
