@@ -2,6 +2,8 @@ package airbnb.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Arianna on 23/8/2017.
@@ -11,7 +13,7 @@ import java.util.Collection;
 public class RenterEntity {
     private String usersUsername;
     private UsersEntity usersByUsersUsername;
-   // private Collection<ReservationEntity> reservationsByUsersUsername;
+    private Set<ReservationEntity> reservationsByUsersUsername=new HashSet<>(0);
 
     @Id
     @Column(name = "users_username")
@@ -51,12 +53,12 @@ public class RenterEntity {
         this.usersByUsersUsername = usersByUsersUsername;
     }
 
-    /*@OneToMany(mappedBy = "renterByRenterUsersUsername")
-    public Collection<ReservationEntity> getReservationsByUsersUsername() {
+    @OneToMany(mappedBy = "renter")
+    public Set<ReservationEntity> getReservationsByUsersUsername() {
         return reservationsByUsersUsername;
     }
 
-    public void setReservationsByUsersUsername(Collection<ReservationEntity> reservationsByUsersUsername) {
+    public void setReservationsByUsersUsername(Set<ReservationEntity> reservationsByUsersUsername) {
         this.reservationsByUsersUsername = reservationsByUsersUsername;
-    }*/
+    }
 }

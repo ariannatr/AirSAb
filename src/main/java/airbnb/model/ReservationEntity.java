@@ -1,4 +1,4 @@
-/*package airbnb.model;
+package airbnb.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,7 +6,7 @@ import java.sql.Date;
 
 /**
  * Created by Arianna on 23/8/2017.
-
+*/
 @Entity
 @Table(name = "reservation", schema = "mydb")
 public class ReservationEntity implements Serializable{
@@ -27,20 +27,23 @@ public class ReservationEntity implements Serializable{
     public void setReservation_id(Integer reservation_id) {
         this.reservation_id = reservation_id;
     }
-   /* @ManyToOne
-    @Column(name = "renter_users_username")
-    public String getRenterUsersUsername() {
-        return renterUsersUsername;
+
+    @ManyToOne
+    @JoinColumn(name = "renter_users_username", referencedColumnName = "users_username")
+    private RenterEntity renter;
+
+    public RenterEntity getRenter() {
+        return renter;
     }
 
-    public void setRenterUsersUsername(String renterUsersUsername) {
-        this.renterUsersUsername = renterUsersUsername;
+    public void setRenterUsersUsername(RenterEntity renter) {
+        this.renter = renter;
     }
 
 
 
     @ManyToOne
-    @JoinColumn(name = "apartment_owner", referencedColumnName = "owner")
+    @JoinColumn(name = "apartment_owner", referencedColumnName ="users_username")
     private OwnerEntity apartmentOwner;
     public OwnerEntity getApartmentOwner() {
         return apartmentOwner;
@@ -109,20 +112,6 @@ public class ReservationEntity implements Serializable{
         return true;
     }
 
-
-
-    @ManyToOne
-    @JoinColumn(name = "renter_users_username", referencedColumnName = "users_username")
-    private RenterEntity renterByRenterUsersUsername;
-
-    public RenterEntity getRenterByRenterUsersUsername() {
-        return renterByRenterUsersUsername;
-    }
-
-    public void setRenterByRenterUsersUsername(RenterEntity renterByRenterUsersUsername) {
-        this.renterByRenterUsersUsername = renterByRenterUsersUsername;
-    }
-
     @ManyToOne
     @JoinColumn(name = "apartment_id")
     private ApartmentEntity apartment;
@@ -149,4 +138,3 @@ public class ReservationEntity implements Serializable{
         return result;
     }
 }
-*/

@@ -401,7 +401,7 @@ public class ApartmentEntity implements Serializable{
     public void setOwnerByOwner(OwnerEntity owner) {
         this.owner = owner;
     }
-/*
+
     @OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @JoinColumn(name = "reservation_id")
     private Set<ReservationEntity> reservations= new HashSet<>(0);
@@ -413,6 +413,6 @@ public class ApartmentEntity implements Serializable{
     public void setReservations(Set<ReservationEntity> reservations) {
         this.reservations = reservations;
     }
-*/
+
 }
 
