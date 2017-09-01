@@ -124,8 +124,8 @@ public class ApartmentController {
           //  Set<ApartmentEntity> aps = owner.getApartments();
             ApartmentEntity ap_old = apartmentService.findById(apartmentID);
 
-            apartmentService.updateApartment(ap, ap_old);
-
+            apartmentService.updateApartment( ap_old,ap);
+            ap=apartmentService.findById(apartmentID);
             modelAndView.addObject("ap", ap);
             modelAndView.addObject("ap_type", apartmentService.getType(ap));
             ArrayList<String> features = apartmentService.getFeatures(ap);

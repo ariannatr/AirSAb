@@ -100,16 +100,16 @@
                                     <td><strong>Final Date</strong><br> <input  type="text" name="finaldate" id="datepicker" th:placeholder="${ap.finaldate}"></td>
                                 </tr>
                                 <tr>
-                                    <td><strong>Price per day</strong><br> <input name="price" id="price" th:placeholder="${ap.price}" min="1"  type="number"/></td>
-                                    <td><strong>Minimum reservation</strong><br><input name="minimumres" th:placeholder="${ap.minimumres}" min="1"  type="number"/></td>
+                                    <td><strong>Price per day</strong><br> <input name="price" id="price" th:value="${ap.price}" th:placeholder="${ap.price}" min="1"  type="number"/></td>
+                                    <td><strong>Minimum reservation</strong><br><input name="minimumres" th:value="${ap.minimumres}" th:placeholder="${ap.minimumres}" min="1"  type="number"/></td>
                                 </tr>
                                 <tr>
-                                    <td><strong>Capacity</strong><br> <input name="capacity" th:placeholder="${ap.capacity}"  type="number" min="1"></td>
-                                    <td><strong>Space Area</strong><br><input type="number" name="spaceArea"  id="spaceArea" th:placeholder="${ap.spaceArea}" min="1"/></td>
+                                    <td><strong>Capacity</strong><br> <input name="capacity" th:value="${ap.capacity}" th:placeholder="${ap.capacity}"  type="number" min="1"></td>
+                                    <td><strong>Space Area</strong><br><input type="number" th:value="${ap.spaceArea}" name="spaceArea"  id="spaceArea" th:placeholder="${ap.spaceArea}" min="1"/></td>
                                 </tr>
                                 <tr>
-                                    <td><strong>Floor</strong><br> <input type="number" name="floor"  id="floor" th:placeholder="${ap.floor}"/></td>
-                                    <td><strong>Number of bathrooms</strong><br><input type="number" name="baths"  id="baths" th:placeholder="${ap.baths}" min="0"/></td>
+                                    <td><strong>Floor</strong><br> <input type="number" name="floor"  id="floor" th:value="${ap.floor}" th:placeholder="${ap.floor}"/></td>
+                                    <td><strong>Number of bathrooms</strong><br><input type="number" name="baths"  id="baths" th:value="${ap.baths}" th:placeholder="${ap.baths}" min="0"/></td>
                                 </tr>
                             </table>
 
