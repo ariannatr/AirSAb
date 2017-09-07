@@ -97,8 +97,8 @@ public class ApartmentController {
         if (!authentication.getName().equals("anonymousUser")) {
             modelAndView.addObject("uname", authentication.getName());
             OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
-            int user_type=owner.getUsersByUsersUsername().getType();
-            modelAndView.addObject("type", String.valueOf(user_type));
+            UsersEntity user=owner.getUsersByUsersUsername();
+            modelAndView.addObject("type",String.valueOf( user.getType()));
             /*Set<ApartmentEntity> aps=owner.getApartments();
             ApartmentEntity ap1=aps.iterator().next();*/
             ApartmentEntity ap1=apartmentService.findById(apartmentID);
@@ -171,6 +171,7 @@ public class ApartmentController {
         modelAndView.addObject("url","aparts");
         modelAndView.addObject("selectedPageSize", evalPageSize);
         modelAndView.addObject("pageSizes", PAGE_SIZES);
+        modelAndView.addObject("owner", owner.getUsersByUsersUsername());
         return modelAndView;
     }
 }

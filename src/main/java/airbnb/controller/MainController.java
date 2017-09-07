@@ -71,15 +71,7 @@ public class MainController {
             UsersEntity useron = userService.findByUsername(authentication.getName());
             userService.updateUser(useron,user);
             modelAndView.addObject("user",useron);
-            int type=useron.getType();
-            if(type==1)
-                modelAndView.addObject("type1", "Renter");
-            else if(type==2)
-                modelAndView.addObject("type1", "Owner");
-            else if(type==3)
-                modelAndView.addObject("type1", "Owner and Renter");
-            else
-                modelAndView.addObject("type1", "Admin");
+            modelAndView.addObject("type1",userService.getType(useron));
             modelAndView.setViewName("redirect:/profile");
             return modelAndView;
         }

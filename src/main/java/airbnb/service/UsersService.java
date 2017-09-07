@@ -24,4 +24,7 @@ public interface UsersService {
     //public void updateUserProvider(ProviderEntity provideron,ProviderEntity provider,UserEntity useron,UserEntity user);
      public void approveOwner(OwnerEntity ownerEntity);
    // public void uploadPhoto(ParentEntity parenton,ParentEntity parent,UserEntity useron,UserEntity user,String photopath);
+
+    public String getType(UsersEntity user);
+
 }

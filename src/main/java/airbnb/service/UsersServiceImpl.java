@@ -206,4 +206,18 @@ public class UsersServiceImpl implements UsersService {
         ownerEntity.setApproval(1);
         ownerRepository.save(ownerEntity);
     }
+
+    @Override
+    public String getType(UsersEntity user)
+    {
+        int type=user.getType();
+        if(type==1)
+            return ("Renter");
+        else if(type==2)
+            return( "Owner");
+        else if(type==3)
+            return ("Owner and Renter");
+        else
+            return( "Admin");
+    }
 }
