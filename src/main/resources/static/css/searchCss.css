@@ -101,3 +101,9 @@ img{
     margin: 5px;
     height: 500px;
 }
+
+.mychild {
+    flex: 1 0 20%;
+    margin: 5px;
+    width: 80%;
+}

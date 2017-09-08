@@ -12,19 +12,86 @@
     <!-- Custom styles for this template -->
     <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
     <link th:href="@{/css/apartment_prof.css}" rel="stylesheet" type="text/css" media="all">
+    <link th:href="@{/css/searchCss.css}" rel="stylesheet" type="text/css" media="all">
+
 </head>
 <body>
     <!-- Navigation -->
     <div th:replace="/fragments/navbar :: navbar('apartments')"></div>
 
-    <header class="masthead">
-        <div class="overlay">
-            <p class="table-title"> <span th:text="${ap.name}"></span></p>
-            <div class="container" style="background-color:#e6eaf2; opacity:0.8; width:90%; margin:0 auto;">
+
+    <div id="yourtext1">
+        <div class="container">
+
+            <div class="parent-wrapper">
+                <div class="parent">
+                    <div class= "child" style="height: 100%;" >
+                        <section class="col-xs-12 col-sm-9 col-md-12 col-lg-12">
+                            <article class="search-result">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <h2 class="heading"><a  th:text="${ap.name}">Voluptatem, exercitationem, suscipit, distinctio</a></h2>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <img th:src="@{/images/no_image.png}"  />
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 excerpet border">
+                                    <p th:text="${ap.description}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <ul class="meta-search">
+                                            <li><i class="fa fa-user"></i> <a><strong>Owned by:</strong> <span th:text="${ owner.name}" ></span> <span th:text="${ owner.surname }"></span></a></li>
+                                            <li> <a><span th:text="${ap.country}"></span>, <span th:text="${ap.town}"></span>, <span th:text="${ap.area}"></span></a></li>
+                                            <li> <span th:text="${ap_type}"></span></li>
+                                            <li><strong>For <span th:text="${ap.capacity}"></span>people</strong> ,<span th:text="${ap.spaceArea}">-</span>s.m.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <p><strong>Available from: </strong><span th:text="${ap.startdate}"></span> <strong>to: </strong><span th:text="${ap.finaldate}"></span> </p>
+                                    </div>
+                                </div>
 
 
-                <div id="initialtext">
-                    <div >
+                                <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                            <p><span th:text="${ap.price}">price in</span>€/day</p>
+                                            <p><strong>Minimum reservation:</strong><span th:text="${ap.minimumres}"></span> days</p>
+
+                                    </div>
+                                </div>
+
+                                <span class="clearfix borda"></span>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <ul class="meta-search">
+                                            <li><strong> Floor: </strong><span th:text="${ap.floor}"></span></li>
+                                            <li> <strong> Number of bathrooms: </strong><span th:text="${ap.baths}"></span></li>
+                                            <li><a th:each="f : ${features}"><span th:text="${f}"></span>  </a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <span class="clearfix borda"></span>
+                                <div th:if ="${(type == '1') or (type=='3')}">
+                                    <button id="changenow" class="btn btn-outline-warning " data-wow-delay="0.5s" onclick="change()">Change</button>
+                                    <br>
+                                </div>
+                                </article>
+                            <br><br>
+                    </section>
+                        </div>
+                    </div>
+                <!--div id="initialtext">
+
                         <br>
                         <table >
                             <tr>
@@ -56,13 +123,13 @@
                                 <td></td>
                             </tr>
                         </table>
-                    <br>
+                        <br>
 
-                    <table>
-                        <tr>
-                            <td th:each="f : ${features}"><span th:text="${f}"></span></td>
-                        </tr>
-                    </table>
+                        <table>
+                            <tr>
+                                <td th:each="f : ${features}"><span th:text="${f}"></span></td>
+                            </tr>
+                        </table>
 
                     </div>
                     <br>
@@ -70,10 +137,20 @@
                         <button id="changenow" class="btn btn-outline-warning " data-wow-delay="0.5s" onclick="change()">Change</button>
                         <br>
                     </div>
-                </div>
+                </div-->
 
 
-                <div id="secondarytext" style="display:none;">
+            </div>
+    </div>
+    </div>
+    <div id="yourtext2" style="display:none;">
+
+        <header class="masthead">
+            <div class="overlay">
+                <p class="table-title"> <span th:text="${ap.name}"></span></p>
+                <div class="container" style="background-color:#e6eaf2; opacity:0.8; width:90%; margin:0 auto;">
+
+                <div id="secondarytext" >
                     <p class="table-subtitle"> Complete the form below to update your apartment's info</p><br>
                     <div  >
                         <form  class="update" method="POST"   th:action="@{/apartment_update/{apartmentID}(apartmentID=${ap.id})}">
@@ -121,17 +198,17 @@
                                 <br>
 
 
-                                <label class="btn btn-sm"> Parking <input type="checkbox" name="parking" th:checked="${ap.parking} == 1" value="1"> </label>
+                                <label class="btn btn-sm"> Parking <input type="checkbox" name="parking" th:checked="${ap.parking} == 1" value="1"/> </label>
                                 <label class="btn btn-sm"> Air Condition <input type="checkbox" name="ac" th:checked="${ap.ac} == 1" value="1"/></label>
-                                <label class="btn btn-sm"> Internet <input type="checkbox" name="internet" th:checked="${ap.internet} == 1" value="1"  > </label>
-                                <label class="btn btn-sm"> Elevator <input type="checkbox" name="elevator" th:checked="${ap.elevator} == 1" value="1"  > </label>
-                                <label class="btn btn-sm"> TV <input type="checkbox" name="tv" th:checked="${ap.tv} == 1" value="1"> </label>
-                                <label class="btn btn-sm"> Kitchen <input type="checkbox" name="kitchen" th:checked="${ap.kitchen} == 1" value="1" > </label>
-                                <label class="btn btn-sm"> Living Room <input type="checkbox" name="livingroom" th:checked="${ap.livingroom} == 1" value="1" > </label>
-                                <label class="btn btn-sm"> Central Heating <input type="checkbox" name="heating" th:checked="${ap.heating} == 1" value="1" > </label>
-                                <label class="btn btn-sm"> Pets Allowed <input type="checkbox" name="pets" th:checked="${ap.pets} == 1" value="1"> </label>
-                                <label class="btn btn-sm"> Smoking Allowed <input type="checkbox" name="smoking" th:checked="${ap.smoking} == 1" value="1" > </label>
-                                <label class="btn btn-sm"> For Events <input type="checkbox" name="events" th:checked="${ap.events} == 1" value="1" > </label>
+                                <label class="btn btn-sm"> Internet <input type="checkbox" name="internet" th:checked="${ap.internet} == 1" value="1"  /> </label>
+                                <label class="btn btn-sm"> Elevator <input type="checkbox" name="elevator" th:checked="${ap.elevator} == 1" value="1"  /> </label>
+                                <label class="btn btn-sm"> TV <input type="checkbox" name="tv" th:checked="${ap.tv} == 1" value="1"/> </label>
+                                <label class="btn btn-sm"> Kitchen <input type="checkbox" name="kitchen" th:checked="${ap.kitchen} == 1" value="1" /> </label>
+                                <label class="btn btn-sm"> Living Room <input type="checkbox" name="livingroom" th:checked="${ap.livingroom} == 1" value="1" /> </label>
+                                <label class="btn btn-sm"> Central Heating <input type="checkbox" name="heating" th:checked="${ap.heating} == 1" value="1" /> </label>
+                                <label class="btn btn-sm"> Pets Allowed <input type="checkbox" name="pets" th:checked="${ap.pets} == 1" value="1"/> </label>
+                                <label class="btn btn-sm"> Smoking Allowed <input type="checkbox" name="smoking" th:checked="${ap.smoking} == 1" value="1" /> </label>
+                                <label class="btn btn-sm"> For Events <input type="checkbox" name="events" th:checked="${ap.events} == 1" value="1" /> </label>
 
                                 <br/>
                                 <br>
@@ -145,7 +222,7 @@
             </div>
         </div>
     </header>
-
+    </div>
     <!-- Footer -->
     <div th:replace="/fragments/footer :: footer"></div>
 
@@ -167,13 +244,13 @@
     </script>
     <script >
         function change(){
-            $("#initialtext").hide();
-            $("#secondarytext").show();
+            $("#yourtext1").hide();
+            $("#yourtext2").show();
         }
 
         function back(){
-            $("#secondarytext").hide();
-            $("#initialtext").show();
+            $("#yourtext2").hide();
+            $("#yourtext1").show();
         }
     </script>
 

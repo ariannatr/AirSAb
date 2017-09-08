@@ -104,6 +104,7 @@ public class ApartmentController {
             ApartmentEntity ap1=apartmentService.findById(apartmentID);
             modelAndView.addObject("ap",ap1);
             modelAndView.addObject("ap_type",apartmentService.getType(ap1));
+            modelAndView.addObject("owner", user);
             ArrayList<String> features=apartmentService.getFeatures(ap1);
             modelAndView.addObject("features",features);
         }
@@ -131,7 +132,7 @@ public class ApartmentController {
             ArrayList<String> features = apartmentService.getFeatures(ap);
             modelAndView.addObject("features", features);
             redirectAttributes.addFlashAttribute("success", "true");
-            System.out.println("eftasa edw");
+           // System.out.println("eftasa edw");
             modelAndView.setViewName("redirect:/apartment/"+apartmentID);
             return modelAndView;
         } else {

@@ -130,7 +130,19 @@ public class ApartmentServiceImpl implements ApartmentService {
         {
             ap.setBaths(old.getBaths());
         }
+        ap.setParking(old.getParking());
+        ap.setInternet(old.getInternet());
+        ap.setAc(old.getAc());
+        ap.setElevator(old.getElevator());
+        ap.setTv(old.getTv());
+        ap.setKitchen(old.getKitchen());
+        ap.setHeating(old.getHeating());
+        ap.setLivingroom(old.getLivingroom());
 
+        ap.setPets(old.getPets());
+        ap.setSmoking(old.getSmoking());
+        ap.setEvents(old.getEvents());
+        ap.setType(old.getType());
         apartmentRepository.save(ap);
 
     }
