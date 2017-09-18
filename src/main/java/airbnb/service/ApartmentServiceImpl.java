@@ -35,6 +35,9 @@ public class ApartmentServiceImpl implements ApartmentService {
     {
         apartmentEntity.setOwnerByOwner(ownerEntity);
         apartmentEntity.setPhoto(photograph);
+        apartmentEntity.setPhoto2("");
+        apartmentEntity.setPhoto3("");
+        apartmentEntity.setPhoto4("");
         apartmentRepository.save(apartmentEntity);
         Set<ApartmentEntity> apartmentEntitySet=ownerEntity.getApartments();
         apartmentEntitySet.add(apartmentEntity);
@@ -157,6 +160,27 @@ public class ApartmentServiceImpl implements ApartmentService {
     public void uploadPhoto(ApartmentEntity ap,String photo)
     {
         ap.setPhoto(photo);
+        apartmentRepository.save(ap);
+    }
+
+    @Override
+    public void uploadPhoto2(ApartmentEntity ap,String photo)
+    {
+        ap.setPhoto2(photo);
+        apartmentRepository.save(ap);
+    }
+
+    @Override
+    public void uploadPhoto3(ApartmentEntity ap,String photo)
+    {
+        ap.setPhoto3(photo);
+        apartmentRepository.save(ap);
+    }
+
+    @Override
+    public void uploadPhoto4(ApartmentEntity ap,String photo)
+    {
+        ap.setPhoto4(photo);
         apartmentRepository.save(ap);
     }
 }

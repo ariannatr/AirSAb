@@ -42,6 +42,10 @@ public class ApartmentEntity implements Serializable{
     private int livingroom;
     private int events;
 
+    private  String photo2;
+    private  String photo3;
+    private  String photo4;
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
@@ -313,6 +317,37 @@ public class ApartmentEntity implements Serializable{
 
     public void setEvents(int events) {
         this.events = events;
+    }
+
+
+    @Basic
+    @Column(name = "photo2")
+    public String getPhoto2() {
+        return photo2;
+    }
+
+    public void setPhoto2(String photog) {
+        this.photo2 = photog;
+    }
+
+    @Basic
+    @Column(name = "photo3")
+    public String getPhoto3() {
+        return photo3;
+    }
+
+    public void setPhoto3(String photog) {
+        this.photo3 = photog;
+    }
+
+    @Basic
+    @Column(name = "photo4")
+    public String getPhoto4() {
+        return photo4;
+    }
+
+    public void setPhoto4(String photo) {
+        this.photo4 = photo;
     }
 
     @Override

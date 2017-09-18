@@ -19,4 +19,7 @@ public interface ApartmentService {
     public void updateApartment(ApartmentEntity ap, ApartmentEntity old);
     public Page<ApartmentEntity> findOwnersAparts(OwnerEntity ownerEntity,Pageable pageable);
     public void uploadPhoto(ApartmentEntity ap,String photo);
+    public void uploadPhoto2(ApartmentEntity ap,String photo);
+    public void uploadPhoto3(ApartmentEntity ap,String photo);
+    public void uploadPhoto4(ApartmentEntity ap,String photo);
 }

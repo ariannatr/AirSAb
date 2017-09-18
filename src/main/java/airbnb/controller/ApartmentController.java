@@ -122,7 +122,9 @@ public class ApartmentController {
     }
 
     @RequestMapping(value="/apartment_update/{apartmentID}", method = RequestMethod.POST)
-    public ModelAndView apartment_update(@PathVariable("apartmentID") int apartmentID,@ModelAttribute("apartment") @Valid ApartmentEntity ap,RedirectAttributes redirectAttributes,@RequestParam("uploadingFile") MultipartFile uploadingFile) throws IOException {
+    public ModelAndView apartment_update(@PathVariable("apartmentID") int apartmentID,@ModelAttribute("apartment") @Valid ApartmentEntity ap,RedirectAttributes redirectAttributes, @RequestParam("uploadingFile") MultipartFile uploadingFile,
+                                         @RequestParam("uploadingFile2") MultipartFile uploadingFile2,@RequestParam("uploadingFile3") MultipartFile uploadingFile3,@RequestParam("uploadingFile4") MultipartFile uploadingFile4) throws IOException {
+
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = authenticationFacade.getAuthentication();
         if (!authentication.getName().equals("anonymousUser")) {
@@ -143,7 +145,25 @@ public class ApartmentController {
                 apartmentService.uploadPhoto(ap, "/images/" + uploadingFile.getOriginalFilename());
                 uploadingFile.transferTo(file);
             }
+            if (!uploadingFile2.isEmpty()){
+                File file = new File(uploadingdir + uploadingFile2.getOriginalFilename());
+                apartmentService.uploadPhoto2(ap, "/images/" + uploadingFile2.getOriginalFilename());
+                uploadingFile2.transferTo(file);
 
+            }
+            if (!uploadingFile3.isEmpty()){
+                File file = new File(uploadingdir + uploadingFile3.getOriginalFilename());
+                apartmentService.uploadPhoto3(ap, "/images/" + uploadingFile3.getOriginalFilename());
+                uploadingFile3.transferTo(file);
+
+            }
+
+            if (!uploadingFile4.isEmpty()){
+                File file = new File(uploadingdir + uploadingFile4.getOriginalFilename());
+                apartmentService.uploadPhoto4(ap, "/images/" + uploadingFile4.getOriginalFilename());
+                uploadingFile4.transferTo(file);
+
+            }
             modelAndView.addObject("ap", ap);
             modelAndView.addObject("ap_type", apartmentService.getType(ap));
             ArrayList<String> features = apartmentService.getFeatures(ap);
