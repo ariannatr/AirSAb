@@ -78,7 +78,6 @@ public class ApartmentController {
 //            System.out.println("apothikeuw ton xristi me username "+user.getUsername()+" kai type "+user.getType());
 //
            apartmentService.saveApartment(ap,owner);
-//
             redirectAttributes.addFlashAttribute("success","true");
 //            modelAndView.addObject("uname", user.getUsername());
 //            modelAndView.setViewName("redirect:/register");

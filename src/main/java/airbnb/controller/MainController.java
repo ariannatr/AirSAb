@@ -45,7 +45,7 @@ public class MainController {
         if (!authentication.getName().equals("anonymousUser")) {
             modelAndView.addObject("uname", authentication.getName());
             UsersEntity userS = userService.findByUsername(authentication.getName());
-
+            modelAndView.addObject("type", String.valueOf(userS.getType()));
             modelAndView.addObject("user",userS);
             int type=userS.getType();
                 if(type==1)
@@ -72,6 +72,7 @@ public class MainController {
             userService.updateUser(useron,user);
             modelAndView.addObject("user",useron);
             modelAndView.addObject("type1",userService.getType(useron));
+            modelAndView.addObject("type", String.valueOf(useron.getType()));
             modelAndView.setViewName("redirect:/profile");
             return modelAndView;
         }
