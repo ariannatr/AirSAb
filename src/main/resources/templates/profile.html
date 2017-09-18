@@ -34,6 +34,9 @@
                 <p class="table-title"> Users <span th:text="${uname}"></span> Info</p>
                 <p class="table-subtitle"> Below you can see the info you provided during registration. You can change any of them by clicking 'Change' button ,except your username.<p>
                 <div  style="background-color:#e6eaf2; opacity:0.8; width:50%; margin:0 auto;">
+                    <div th:if="${(user.photo!= null)}">
+                        <img alt="User Pic"  th:src ="${user.photo}" style="width:70%;height:200px;">
+                    </div>
                     <table>
                         <tr>
                             <td class="mylabel"> Name   </td>
@@ -64,7 +67,7 @@
             <div id="secondarytext" style="display:none;">
                 <p class="table-title"> Complete the form below to update your account</p>
                 <div  style="background-color:#e6eaf2; opacity:0.8; width:50%; margin:0 auto;">
-                    <form  class="update" method="POST"  th:action="@{/update}">
+                    <form  class="update" method="POST"  enctype="multipart/form-data" th:action="@{/update}">
                         <table>
                             <tr>
                                 <td class="mylabel"> Name   </td>
@@ -94,8 +97,15 @@
                                 <td class="mylabel"> Confirm Password   </td>
                                 <td> <input name="password_confirm" name="password_confirm" placeholder="*******" type="password" /> </td>
                             </tr>
-                        </table>
 
+                        </table>
+                        <div class="form-group">
+
+                            <label  class="photo_upload" >Change Profile picture</label>
+                            <div class="col-sm-10">
+                                <input  type="file" name="uploadingFile"  >
+                            </div>
+                        </div>
                         <!--label class="btn btn-sm">Owner <input type="checkbox" name="q1" value="0" > </label>
                         <label class="btn btn-sm">       Renter<input type="checkbox" name="q1" value="1"/></label-->
                         <br>

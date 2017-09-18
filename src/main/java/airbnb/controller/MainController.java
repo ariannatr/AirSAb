@@ -12,7 +12,11 @@ import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import javax.validation.Valid;
-
+import org.springframework.ui.Model;
+import java.io.File;
+import java.io.IOException;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by Arianna on 22/8/2017.
@@ -23,6 +27,8 @@ public class MainController {
     private UsersService userService;
     @Autowired
     private IAuthenticationFacade authenticationFacade;
+
+    public static final String uploadingdir = System.getProperty("user.dir") + "/uploadingdir/";
 
     @RequestMapping(value={"/", "/index"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
     public ModelAndView index(){
@@ -61,8 +67,10 @@ public class MainController {
     }
 
 
+
+
     @RequestMapping(value="/update", method = RequestMethod.POST)
-    public ModelAndView edit(@ModelAttribute("user") @Valid UsersEntity user,RedirectAttributes redirectAttributes )  {
+    public ModelAndView edit(@ModelAttribute("user") @Valid UsersEntity user,RedirectAttributes redirectAttributes,@RequestParam("uploadingFile") MultipartFile uploadingFile ) throws IOException {
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = authenticationFacade.getAuthentication();
         if (!authentication.getName().equals("anonymousUser")) {
@@ -70,10 +78,17 @@ public class MainController {
 
             UsersEntity useron = userService.findByUsername(authentication.getName());
             userService.updateUser(useron,user);
+            if (!uploadingFile.isEmpty()) {
+                File file = new File(uploadingdir + uploadingFile.getOriginalFilename());
+
+                userService.uploadPhoto(useron, "/images/" + uploadingFile.getOriginalFilename());
+                uploadingFile.transferTo(file);
+            }
+
+            modelAndView.setViewName("redirect:/profile");
             modelAndView.addObject("user",useron);
             modelAndView.addObject("type1",userService.getType(useron));
             modelAndView.addObject("type", String.valueOf(useron.getType()));
-            modelAndView.setViewName("redirect:/profile");
             return modelAndView;
         }
         else
@@ -84,4 +99,7 @@ public class MainController {
             return modelAndView;
         }
     }
+
+
+
 }

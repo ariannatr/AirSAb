@@ -15,6 +15,7 @@ public class UsersEntity {
     private String surname;
     private String telephone;
     private String email;
+    private String photo;
     private OwnerEntity ownerByUsername;
     private RenterEntity renterByUsername;
 
@@ -86,6 +87,15 @@ public class UsersEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Basic
+    @Column(name="photo")
+    public String getPhoto() {
+        return photo;
+    }
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     @Override

@@ -73,11 +73,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void saveUser(UsersEntity user) {
+    public void saveUser(UsersEntity user,String photopath) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         System.out.println("Creating user..." + user.getPassword());
 
-
+        user.setPhoto(photopath);
         userRepository.save(user);
         if(user.getType()==1)
         {
@@ -106,10 +106,7 @@ public class UsersServiceImpl implements UsersService {
             renterRepository.save(renter);
         }
         //CookiesEntity cookie = new CookiesEntity();
-        System.out.println("Creating parent user...");
-
-        //renter.setUser(user);
-      //  renter.setPhoto(photopath);
+        System.out.println("Creating  user...");
 
         //cookieRepository.save(cookie);
         System.out.println("Done.");
@@ -219,5 +216,12 @@ public class UsersServiceImpl implements UsersService {
             return ("Owner and Renter");
         else
             return( "Admin");
+    }
+
+    @Override
+    public void uploadPhoto(UsersEntity useron,String photopath)
+    {
+        useron.setPhoto(photopath);
+        userRepository.save(useron);
     }
 }

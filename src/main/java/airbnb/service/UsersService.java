@@ -11,9 +11,7 @@ public interface UsersService {
     public UsersEntity findByUsername(String username);
     public OwnerEntity findOwnerByUsername(String username);
 
-   public void saveUser(UsersEntity user);
-   // public void saveUserProvider(UserEntity user, ProviderEntity provider);
- //  public void saveUserOwner(UsersEntity user, OwnerEntity owner);
+   public void saveUser(UsersEntity user,String photopath);
     public UsersEntity findByUsernamePassword(String username, String Password);
 
     public void updateUser(UsersEntity useron,UsersEntity user);
@@ -23,8 +21,7 @@ public interface UsersService {
     public Page<OwnerEntity> findAllnotApproved(Pageable pageable);
     //public void updateUserProvider(ProviderEntity provideron,ProviderEntity provider,UserEntity useron,UserEntity user);
      public void approveOwner(OwnerEntity ownerEntity);
-   // public void uploadPhoto(ParentEntity parenton,ParentEntity parent,UserEntity useron,UserEntity user,String photopath);
-
+   public void uploadPhoto(UsersEntity useron,String photopath);
     public String getType(UsersEntity user);
 
 }

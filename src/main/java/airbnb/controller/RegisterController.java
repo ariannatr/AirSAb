@@ -12,6 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import org.springframework.ui.Model;
+import java.io.File;
+import java.io.IOException;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -25,7 +30,7 @@ public class RegisterController {
 
     @Autowired
     private IAuthenticationFacade authenticationFacade;
-
+    public static final String uploadingdir = System.getProperty("user.dir") + "/uploadingdir/";
 
     @RequestMapping(value={"/register"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
     public ModelAndView register(){
@@ -36,7 +41,7 @@ public class RegisterController {
 
 
     @RequestMapping(value ="/register", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@ModelAttribute("user") @Valid UsersEntity user, RedirectAttributes redirectAttributes) {
+    public ModelAndView createNewUser(@ModelAttribute("user") @Valid UsersEntity user, RedirectAttributes redirectAttributes,@RequestParam("uploadingFile") MultipartFile uploadingFile) throws IOException  {
         ModelAndView modelAndView = new ModelAndView();
         System.out.print("tha apothikeusouem ton xristi "+user.getUsername());
         UsersEntity userExists = userService.findByUsername(user.getUsername());
@@ -48,17 +53,17 @@ public class RegisterController {
         else
         {
 
-           /* if (!uploadingFile.isEmpty()) {
+            if (!uploadingFile.isEmpty()) {
                 File file = new File(uploadingdir + uploadingFile.getOriginalFilename());
 
-                userService.saveUser(user, parent, "/image/" + uploadingFile.getOriginalFilename());
+                userService.saveUser(user,  "/images/" + uploadingFile.getOriginalFilename());
                 uploadingFile.transferTo(file);
             }
             else
-                userService.saveUser(user, parent,"");*/
+                userService.saveUser(user,"");
             System.out.println("apothikeuw ton xristi me username "+user.getUsername()+" kai type "+user.getType());
 
-            userService.saveUser(user);
+
 
             redirectAttributes.addFlashAttribute("success","true");
             modelAndView.addObject("uname", user.getUsername());
