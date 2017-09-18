@@ -15,13 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import javax.validation.Valid;
-import java.util.Set;
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 import java.util.ArrayList;
 
@@ -44,6 +46,8 @@ public class ApartmentController {
     @Autowired
     private IAuthenticationFacade authenticationFacade;
 
+    public static final String uploadingdir = System.getProperty("user.dir") + "/uploadingdir/";
+
 
     @RequestMapping(value={"/apartment_reg"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
     public ModelAndView apartment_reg(){
@@ -59,7 +63,7 @@ public class ApartmentController {
     }
 
     @RequestMapping(value ="/apartment_reg", method = RequestMethod.POST)
-    public ModelAndView createNewApartment(@ModelAttribute("apartment") @Valid ApartmentEntity ap, RedirectAttributes redirectAttributes) {
+    public ModelAndView createNewApartment(@ModelAttribute("apartment") @Valid ApartmentEntity ap, RedirectAttributes redirectAttributes,@RequestParam("uploadingFile") MultipartFile uploadingFile) throws IOException {
         ModelAndView modelAndView = new ModelAndView();
 
         Authentication authentication = authenticationFacade.getAuthentication();
@@ -77,7 +81,14 @@ public class ApartmentController {
 //
 //            System.out.println("apothikeuw ton xristi me username "+user.getUsername()+" kai type "+user.getType());
 //
-           apartmentService.saveApartment(ap,owner);
+        if (!uploadingFile.isEmpty()) {
+            File file = new File(uploadingdir + uploadingFile.getOriginalFilename());
+
+            apartmentService.saveApartment(ap,owner,  "/images/" + uploadingFile.getOriginalFilename());
+            uploadingFile.transferTo(file);
+        }
+        else
+            apartmentService.saveApartment(ap,owner,"");
             redirectAttributes.addFlashAttribute("success","true");
 //            modelAndView.addObject("uname", user.getUsername());
 //            modelAndView.setViewName("redirect:/register");
@@ -111,7 +122,7 @@ public class ApartmentController {
     }
 
     @RequestMapping(value="/apartment_update/{apartmentID}", method = RequestMethod.POST)
-    public ModelAndView apartment_update(@PathVariable("apartmentID") int apartmentID,@ModelAttribute("apartment") @Valid ApartmentEntity ap,RedirectAttributes redirectAttributes ) {
+    public ModelAndView apartment_update(@PathVariable("apartmentID") int apartmentID,@ModelAttribute("apartment") @Valid ApartmentEntity ap,RedirectAttributes redirectAttributes,@RequestParam("uploadingFile") MultipartFile uploadingFile) throws IOException {
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = authenticationFacade.getAuthentication();
         if (!authentication.getName().equals("anonymousUser")) {
@@ -126,6 +137,13 @@ public class ApartmentController {
 
             apartmentService.updateApartment( ap_old,ap);
             ap=apartmentService.findById(apartmentID);
+            if (!uploadingFile.isEmpty()) {
+                File file = new File(uploadingdir + uploadingFile.getOriginalFilename());
+
+                apartmentService.uploadPhoto(ap, "/images/" + uploadingFile.getOriginalFilename());
+                uploadingFile.transferTo(file);
+            }
+
             modelAndView.addObject("ap", ap);
             modelAndView.addObject("ap_type", apartmentService.getType(ap));
             ArrayList<String> features = apartmentService.getFeatures(ap);

@@ -36,7 +36,13 @@
 
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                        <img th:src="@{/images/no_image.png}"  />
+                                        <div th:if="${(ap.photo!= '')}">
+                                            <img alt="Apartment Pic"  th:src ="${ap.photo}"/>
+                                        </div>
+                                        <div th:if="${(ap.photo=='')}">
+                                            <img th:src="@{/images/no_image.png}"  />
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -153,7 +159,7 @@
                 <div id="secondarytext" >
                     <p class="table-subtitle"> Complete the form below to update your apartment's info</p><br>
                     <div  >
-                        <form  class="update" method="POST"   th:action="@{/apartment_update/{apartmentID}(apartmentID=${ap.id})}">
+                        <form  class="update" method="POST"   enctype="multipart/form-data" th:action="@{/apartment_update/{apartmentID}(apartmentID=${ap.id})}">
                             <table>
                                 <tr>
                                 <td class="mylabel"><strong> Name</strong>   </td>
@@ -211,6 +217,10 @@
                                 <label class="btn btn-sm"> For Events <input type="checkbox" name="events" th:checked="${ap.events} == 1" value="1" /> </label>
 
                                 <br/>
+                                <div class="form-group" align="center">
+                                    <label  class="photo_upload" >Change apartment photo </label>
+                                    <input id="fileInput" type="file" name="uploadingFile" >
+                                </div>
                                 <br>
                             <button type="submit" id="change" value="Update" class="btn  btn-outline-warning " >Update</button>
                             <button id="backnow" class="btn btn-outline-secondary" data-wow-delay="0.5s" onclick="back()">Back</button>

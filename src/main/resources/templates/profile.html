@@ -34,7 +34,7 @@
                 <p class="table-title"> Users <span th:text="${uname}"></span> Info</p>
                 <p class="table-subtitle"> Below you can see the info you provided during registration. You can change any of them by clicking 'Change' button ,except your username.<p>
                 <div  style="background-color:#e6eaf2; opacity:0.8; width:50%; margin:0 auto;">
-                    <div th:if="${(user.photo!= null)}">
+                    <div th:if="${(user.photo!= '')}">
                         <img alt="User Pic"  th:src ="${user.photo}" style="width:70%;height:200px;">
                     </div>
                     <table>

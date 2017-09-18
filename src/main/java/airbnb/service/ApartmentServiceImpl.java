@@ -31,10 +31,10 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public  void saveApartment(ApartmentEntity apartmentEntity, OwnerEntity ownerEntity)
+    public  void saveApartment(ApartmentEntity apartmentEntity, OwnerEntity ownerEntity,String photograph)
     {
         apartmentEntity.setOwnerByOwner(ownerEntity);
-        apartmentEntity.setPhoto(" ");
+        apartmentEntity.setPhoto(photograph);
         apartmentRepository.save(apartmentEntity);
         Set<ApartmentEntity> apartmentEntitySet=ownerEntity.getApartments();
         apartmentEntitySet.add(apartmentEntity);
@@ -150,5 +150,13 @@ public class ApartmentServiceImpl implements ApartmentService {
     @Override
     public Page<ApartmentEntity> findOwnersAparts(OwnerEntity ownerEntity, Pageable pageable){
               return apartmentRepository.findAllByOwner(ownerEntity,pageable);
+    }
+
+
+    @Override
+    public void uploadPhoto(ApartmentEntity ap,String photo)
+    {
+        ap.setPhoto(photo);
+        apartmentRepository.save(ap);
     }
 }

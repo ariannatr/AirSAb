@@ -55,9 +55,9 @@ public class MainController {
             modelAndView.addObject("user",userS);
             int type=userS.getType();
                 if(type==1)
-                    modelAndView.addObject("type1", "Renter");
-                else if(type==2)
                     modelAndView.addObject("type1", "Owner");
+                else if(type==2)
+                    modelAndView.addObject("type1", "Renter");
                 else if(type==3)
                     modelAndView.addObject("type1", "Owner and Renter");
                 else

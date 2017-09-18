@@ -49,7 +49,13 @@ Licence URI: http://www.os-templates.com/template-terms
 
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
-                                <img th:src="@{images/ap1.jpg}" />
+                                <div th:if="${(apart.photo!= '')}">
+                                    <img alt="Apartment Pic"  th:src ="${apart.photo}" style="width:300px;height:150px"/>
+                                </div>
+                                <div th:if="${(apart.photo== '')}">
+                                    <img th:src="@{/images/no_image.png}"  />
+                                </div>
+
                             </div>
                             <!--<a href="#" th:title="${event.name}" class="thumbnail"><img th:src="@{images/demo/event1.jpg}" alt="Lorem ipsum" /></a>-->
 
@@ -63,7 +69,8 @@ Licence URI: http://www.os-templates.com/template-terms
                                     <li><i class="fa fa-user"></i> <a href="#"> <span th:text="${ owner.name}" ></span> <span th:text="${ owner.surname }"></span></a></li>
                                 <!--<li><i class="glyphicon glyphicon-calendar"></i> <span>02/15/2014</span></li>-->
                                 <!--<li><i class="glyphicon glyphicon-time"></i> <span>4:28 pm</span></li>-->
-                                    <li><i class="glyphicon glyphicon-tags"></i> <span th:text="${apart.type}"></span></li>
+                                    <li><span th:text="${apart.country}"></span>,<span th:text="${apart.town}"></span>,<span th:text="${apart.area}"></span></li>
+                                    <li>for <span th:text="${apart.capacity}"></span> people</li>
                                 </ul>
                             </div>
                         </div>
