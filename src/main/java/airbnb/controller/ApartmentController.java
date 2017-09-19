@@ -10,11 +10,7 @@ import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -47,7 +43,6 @@ public class ApartmentController {
     private IAuthenticationFacade authenticationFacade;
 
     public static final String uploadingdir = System.getProperty("user.dir") + "/uploadingdir/";
-
 
     @RequestMapping(value={"/apartment_reg"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
     public ModelAndView apartment_reg(){
@@ -83,8 +78,7 @@ public class ApartmentController {
 //
         if (!uploadingFile.isEmpty()) {
             File file = new File(uploadingdir + uploadingFile.getOriginalFilename());
-
-            apartmentService.saveApartment(ap,owner,  "/images/" + uploadingFile.getOriginalFilename());
+            apartmentService.saveApartment(ap,owner,  "/image/" + uploadingFile.getOriginalFilename());
             uploadingFile.transferTo(file);
         }
         else
@@ -142,25 +136,25 @@ public class ApartmentController {
             if (!uploadingFile.isEmpty()) {
                 File file = new File(uploadingdir + uploadingFile.getOriginalFilename());
 
-                apartmentService.uploadPhoto(ap, "/images/" + uploadingFile.getOriginalFilename());
+                apartmentService.uploadPhoto(ap, "/image/" + uploadingFile.getOriginalFilename());
                 uploadingFile.transferTo(file);
             }
             if (!uploadingFile2.isEmpty()){
                 File file = new File(uploadingdir + uploadingFile2.getOriginalFilename());
-                apartmentService.uploadPhoto2(ap, "/images/" + uploadingFile2.getOriginalFilename());
+                apartmentService.uploadPhoto2(ap, "/image/" + uploadingFile2.getOriginalFilename());
                 uploadingFile2.transferTo(file);
 
             }
             if (!uploadingFile3.isEmpty()){
                 File file = new File(uploadingdir + uploadingFile3.getOriginalFilename());
-                apartmentService.uploadPhoto3(ap, "/images/" + uploadingFile3.getOriginalFilename());
+                apartmentService.uploadPhoto3(ap, "/image/"+uploadingFile3.getOriginalFilename());
                 uploadingFile3.transferTo(file);
 
             }
 
             if (!uploadingFile4.isEmpty()){
                 File file = new File(uploadingdir + uploadingFile4.getOriginalFilename());
-                apartmentService.uploadPhoto4(ap, "/images/" + uploadingFile4.getOriginalFilename());
+                apartmentService.uploadPhoto4(ap, "/image/" + uploadingFile4.getOriginalFilename());
                 uploadingFile4.transferTo(file);
 
             }
@@ -169,7 +163,6 @@ public class ApartmentController {
             ArrayList<String> features = apartmentService.getFeatures(ap);
             modelAndView.addObject("features", features);
             redirectAttributes.addFlashAttribute("success", "true");
-           // System.out.println("eftasa edw");
             modelAndView.setViewName("redirect:/apartment/"+apartmentID);
             return modelAndView;
         } else {
@@ -179,6 +172,8 @@ public class ApartmentController {
             return modelAndView;
         }
     }
+
+
 
     @RequestMapping(value={"/aparts"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
     public ModelAndView apartments(@RequestParam("pageSize") Optional<Integer> pageSize,

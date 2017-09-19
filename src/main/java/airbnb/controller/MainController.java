@@ -15,6 +15,8 @@ import javax.validation.Valid;
 import org.springframework.ui.Model;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -81,7 +83,7 @@ public class MainController {
             if (!uploadingFile.isEmpty()) {
                 File file = new File(uploadingdir + uploadingFile.getOriginalFilename());
 
-                userService.uploadPhoto(useron, "/images/" + uploadingFile.getOriginalFilename());
+                userService.uploadPhoto(useron, "/image/" + uploadingFile.getOriginalFilename());
                 uploadingFile.transferTo(file);
             }
 
@@ -100,6 +102,15 @@ public class MainController {
         }
     }
 
+    @RequestMapping(value = "/image/{imageName}")
+    @ResponseBody
+    public byte[] getImage(@PathVariable(value = "imageName") String imageName) throws IOException {
 
+        File serverFile = new File(uploadingdir + imageName +".jpg");
+        if(!serverFile.exists())
+            serverFile=new File(uploadingdir + imageName +".png");
+        // System.out.println("Psaxnw to "+uploadingdir+imageName);
+        return Files.readAllBytes(serverFile.toPath());
+    }
 
 }

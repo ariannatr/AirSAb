@@ -56,7 +56,7 @@ public class RegisterController {
             if (!uploadingFile.isEmpty()) {
                 File file = new File(uploadingdir + uploadingFile.getOriginalFilename());
 
-                userService.saveUser(user,  "/images/" + uploadingFile.getOriginalFilename());
+                userService.saveUser(user,  "/image/" + uploadingFile.getOriginalFilename());
                 uploadingFile.transferTo(file);
             }
             else
