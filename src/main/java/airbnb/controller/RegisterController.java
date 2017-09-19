@@ -52,6 +52,9 @@ public class RegisterController {
         }
         else
         {
+            File theDir=new File(uploadingdir);
+            if(!theDir.exists())
+                theDir.mkdir();
 
             if (!uploadingFile.isEmpty()) {
                 File file = new File(uploadingdir + uploadingFile.getOriginalFilename());

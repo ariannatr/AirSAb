@@ -82,6 +82,10 @@ public class ApartmentController {
 //
 //            System.out.println("apothikeuw ton xristi me username "+user.getUsername()+" kai type "+user.getType());
 //
+        File theDir=new File(uploadingdir);
+        if(!theDir.exists())
+            theDir.mkdir();
+
         if (!uploadingFile.isEmpty()) {
             File file = new File(uploadingdir + uploadingFile.getOriginalFilename());
             apartmentService.saveApartment(ap,owner,  "/image/" + uploadingFile.getOriginalFilename());
@@ -137,6 +141,11 @@ public class ApartmentController {
 
             apartmentService.updateApartment( ap_old,ap);
             ap=apartmentService.findById(apartmentID);
+
+            File theDir=new File(uploadingdir);
+            if(!theDir.exists())
+                theDir.mkdir();
+
             if (!uploadingFile.isEmpty()) {
                 File file = new File(uploadingdir + uploadingFile.getOriginalFilename());
 

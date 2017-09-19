@@ -91,6 +91,11 @@ public class MainController {
 
             UsersEntity useron = userService.findByUsername(authentication.getName());
             userService.updateUser(useron,user);
+
+            File theDir=new File(uploadingdir);
+            if(!theDir.exists())
+                theDir.mkdir();
+
             if (!uploadingFile.isEmpty()) {
                 File file = new File(uploadingdir + uploadingFile.getOriginalFilename());
 
