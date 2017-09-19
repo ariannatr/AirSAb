@@ -1,6 +1,7 @@
 package airbnb.controller;
 
 import airbnb.authentication.IAuthenticationFacade;
+import airbnb.model.OwnerEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,11 @@ public class MainController {
             modelAndView.addObject("uname", authentication.getName());
             UsersEntity userS = userService.findByUsername(authentication.getName());
             modelAndView.addObject("type", String.valueOf(userS.getType()));
+            if(userS.getType()==1 || userS.getType()==3) {
+                OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
+                if (owner.getApproval() == 0)
+                    modelAndView.addObject("approval", "false");
+            }
         }
         return modelAndView;
     }
@@ -64,6 +70,11 @@ public class MainController {
                     modelAndView.addObject("type1", "Owner and Renter");
                 else
                     modelAndView.addObject("type1", "Admin");
+            if(userS.getType()==1 || userS.getType()==3) {
+                OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
+                if (owner.getApproval() == 0)
+                    modelAndView.addObject("approval", "false");
+            }
         }
         return modelAndView;
     }
@@ -91,6 +102,11 @@ public class MainController {
             modelAndView.addObject("user",useron);
             modelAndView.addObject("type1",userService.getType(useron));
             modelAndView.addObject("type", String.valueOf(useron.getType()));
+            if(useron.getType()==1 || useron.getType()==3) {
+                OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
+                if (owner.getApproval() == 0)
+                    modelAndView.addObject("approval", "false");
+            }
             return modelAndView;
         }
         else

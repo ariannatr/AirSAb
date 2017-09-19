@@ -52,7 +52,7 @@
                         <li th:if ="${(type == '1') or (type=='3')}" class="nav-item dropdown" th:classappend="${module == 'apartments' ? 'active' : ''}">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false"> My Apartments</a>
                             <div th:if ="${(type == '1') or (type=='3')}"  class="dropdown-menu">
-                                <a class="dropdown-item" th:href="@{/apartment_reg}">New Registration</a>
+                                <a class="dropdown-item" th:href="@{/apartment_reg}" th:classappend="${approval == 'false' ? 'disabled' : ''}">New Registration</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" th:href="@{/aparts}" >View All </a>
                             </div>

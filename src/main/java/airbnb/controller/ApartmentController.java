@@ -53,6 +53,11 @@ public class ApartmentController {
             modelAndView.addObject("uname", authentication.getName());
             UsersEntity userS = userService.findByUsername(authentication.getName());
             modelAndView.addObject("type", String.valueOf(userS.getType()));
+            OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
+            if(owner.getApproval()==0)
+                modelAndView.addObject("approval","false");
+            else
+                modelAndView.addObject("approval","true");
         }
         return modelAndView;
     }
@@ -65,6 +70,7 @@ public class ApartmentController {
 
      //   ApartmentEntity app=apartmentService.findByUsername(authentication.getName());
        OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
+
 //        if (userExists != null) {
 //            System.out.println("this user already exists");
 //            redirectAttributes.addFlashAttribute("success","false");
@@ -83,12 +89,10 @@ public class ApartmentController {
         }
         else
             apartmentService.saveApartment(ap,owner,"");
-            redirectAttributes.addFlashAttribute("success","true");
-//            modelAndView.addObject("uname", user.getUsername());
-//            modelAndView.setViewName("redirect:/register");
 //        }
         modelAndView.setViewName("redirect:/apartment_reg");
-        redirectAttributes.addFlashAttribute("success","false");
+        modelAndView.addObject("success","true");
+        //redirectAttributes.addFlashAttribute("success","false");
         return modelAndView;
     }
 
