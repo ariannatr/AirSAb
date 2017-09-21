@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<!--
+Template Name: Maxisonix
+Author: <a href="http://www.os-templates.com/">OS Templates</a>
+Author URI: http://www.os-templates.com/
+Licence: Free to use under our free template licence terms
+Licence URI: http://www.os-templates.com/template-terms
+-->
+<head >
+    <title>My apartments</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"rel="stylesheet" type="text/css" media="all">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
+    <link th:href="@{/css/searchCss.css}" rel="stylesheet" type="text/css" media="all">
+    <style>
+        li div { display: table-cell; vertical-align: middle; }
+    </style>
+</head>
+
+<body id="top" style="background-color: whitesmoke">
+
+<div th:replace="/fragments/navbar :: navbar('apartments')"></div>
+
+
+<!-- main body -->
+
+<div class="mainDiv">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <hgroup class="mb20">
+                <h1>Search Results </h1>
+            </hgroup>
+        </div>
+    </div>
+</div>
+<div class="container" >
+<div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <h4 align="center" style="color:#cc834f;">Search Filters</h4>
+                <div class="container filtersContainer">
+                    <div class="row">
+                        <form class="form-horizontal" th:action="@{/search2}">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="type" class="control-label"  style="text-align: left;">Apartment Type </label>
+                                    <select  id="type" name="type" class="mine" >
+                                        <option selected disabled>Choose type</option>
+                                        <option value="0"> Private Residence</option>
+                                        <option value="1"> Public Residence</option>
+                                        <option value="2"> Whole Residence</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="maxPrice" class="control-label"  style="text-align: left;"> Max Price</label>
+                                        <input type="text" name="maxPrice" id="maxPrice"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <ul>
+                                        <li>
+                                            <div> <input type="checkbox" name="parking" value="1" ></div>
+                                            <div><label>Parking</label></div>
+                                        </li>
+                                        <li>
+                                            <div><input type="checkbox" name="ac" value="1"/></div>
+                                            <div><label >Aircondition</label></div>
+                                        </li>
+                                        <li>
+                                            <div><input type="checkbox" name="internet" value="1" ></div>
+                                            <div><label >Wifi</label></div>
+                                        </li>
+                                        <li>
+                                            <div><input type="checkbox" name="elevator" value="1" ></div>
+                                            <div><label >Elevator</label></div>
+                                        </li>
+                                        <li>
+                                            <div> <input type="checkbox" name="tv" value="1" > </div>
+                                            <div><label >Tv</label></div>
+                                        </li>
+                                        <li>
+                                            <div><input type="checkbox" name="kitchen" value="1" ></div>
+                                            <div><label >Kitchen</label></div>
+                                        </li>
+                                        <li>
+                                            <div><input type="checkbox" name="heating" value="1" ></div>
+                                            <div><label >Central Heating</label></div>
+                                        </li>
+                                    </ul>
+                                    <br/>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <button type="submit" title="Search" class="btn btn-default">
+                                        <i class="fa fa-search">
+                                        <em>Search Again</em>
+                                        </i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+    <div class="col-sm-9">
+        <div class="row>">
+            <div class="parent-wrapper"th:if ="${(items!=null)}">
+                <div th:replace="fragments/paginationbar :: paginationbar"></div>
+                    <div class="parent">
+                        <div class= "child" th:each="apart : ${items} ">
+                        <section class="col-sm-12">
+                            <article class="search-result">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                    <h2 class="heading"><a th:href="@{/apartment/{apartID}(apartID=${apart.id})}" th:text="${apart.name}">Voluptatem, exercitationem, suscipit, distinctio</a></h2>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12"></div>
+                                    <div th:if="${(apart.photo!= '')}">
+                                        <img alt="Apartment Pic"  th:src ="${apart.photo}" style="width:300px;height:150px"/>
+                                    </div>
+                                    <div th:if="${(apart.photo== '')}">
+                                        <img th:src="@{/images/no_image.png}"  />
+                                    </div>
+                                </div>
+                        <!--<a href="#" th:title="${event.name}" class="thumbnail"><img th:src="@{images/demo/event1.jpg}" alt="Lorem ipsum" /></a>-->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="meta-search">
+                                    <!--<li><span th:text="${apart.country}"></span>,<span th:text="${apart.town}"></span>,<span th:text="${apart.area}"></span></li>-->
+                                    <li>for <span th:text="${apart.capacity}"></span> people</li>
+                                    <li><span th:text="${apart.capacity}"></span> beds</li>
+                                    <li><span th:text="${apart.rating}"></span> ( <span th:text="${apart.reviews}"></span> reviews)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12"><span th:text="${apart.price}"></span><span>€</span></div>
+                                <div class="col-sm-12"> <span class="plus"><a th:href="@{/apartment/{apartID}(apartID=${apart.id})}"> More .. <i class="glyphicon glyphicon-plus"></i></a></span></div>
+                            </div>
+                            <span class="clearfix borda"></span>
+                        </div>
+                        <span class="clearfix borda"></span>
+                    </article>
+                </section>
+            </div>
+            </div>
+                <div th:replace="/fragments/paginationbar :: paginationbar"></div>
+            </div>
+            <div th:if ="${(items==null)}">
+                <span class="alert alert-warning" type="" style="text-align: center;">There are no apartments available !</span>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+<div th:replace="/fragments/footer :: footer"></div>
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/popper/popper.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>-->
+
+<script>
+    jQuery.document.ready(function(){
+        $jQuery('.mycontainer').find('img').each(function(){
+            var imgClass = (this.width/this.height > 1) ? 'wide' : 'tall';
+            $(this).addClass(imgClass);
+        })
+    })
+</script>
+</body>
+</html>

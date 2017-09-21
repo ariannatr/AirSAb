@@ -87,10 +87,11 @@ Licence URI: http://www.os-templates.com/template-terms
         </div>
     </div>
 </div>
+    <div th:replace="/fragments/paginationbar :: paginationbar"></div>
 </div>
 
 
-    <div th:replace="/fragments/paginationbar :: paginationbar"></div>
+
     <div th:if ="${(items==null)}">
         <span type="">You have not registered yet any apartments</span>
 

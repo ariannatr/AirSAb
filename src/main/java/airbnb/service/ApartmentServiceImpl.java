@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
-import java.util.Set;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * Created by Arianna on 29/8/2017.
@@ -38,6 +40,8 @@ public class ApartmentServiceImpl implements ApartmentService {
         apartmentEntity.setPhoto2("");
         apartmentEntity.setPhoto3("");
         apartmentEntity.setPhoto4("");
+        apartmentEntity.setRating((float)0);
+        apartmentEntity.setReviews(0);
         apartmentRepository.save(apartmentEntity);
         Set<ApartmentEntity> apartmentEntitySet=ownerEntity.getApartments();
         apartmentEntitySet.add(apartmentEntity);
@@ -125,6 +129,12 @@ public class ApartmentServiceImpl implements ApartmentService {
         {
             ap.setSpaceArea(old.getSpaceArea());
         }
+
+        if(!String.valueOf(old.getBeds()).replaceAll(" ","").equals(""))
+        {
+            ap.setSpaceArea(old.getBeds());
+        }
+
         if(!String.valueOf(old.getMinimumres()).replaceAll(" ","").equals(""))
         {
             ap.setMinimumres(old.getMinimumres());
@@ -183,4 +193,206 @@ public class ApartmentServiceImpl implements ApartmentService {
         ap.setPhoto4(photo);
         apartmentRepository.save(ap);
     }
+
+    @Override
+    public Page<ApartmentEntity> findAparts(Pageable pageable){
+        return apartmentRepository.findAllOrderByPrice(pageable);
+    }
+
+    @Override
+    public Page<ApartmentEntity> findAparts(Optional<Integer> heating, Optional<Float>  maxPrice, Optional<Integer>  kitchen, Optional<Integer>  tv, Optional<Integer>  type, Optional<Integer>  elevator, Optional<Integer>  ac, Optional<Integer>  internet, Optional<Integer>  parking, Pageable pageable) {
+        Page<ApartmentEntity> aparts = null;
+        boolean nofilter = true;
+        if (heating.isPresent()) {
+            aparts = apartmentRepository.findAllByHeating(heating.get(), pageable);
+            nofilter = false;
+        }
+
+        if (maxPrice.isPresent() && aparts != null) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (list.next().getPrice() > maxPrice.get())
+                    list.remove();
+            }
+        }
+        if (maxPrice.isPresent() && aparts == null) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByPriceLessThanEqual(maxPrice.get(), pageable);
+
+        }
+        if (kitchen.isPresent() && aparts != null) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (list.next().getKitchen() == 0)
+                    list.remove();
+            }
+        }
+        if (kitchen.isPresent() && aparts == null) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByKitchen(kitchen.get(), pageable);
+        }
+
+        if (tv.isPresent() && aparts != null) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (list.next().getTv() == 0)
+                    list.remove();
+            }
+        }
+        if (tv.isPresent() && aparts == null) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByTv(tv.get(), pageable);
+        }
+        if (elevator.isPresent() && aparts != null) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (list.next().getElevator() == 0)
+                    list.remove();
+            }
+        }
+        if (elevator.isPresent() && aparts == null) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByElevator(elevator.get(), pageable);
+
+        }
+        if (ac.isPresent() && aparts != null) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (list.next().getAc() == 0)
+                    list.remove();
+            }
+        }
+        if (ac.isPresent() && aparts == null) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByAc(ac.get(), pageable);
+
+        }
+        if (parking.isPresent() && aparts != null) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (list.next().getParking() == 0)
+                    list.remove();
+            }
+        }
+        if (parking.isPresent() && aparts == null) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByParking(parking.get(), pageable);
+        }
+        if (type.isPresent() && aparts != null) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (list.next().getType() != type.get())
+                    list.remove();
+            }
+        }
+        if (type.isPresent() && aparts == null) {
+            aparts = apartmentRepository.findAllByType(type.get(), pageable);
+            nofilter = false;
+        }
+        if (internet.isPresent() && aparts != null) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (list.next().getInternet() == 0)
+                    list.remove();
+            }
+        }
+        if (internet.isPresent() && aparts == null)
+        {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByInternet(internet.get(), pageable);
+        }
+        if(nofilter==true)
+            aparts=apartmentRepository.findAll(pageable);
+        return aparts;
+    }
+
+    @Override
+    public Page<ApartmentEntity> findAparts(Optional<String> country,Optional<String> town,Optional<String> area,Optional<String> arrivalDate,Optional<String> departureDate,Optional< Integer> people, Pageable pageable)
+    {
+        Page<ApartmentEntity> aparts = null;
+        boolean nofilter = true;
+        if (country.isPresent() && !country.get().replaceAll(" ","").equals("")) {
+            aparts = apartmentRepository.findAllByCountry(country.get(), pageable);
+            nofilter = false;
+        }
+        if (town.isPresent() && !town.get().replaceAll(" ","").equals("") && aparts != null) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (!list.next().getTown().equals(town.get()))
+                    list.remove();
+            }
+        }
+        if (town.isPresent() && !town.get().replaceAll(" ","").equals("") && aparts == null) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByTown(town.get(), pageable);
+
+        }
+        if (area.isPresent() && !area.get().replaceAll(" ","").equals("") && aparts != null) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (!list.next().getArea().equals(area.get()))
+                    list.remove();
+            }
+        }
+        if (area.isPresent() && !area.get().replaceAll(" ","").equals("") && aparts == null) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByArea(area.get(), pageable);
+        }
+
+        if (people.isPresent() && aparts != null) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (list.next().getCapacity() < people.get())
+                    list.remove();
+            }
+        }
+        if (people.isPresent() && aparts == null) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByCapacityIsGreaterThanEqual(people.get(), pageable);
+        }
+        if (arrivalDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && aparts != null) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ENGLISH);
+                LocalDate date = LocalDate.parse(list.next().getStartdate(), formatter);
+                if (date.compareTo(LocalDate.parse(arrivalDate.get(), formatter))>0)
+                    list.remove();
+            }
+        }
+        if (arrivalDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && aparts == null) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByStartDate(arrivalDate.get(), pageable);
+        }
+        if (departureDate.isPresent() && !departureDate.get().replaceAll(" ","").equals("") && aparts != null) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ENGLISH);
+                LocalDate date = LocalDate.parse(list.next().getFinaldate(), formatter);
+                if (date.compareTo(LocalDate.parse(departureDate.get(), formatter))<0)
+                    list.remove();
+            }
+        }
+        if (departureDate.isPresent() && !departureDate.get().replaceAll(" ","").equals("") && aparts == null) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByFinalDate(departureDate.get(), pageable);
+
+        }
+        if(nofilter==true)
+            aparts=apartmentRepository.findAll(pageable);
+        return aparts;
+    }
+
 }

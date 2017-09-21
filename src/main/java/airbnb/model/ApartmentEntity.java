@@ -46,6 +46,10 @@ public class ApartmentEntity implements Serializable{
     private  String photo3;
     private  String photo4;
 
+    private Float rating;
+
+    private int reviews;
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
@@ -76,6 +80,38 @@ public class ApartmentEntity implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Basic
+    @Column(name = "rating")
+    public Float getRating() {
+        return rating;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
+    }
+
+    @Basic
+    @Column(name = "reviews")
+    public int getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(int reviews) {
+        this.reviews = reviews;
+    }
+
+    @Basic
+    @Column(name = "beds")
+    private int beds;
+
+    public int getBeds() {
+        return beds;
+    }
+
+    public void setBeds(int beds) {
+        this.beds = beds;
     }
 
     @Basic

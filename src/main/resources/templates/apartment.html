@@ -73,7 +73,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                         <ul class="meta-search">
-                                            <li><i class="fa fa-user"></i> <a><strong>Owned by:</strong> <span th:text="${ owner.name}" ></span> <span th:text="${ owner.surname }"></span></a></li>
+                                            <!--<li><i class="fa fa-user"></i> <a><strong>Owned by:</strong> <span th:text="${ ap.owner.name}" ></span> <span th:text="${ owner.surname }"></span></a></li>-->
                                             <li> <a><span th:text="${ap.country}"></span>, <span th:text="${ap.town}"></span>, <span th:text="${ap.area}"></span></a></li>
                                             <li> <span th:text="${ap_type}"></span></li>
                                             <li><strong>For <span th:text="${ap.capacity}"></span>people</strong> ,<span th:text="${ap.spaceArea}">-</span>s.m.</li>
@@ -107,7 +107,7 @@
                                 </div>
 
                                 <span class="clearfix borda"></span>
-                                <div th:if ="${(type == '1') or (type=='3')}">
+                                <div th:if ="${(mine == 'true')}">
                                     <button id="changenow" class="btn btn-outline-warning " data-wow-delay="0.5s" onclick="change()">Change</button>
                                     <br>
                                 </div>
@@ -150,8 +150,8 @@
                             </table>
                             <table>
                                 <tr>
-                                    <td><strong>Start Date</strong><br> <input type="text" name="startdate" id="datepicker"  th:placeholder="${ap.startdate}"/></td>
-                                    <td><strong>Final Date</strong><br> <input  type="text" name="finaldate" id="datepicker" th:placeholder="${ap.finaldate}"></td>
+                                    <td><strong>Start Date</strong><br> <input type="text" name="startdate" id="datepicker"  th:placeholder="${ap.startdate}" data-date-format='yyyy-mm-dd'/></td>
+                                    <td><strong>Final Date</strong><br> <input  type="text" name="finaldate" id="datepicker" th:placeholder="${ap.finaldate}" data-date-format='yyyy-mm-dd'/></td>
                                 </tr>
                                 <tr>
                                     <td><strong>Price per day</strong><br> <input name="price" id="price" th:value="${ap.price}" th:placeholder="${ap.price}" min="1"  type="number"/></td>
@@ -230,6 +230,7 @@
     <script type="text/javascript">
         jQuery(function(){
             jQuery($(":input[id^='datepicker']")).datepicker({
+                dateFormat: 'yy-mm-dd',
                 inline: true,
                 showOtherMonths: true
             });

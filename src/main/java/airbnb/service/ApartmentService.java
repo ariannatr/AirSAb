@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 import java.security.acl.Owner;
+import java.util.Date;
+import java.util.Optional;
 
 
 @Service("apartmentService")
@@ -22,4 +24,8 @@ public interface ApartmentService {
     public void uploadPhoto2(ApartmentEntity ap,String photo);
     public void uploadPhoto3(ApartmentEntity ap,String photo);
     public void uploadPhoto4(ApartmentEntity ap,String photo);
+    public Page<ApartmentEntity> findAparts(Pageable pageable);
+    public Page<ApartmentEntity> findAparts(Optional<Integer> heating,Optional<Float>  maxPrice,Optional<Integer>  kitchen,Optional<Integer>  tv,Optional<Integer>  type,Optional<Integer>  elevator,Optional<Integer>  ac,Optional<Integer>  internet,Optional<Integer>  parking,Pageable pageable);
+    public Page<ApartmentEntity> findAparts(Optional<String> country,Optional<String> town,Optional<String> area,Optional<String> arrivalDate,Optional<String> departureDate,Optional< Integer> people, Pageable pageable);
+
 }

@@ -113,13 +113,19 @@ public class ApartmentController {
             modelAndView.addObject("type",String.valueOf( user.getType()));
             /*Set<ApartmentEntity> aps=owner.getApartments();
             ApartmentEntity ap1=aps.iterator().next();*/
-            ApartmentEntity ap1=apartmentService.findById(apartmentID);
-            modelAndView.addObject("ap",ap1);
-            modelAndView.addObject("ap_type",apartmentService.getType(ap1));
+
             modelAndView.addObject("owner", user);
-            ArrayList<String> features=apartmentService.getFeatures(ap1);
-            modelAndView.addObject("features",features);
+
         }
+        ApartmentEntity ap1=apartmentService.findById(apartmentID);
+        modelAndView.addObject("ap",ap1);
+        if (!authentication.getName().equals("anonymousUser") && ap1.getOwner().getUsersUsername().equals(authentication.getName())) {
+           System.out.println("einai diko mou");
+            modelAndView.addObject("mine","true");
+        }
+        modelAndView.addObject("ap_type",apartmentService.getType(ap1));
+        ArrayList<String> features=apartmentService.getFeatures(ap1);
+        modelAndView.addObject("features",features);
         return modelAndView;
     }
 
