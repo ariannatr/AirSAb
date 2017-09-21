@@ -54,6 +54,8 @@ public class SearchController {
             modelAndView.addObject("uname", authentication.getName());
             UsersEntity userS = userService.findByUsername(authentication.getName());
             modelAndView.addObject("type", String.valueOf(userS.getType()));
+
+
         }
         int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
         // Evaluate page. If requested parameter is null or less than 0 (to
@@ -85,6 +87,12 @@ public class SearchController {
             modelAndView.addObject("uname", authentication.getName());
             UsersEntity userS = userService.findByUsername(authentication.getName());
             modelAndView.addObject("type", String.valueOf(userS.getType()));
+
+            if(userS.getType()==1 || userS.getType()==3) {
+                OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
+                if (owner.getApproval() == 0)
+                    modelAndView.addObject("approval", "false");
+            }
 
         }
         int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
@@ -149,6 +157,12 @@ public class SearchController {
             modelAndView.addObject("uname", authentication.getName());
             UsersEntity userS = userService.findByUsername(authentication.getName());
             modelAndView.addObject("type", String.valueOf(userS.getType()));
+
+            if(userS.getType()==1 || userS.getType()==3) {
+                OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
+                if (owner.getApproval() == 0)
+                    modelAndView.addObject("approval", "false");
+            }
 
         }
         int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);

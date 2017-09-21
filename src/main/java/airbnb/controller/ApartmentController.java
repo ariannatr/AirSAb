@@ -96,6 +96,7 @@ public class ApartmentController {
 //        }
         modelAndView.setViewName("redirect:/apartment_reg");
         modelAndView.addObject("success","true");
+
         //redirectAttributes.addFlashAttribute("success","false");
         return modelAndView;
     }
@@ -204,6 +205,11 @@ public class ApartmentController {
             modelAndView.addObject("uname", authentication.getName());
             UsersEntity userS = userService.findByUsername(authentication.getName());
             modelAndView.addObject("type", String.valueOf(userS.getType()));
+            if(userS.getType()==1 || userS.getType()==3) {
+                OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
+                if (owner.getApproval() == 0)
+                    modelAndView.addObject("approval", "false");
+            }
 
         }
         int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
