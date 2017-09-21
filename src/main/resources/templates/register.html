@@ -27,8 +27,12 @@
 
     <header class="masthead">
         <div class="overlay">
-            <div th:if ="${(success != null) and (success == 'true')}">
+            <div th:if ="${(success != null) and (success == 'true') and (type=='2')}">
                 <div class="alert alert-success" style="text-align: center;"> Your registration has been succesfully completed! <br>  <a  th:href="@{/index}">Back to homepage .</a></div>
+                <div th:if="${(type=='1') or (type=='3')}" class="alert alert-success" style="text-align: center;"> Your registration has been succesfully completed! <br> Not approved by admin yet! <br><a  th:href="@{/index}">Back to homepage .</a></div>
+            </div >
+            <div th:if ="${(success != null) and (success == 'true') and ((type=='1') or (type=='3'))}">
+                <div  class="alert alert-success" style="text-align: center;"> Your registration has been succesfully completed! <br> Not approved by admin yet! <br><a  th:href="@{/index}">Back to homepage .</a></div>
             </div >
             <div th:if ="${(success != null) and (success == 'false')}">
                 <div class="alert alert-success" style="text-align: center;"> Your registration failed! Please try again with a different username. <br> </div>
