@@ -47,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/register").anonymous()
 				.antMatchers("/usernameCheck").anonymous()
                 .antMatchers("/login").anonymous()
-                .antMatchers("/users").permitAll()
+                .antMatchers("/users").hasRole("0")
                 .antMatchers("/error").permitAll()
 				.antMatchers("/searchAparts").permitAll()
                 .antMatchers("/search","/search2").permitAll()
@@ -62,8 +62,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/owners").permitAll()
 				.antMatchers("/accept","/accept/**").permitAll()
 				.antMatchers("/aparts").hasAnyRole("1","3")
-				.anyRequest()//be admin
-				.authenticated().and().csrf().disable()
+				.anyRequest().authenticated().and().anonymous().and()
+                .csrf().disable()
                 .formLogin()
 				.loginPage("/index")
                 .loginProcessingUrl("/login")
@@ -100,5 +100,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    web.ignoring()
 	       .antMatchers("/fragments/**","/resources/**","/static/**", "/css/**", "/js/**", "/images/**","/scripts/**","/vendor/**");
 		web.ignoring().antMatchers("/the_js_path/**");
+		web.ignoring().antMatchers("/image/**","/jquery/**");
 	}
 }
