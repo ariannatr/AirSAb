@@ -365,9 +365,10 @@ public class ApartmentServiceImpl implements ApartmentService {
             nofilter = false;
             Iterator<ApartmentEntity> list = aparts.iterator();
             while (list.hasNext()) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ENGLISH);
-                LocalDate date = LocalDate.parse(list.next().getStartdate(), formatter);
-                if (date.compareTo(LocalDate.parse(arrivalDate.get(), formatter))>0)
+//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd", Locale.ENGLISH);
+//                LocalDate date = LocalDate.parse(list.next().getStartdate(), formatter);
+//                if (date.compareTo(LocalDate.parse(arrivalDate.get(), formatter))>0)
+                  if(list.next().getStartdate().compareTo(arrivalDate.get())>0)
                     list.remove();
             }
         }
@@ -379,9 +380,10 @@ public class ApartmentServiceImpl implements ApartmentService {
             nofilter = false;
             Iterator<ApartmentEntity> list = aparts.iterator();
             while (list.hasNext()) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ENGLISH);
-                LocalDate date = LocalDate.parse(list.next().getFinaldate(), formatter);
-                if (date.compareTo(LocalDate.parse(departureDate.get(), formatter))<0)
+//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd", Locale.ENGLISH);
+//                LocalDate date = LocalDate.parse(list.next().getFinaldate(), formatter);
+              //  if (date.compareTo(LocalDate.parse(departureDate.get(), formatter))<0)
+                if(list.next().getFinaldate().compareTo(departureDate.get())<0)
                     list.remove();
             }
         }
