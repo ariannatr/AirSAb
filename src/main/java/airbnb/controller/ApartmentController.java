@@ -106,11 +106,13 @@ public class ApartmentController {
     public ModelAndView apartment_prof( @PathVariable("apartmentID") int apartmentID){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/apartment");
+        int user_type=-1;
         Authentication authentication = authenticationFacade.getAuthentication();
         if (!authentication.getName().equals("anonymousUser")) {
             modelAndView.addObject("uname", authentication.getName());
             OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
-            UsersEntity user=userService.findByUsername(authentication.getName());
+            UsersEntity user=owner.getUsersByUsersUsername();
+            user_type=user.getType();
             modelAndView.addObject("type",String.valueOf( user.getType()));
             /*Set<ApartmentEntity> aps=owner.getApartments();
             ApartmentEntity ap1=aps.iterator().next();*/
@@ -123,6 +125,9 @@ public class ApartmentController {
         if (!authentication.getName().equals("anonymousUser") && ap1.getOwner().getUsersUsername().equals(authentication.getName())) {
            System.out.println("einai diko mou");
             modelAndView.addObject("mine","true");
+        }
+        if(!authentication.getName().equals("anonymousUser") && !ap1.getOwner().getUsersUsername().equals(authentication.getName())&&( user_type==1 || user_type==3)){
+            modelAndView.addObject("renter","true");
         }
         modelAndView.addObject("ap_type",apartmentService.getType(ap1));
         ArrayList<String> features=apartmentService.getFeatures(ap1);

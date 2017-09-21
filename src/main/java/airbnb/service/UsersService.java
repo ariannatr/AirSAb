@@ -13,8 +13,7 @@ public interface UsersService {
     public RenterEntity findRenterByUsername(String username);
    public void saveUser(UsersEntity user,String photopath);
     public UsersEntity findByUsernamePassword(String username, String Password);
-
-    public void updateUser(UsersEntity useron,UsersEntity user);
+        public void updateUser(UsersEntity useron,UsersEntity user);
     public Page<UsersEntity> findAllPageable(Pageable pageable);
     public Page<UsersEntity> findAllRenters(Pageable pageable);
     public Page<UsersEntity> findAllOwners(Pageable pageable);

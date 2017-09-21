@@ -2,8 +2,12 @@ package airbnb.service;
 
 import airbnb.model.ApartmentEntity;
 import airbnb.model.OwnerEntity;
+import airbnb.model.RenterEntity;
+import airbnb.model.ReservationEntity;
 import airbnb.repository.ApartmentRepository;
 import airbnb.repository.OwnerRepository;
+import airbnb.repository.RenterRepository;
+import airbnb.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -26,6 +30,11 @@ public class ApartmentServiceImpl implements ApartmentService {
     @Autowired
     private OwnerRepository ownerRepository;
 
+    @Autowired
+    private RenterRepository renterRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     @Override
     public ApartmentEntity findById(Integer id){
@@ -395,6 +404,24 @@ public class ApartmentServiceImpl implements ApartmentService {
         if(nofilter==true)
             aparts=apartmentRepository.findAll(pageable);
         return aparts;
+    }
+
+    @Override
+    public  void makeReservation(ReservationEntity reservation, ApartmentEntity apart, RenterEntity renter){
+        reservation.setApartment(apart);
+        reservation.setRenterUsersUsername(renter);
+        reservation.setApproval(0);
+        reservation.setApartmentOwner(apart.getOwner());
+        System.out.println("Ty to save reservation for apart"+apart.getId()+", with owner "+apart.getOwner());
+        reservationRepository.save(reservation);
+
+        Set<ReservationEntity> reservationEntitySetOfRenter=renter.getReservationsByUsersUsername();
+        reservationEntitySetOfRenter.add(reservation);
+        apartmentRepository.save(apart);
+
+        Set<ReservationEntity> reservationEntitySetOfApartment=apart.getReservations();
+        reservationEntitySetOfApartment.add(reservation);
+        renterRepository.save(renter);
     }
 
 }

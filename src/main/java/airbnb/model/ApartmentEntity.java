@@ -473,8 +473,9 @@ public class ApartmentEntity implements Serializable{
         this.owner = owner;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
-    @JoinColumn(name = "reservation_id")
+    //@OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+    @OneToMany(mappedBy = "reservation_id",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    //@JoinColumn(name = "reservation_id")
     private Set<ReservationEntity> reservations= new HashSet<>(0);
 
     public Set<ReservationEntity> getReservations() {
@@ -484,6 +485,14 @@ public class ApartmentEntity implements Serializable{
     public void setReservations(Set<ReservationEntity> reservations) {
         this.reservations = reservations;
     }
+
+    @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+    @JoinColumn(name="id")
+    private Set<ReservedEntity> reservedEntities= new HashSet<>(0);
+
+    public Set<ReservedEntity> getReservedEntities(){return reservedEntities;}
+
+    public void setReservedEntities(Set<ReservedEntity> reservedEntities){this.reservedEntities=reservedEntities;}
 
 }
 

@@ -227,4 +227,5 @@ public class UsersServiceImpl implements UsersService {
         useron.setPhoto(photopath);
         userRepository.save(useron);
     }
+
 }

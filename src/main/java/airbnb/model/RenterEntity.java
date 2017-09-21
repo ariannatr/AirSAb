@@ -64,9 +64,9 @@ public class RenterEntity {
     }
 
     @OneToMany(mappedBy = "renter_sends",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    public Set<MessagesEntity> getMessages() {return messages;}
+     public Set<MessagesEntity> getMessages() {return messages;}
 
-    public void setMessages(Set<MessagesEntity> messages) {
-        this.messages = messages;
-    }
+     public void setMessages(Set<MessagesEntity> messages) {
+                this.messages = messages;
+     }
 }

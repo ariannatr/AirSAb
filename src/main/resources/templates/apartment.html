@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html  xmlns="http://www.w3.org/1999/xhtml"
        xmlns:th="http://www.thymeleaf.org">
@@ -16,129 +17,139 @@
 
 </head>
 <body>
-    <!-- Navigation -->
-    <div th:replace="/fragments/navbar :: navbar('apartments')"></div>
+<!-- Navigation -->
+<div th:replace="/fragments/navbar :: navbar('apartments')"></div>
 
 
-    <div id="yourtext1">
-        <div class="container">
+<div id="yourtext1">
+    <div class="container">
 
-            <div class="parent-wrapper">
-                <div class="parent">
-                    <div class= "child" style="height: 100%;" >
-                        <section class="col-xs-12 col-sm-9 col-md-12 col-lg-12">
-                            <article class="search-result">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <h2 class="heading"><a  th:text="${ap.name}">Voluptatem, exercitationem, suscipit, distinctio</a></h2>
-                                    </div>
+        <div class="parent-wrapper">
+            <div class="parent">
+                <div class= "child" style="height: 100%;" >
+                    <section class="col-xs-12 col-sm-9 col-md-12 col-lg-12">
+                        <article class="search-result">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <h2 class="heading"><a  th:text="${ap.name}">Voluptatem, exercitationem, suscipit, distinctio</a></h2>
                                 </div>
+                            </div>
 
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                        <div th:if="${(ap.photo!= '')}">
-                                            <img alt="Apartment Pic"  th:src ="${ap.photo}" style="width: 350px;height:250px"/>
-                                        </div>
-                                        <div th:if="${(ap.photo=='')}">
-                                            <img th:src="@{/images/no_image.png}"  />
-                                        </div>
-
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div th:if="${(ap.photo!= '')}">
+                                        <img alt="Apartment Pic"  th:src ="${ap.photo}" style="width: 350px;height:250px"/>
                                     </div>
-
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                        <div th:if="${(ap.photo2!= '')}">
-                                            <img alt=""  th:src ="${ap.photo2}" style="width: 350px;height:250px"/>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                        <div th:if="${(ap.photo3!= '')}">
-                                            <img alt=""  th:src ="${ap.photo3}" style="width: 350px;height:250px"/>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                        <div th:if="${(ap.photo4!= '')}">
-                                            <img alt=""  th:src ="${ap.photo4}" style="width: 350px;height:250px"/>
-                                        </div>
-
+                                    <div th:if="${(ap.photo=='')}">
+                                        <img th:src="@{/images/no_image.png}"  />
                                     </div>
 
                                 </div>
 
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 excerpet border">
-                                    <p th:text="${ap.description}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                        <ul class="meta-search">
-                                            <!--<li><i class="fa fa-user"></i> <a><strong>Owned by:</strong> <span th:text="${ ap.owner.name}" ></span> <span th:text="${ owner.surname }"></span></a></li>-->
-                                            <li> <a><span th:text="${ap.country}"></span>, <span th:text="${ap.town}"></span>, <span th:text="${ap.area}"></span></a></li>
-                                            <li> <span th:text="${ap_type}"></span></li>
-                                            <li><strong>For <span th:text="${ap.capacity}"></span>people</strong> ,<span th:text="${ap.spaceArea}">-</span>s.m.</li>
-                                        </ul>
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div th:if="${(ap.photo2!= '')}">
+                                        <img alt=""  th:src ="${ap.photo2}" style="width: 350px;height:250px"/>
                                     </div>
+
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                        <p><strong>Available from: </strong><span th:text="${ap.startdate}"></span> <strong>to: </strong><span th:text="${ap.finaldate}"></span> </p>
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div th:if="${(ap.photo3!= '')}">
+                                        <img alt=""  th:src ="${ap.photo3}" style="width: 350px;height:250px"/>
                                     </div>
+
                                 </div>
-
-
-                                <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <p><span th:text="${ap.price}">price in</span>€/day</p>
-                                            <p><strong>Minimum reservation:</strong><span th:text="${ap.minimumres}"></span> days</p>
-
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div th:if="${(ap.photo4!= '')}">
+                                        <img alt=""  th:src ="${ap.photo4}" style="width: 350px;height:250px"/>
                                     </div>
+
                                 </div>
 
-                                <span class="clearfix borda"></span>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                        <ul class="meta-search">
-                                            <li><strong> Floor: </strong><span th:text="${ap.floor}"></span></li>
-                                            <li> <strong> Number of bathrooms: </strong><span th:text="${ap.baths}"></span></li>
-                                            <li><a th:each="f : ${features}"><span th:text="${f}"></span>  </a></li>
-                                        </ul>
-                                    </div>
-                                </div>
+                            </div>
 
-                                <span class="clearfix borda"></span>
-                                <div th:if ="${(mine == 'true')}">
-                                    <button id="changenow" class="btn btn-outline-warning " data-wow-delay="0.5s" onclick="change()">Change</button>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 excerpet border">
+                                <p th:text="${ap.description}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <ul class="meta-search">
+                                        <!--<li><i class="fa fa-user"></i> <a><strong>Owned by:</strong> <span th:text="${ ap.owner.name}" ></span> <span th:text="${ owner.surname }"></span></a></li>-->
+                                        <li> <a><span th:text="${ap.country}"></span>, <span th:text="${ap.town}"></span>, <span th:text="${ap.area}"></span></a></li>
+                                        <li> <span th:text="${ap_type}"></span></li>
+                                        <li><strong>For <span th:text="${ap.capacity}"></span>people</strong> ,<span th:text="${ap.spaceArea}">-</span>s.m.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <p><strong>Available from: </strong><span th:text="${ap.startdate}"></span> <strong>to: </strong><span th:text="${ap.finaldate}"></span> </p>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <p><span th:text="${ap.price}">price in</span>€/day</p>
+                                    <p><strong>Minimum reservation:</strong><span th:text="${ap.minimumres}"></span> days</p>
+
+                                </div>
+                            </div>
+
+                            <span class="clearfix borda"></span>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <ul class="meta-search">
+                                        <li><strong> Floor: </strong><span th:text="${ap.floor}"></span></li>
+                                        <li> <strong> Number of bathrooms: </strong><span th:text="${ap.baths}"></span></li>
+                                        <li><a th:each="f : ${features}"><span th:text="${f}"></span>  </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <span class="clearfix borda"></span>
+                            <div th:if ="${(mine == 'true')}">
+                                <button id="changenow" class="btn btn-outline-warning " data-wow-delay="0.5s" onclick="change()">Change</button>
+                                <br>
+                            </div>
+                            <div th:if ="${(mine != 'true' and renter == 'true')}">
+                                <form method="POST" th:action="@{/reservation/{apartmentID}(apartmentID=${ap.id})}">
+                                    <label >From :</label>
+                                    <input name="startdate" type="text"  id="datepicker" style="width: 40%;" placeholder="Arrival Date" data-date-format='yyyy-mm-dd' >
+                                    <label> To: </label>
+                                    <input name="finaldate" type="text" id="datepicker" style="width: 40%;" placeholder="Departure Date" data-date-format='yyyy-mm-dd' > <br>
+                                    <button id="rent" type="submit" class="btn btn-outline-warning " >Make a reservation</button>
                                     <br>
-                                </div>
-                                <div th:if="${(mine!='true')and ((type=='2') or(type=='3'))  and (uname!=null)}">
-                                    <button id="asknow" class="btn btn-outline-warning " data-wow-delay="0.2s" onclick="ask()">Ask owner a question</button>
+                                </form>
+                            </div>
+                            <div th:if="${(mine!='true')and ((type=='2') or(type=='3'))  and (uname!=null)}">
+                                <button id="asknow" class="btn btn-outline-warning " data-wow-delay="0.2s" onclick="ask()">Ask owner a question</button>
+                                <br>
+                            </div>
+                            <div id="qform" style="display: none;" class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <br>
-                                </div>
-                                <div id="qform" style="display: none;" class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                        <br>
                                     <form method="POST" th:action="@{/question/{apartmentID}(apartmentID=${ap.id})}">
                                         <input  name="question" id="question"   placeholder="Type your question here" required="required "maxlength="200" type="textarea"/>
                                         <input type="submit" value="Post" class="btn  btn-sm" onclick="post()"/>
                                     </form>
-                                    </div>
                                 </div>
-                                </article>
-                            <br><br>
+                            </div>
+                        </article>
+                        <br><br>
                     </section>
-                        </div>
-                    </div>
-
+                </div>
             </div>
-    </div>
-    </div>
-    <div id="yourtext2" style="display:none;">
 
-        <header class="masthead">
-            <div class="overlay">
-                <p class="table-title"> <span th:text="${ap.name}"></span></p>
-                <div class="container" style="background-color:#e6eaf2; opacity:0.8; width:90%; margin:0 auto;">
+        </div>
+    </div>
+</div>
+<div id="yourtext2" style="display:none;">
+
+    <header class="masthead">
+        <div class="overlay">
+            <p class="table-title"> <span th:text="${ap.name}"></span></p>
+            <div class="container" style="background-color:#e6eaf2; opacity:0.8; width:90%; margin:0 auto;">
 
                 <div id="secondarytext" >
                     <p class="table-subtitle"> Complete the form below to update your apartment's info</p><br>
@@ -146,8 +157,8 @@
                         <form  class="update" method="POST"   enctype="multipart/form-data" th:action="@{/apartment_update/{apartmentID}(apartmentID=${ap.id})}">
                             <table>
                                 <tr>
-                                <td class="mylabel"><strong> Name</strong>   </td>
-                                <td><input  name="name" id="name"  th:placeholder="${ap.name}"  type="text"/></td>
+                                    <td class="mylabel"><strong> Name</strong>   </td>
+                                    <td><input  name="name" id="name"  th:placeholder="${ap.name}"  type="text"/></td>
                                 </tr>
                                 <tr>
                                     <td class="mylabel"> <strong>Description</strong>  </td>
@@ -180,44 +191,44 @@
                                 </tr>
                             </table>
 
-                                <select name="type" class="mine" >
-                                    <option th:if="${(ap.type=='0')?'selected':''}" value="0"> Private Residence</option>
-                                    <option th:if="${(ap.type=='1')?'selected':''}"  value="1"> Public Residence</option>
-                                    <option th:if="${(ap.type=='2')?'selected':''}"  value="2"> Whole Residence</option>
-                                </select>
-                                <br>
+                            <select name="type" class="mine" >
+                                <option th:if="${(ap.type=='0')?'selected':''}" value="0"> Private Residence</option>
+                                <option th:if="${(ap.type=='1')?'selected':''}"  value="1"> Public Residence</option>
+                                <option th:if="${(ap.type=='2')?'selected':''}"  value="2"> Whole Residence</option>
+                            </select>
+                            <br>
 
 
-                                <label class="btn btn-sm"> Parking <input type="checkbox" name="parking" th:checked="${ap.parking} == 1" value="1"/> </label>
-                                <label class="btn btn-sm"> Air Condition <input type="checkbox" name="ac" th:checked="${ap.ac} == 1" value="1"/></label>
-                                <label class="btn btn-sm"> Internet <input type="checkbox" name="internet" th:checked="${ap.internet} == 1" value="1"  /> </label>
-                                <label class="btn btn-sm"> Elevator <input type="checkbox" name="elevator" th:checked="${ap.elevator} == 1" value="1"  /> </label>
-                                <label class="btn btn-sm"> TV <input type="checkbox" name="tv" th:checked="${ap.tv} == 1" value="1"/> </label>
-                                <label class="btn btn-sm"> Kitchen <input type="checkbox" name="kitchen" th:checked="${ap.kitchen} == 1" value="1" /> </label>
-                                <label class="btn btn-sm"> Living Room <input type="checkbox" name="livingroom" th:checked="${ap.livingroom} == 1" value="1" /> </label>
-                                <label class="btn btn-sm"> Central Heating <input type="checkbox" name="heating" th:checked="${ap.heating} == 1" value="1" /> </label>
-                                <label class="btn btn-sm"> Pets Allowed <input type="checkbox" name="pets" th:checked="${ap.pets} == 1" value="1"/> </label>
-                                <label class="btn btn-sm"> Smoking Allowed <input type="checkbox" name="smoking" th:checked="${ap.smoking} == 1" value="1" /> </label>
-                                <label class="btn btn-sm"> For Events <input type="checkbox" name="events" th:checked="${ap.events} == 1" value="1" /> </label>
+                            <label class="btn btn-sm"> Parking <input type="checkbox" name="parking" th:checked="${ap.parking} == 1" value="1"/> </label>
+                            <label class="btn btn-sm"> Air Condition <input type="checkbox" name="ac" th:checked="${ap.ac} == 1" value="1"/></label>
+                            <label class="btn btn-sm"> Internet <input type="checkbox" name="internet" th:checked="${ap.internet} == 1" value="1"  /> </label>
+                            <label class="btn btn-sm"> Elevator <input type="checkbox" name="elevator" th:checked="${ap.elevator} == 1" value="1"  /> </label>
+                            <label class="btn btn-sm"> TV <input type="checkbox" name="tv" th:checked="${ap.tv} == 1" value="1"/> </label>
+                            <label class="btn btn-sm"> Kitchen <input type="checkbox" name="kitchen" th:checked="${ap.kitchen} == 1" value="1" /> </label>
+                            <label class="btn btn-sm"> Living Room <input type="checkbox" name="livingroom" th:checked="${ap.livingroom} == 1" value="1" /> </label>
+                            <label class="btn btn-sm"> Central Heating <input type="checkbox" name="heating" th:checked="${ap.heating} == 1" value="1" /> </label>
+                            <label class="btn btn-sm"> Pets Allowed <input type="checkbox" name="pets" th:checked="${ap.pets} == 1" value="1"/> </label>
+                            <label class="btn btn-sm"> Smoking Allowed <input type="checkbox" name="smoking" th:checked="${ap.smoking} == 1" value="1" /> </label>
+                            <label class="btn btn-sm"> For Events <input type="checkbox" name="events" th:checked="${ap.events} == 1" value="1" /> </label>
 
-                                <br/>
-                                <div class="form-group" >
-                                    <label  class="mylabel" >Change photo </label>
-                                    <input  type="file" name="uploadingFile" >
-                                </div>
-                                <div class="form-group" >
-                                    <label  class="mylabel" >Change photo2 </label>
-                                    <input  type="file" name="uploadingFile2" >
-                                </div>
-                                <div class="form-group" >
-                                     <label  class="mylabel" >Change photo3 </label>
-                                    <input  type="file" name="uploadingFile3" >
-                                </div>
-                                <div class="form-group" >
-                                    <label  class="mylabel" >Change photo4 </label>
-                                     <input  type="file" name="uploadingFile4" >
-                                </div>
-                                <br>
+                            <br/>
+                            <div class="form-group" >
+                                <label  class="mylabel" >Change photo </label>
+                                <input  type="file" name="uploadingFile" >
+                            </div>
+                            <div class="form-group" >
+                                <label  class="mylabel" >Change photo2 </label>
+                                <input  type="file" name="uploadingFile2" >
+                            </div>
+                            <div class="form-group" >
+                                <label  class="mylabel" >Change photo3 </label>
+                                <input  type="file" name="uploadingFile3" >
+                            </div>
+                            <div class="form-group" >
+                                <label  class="mylabel" >Change photo4 </label>
+                                <input  type="file" name="uploadingFile4" >
+                            </div>
+                            <br>
                             <button type="submit" id="change" value="Update" class="btn  btn-outline-warning " >Update</button>
                             <button id="backnow" class="btn btn-outline-secondary" data-wow-delay="0.5s" onclick="back()">Back</button>
                         </form>
@@ -228,47 +239,46 @@
             </div>
         </div>
     </header>
-    </div>
-    <!-- Footer -->
-    <div th:replace="/fragments/footer :: footer"></div>
+</div>
+<!-- Footer -->
+<div th:replace="/fragments/footer :: footer"></div>
 
-    <!-- Bootstrap core JavaScript -->
-    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-    <script th:src="@{/vendor/popper/popper.min.js}"></script>
-    <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/popper/popper.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
 
 
-    <script type="text/javascript">
-        jQuery(function(){
-            jQuery($(":input[id^='datepicker']")).datepicker({
-                dateFormat: 'yy-mm-dd',
-                inline: true,
-                showOtherMonths: true
-            });
+<script type="text/javascript">
+    jQuery(function(){
+        jQuery($(":input[id^='datepicker']")).datepicker({
+            dateFormat: 'yy-mm-dd',
+            inline: true,
+            showOtherMonths: true
         });
-    </script>
-    <script >
-        function change(){
-            $("#yourtext1").hide();
-            $("#yourtext2").show();
-        }
+    });
+</script>
+<script >
+    function change(){
+        $("#yourtext1").hide();
+        $("#yourtext2").show();
+    }
+    function back(){
+        $("#yourtext2").hide();
+        $("#yourtext1").show();
+    }
+</script>
 
-        function back(){
-            $("#yourtext2").hide();
-            $("#yourtext1").show();
-        }
-    </script>
-
-    <script >
-        function ask(){
-            $("#qform").show();
-        }
-        function post(){
-            $("#qform").hide();
-        }
-    </script>
+<script >
+    function ask(){
+        $("#qform").show();
+    }
+    function post(){
+        $("#qform").hide();
+    }
+</script>
 
 </body>
 </html>

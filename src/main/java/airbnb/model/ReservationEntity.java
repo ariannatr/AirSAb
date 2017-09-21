@@ -10,21 +10,16 @@ import java.sql.Date;
 @Entity
 @Table(name = "reservation", schema = "mydb")
 public class ReservationEntity implements Serializable{
-   // private String renterUsersUsername;
-    private Date startdate;
-    private Date finaldate;
-    private double totalCost;
-    private int approval;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "reservation_id", nullable = false)
-    private Integer reservation_id;
-    public Integer getReservation_id() {
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "reservation_id")
+    private int reservation_id;
+    public int getReservation_id() {
         return reservation_id;
     }
 
-    public void setReservation_id(Integer reservation_id) {
+    public void setReservation_id(int reservation_id) {
         this.reservation_id = reservation_id;
     }
 
@@ -55,26 +50,29 @@ public class ReservationEntity implements Serializable{
 
     @Basic
     @Column(name = "startdate")
-    public Date getStartdate() {
+    private String startdate;
+    public String getStartdate() {
         return startdate;
     }
 
-    public void setStartdate(Date startdate) {
+    public void setStartdate(String startdate) {
         this.startdate = startdate;
     }
 
     @Basic
     @Column(name = "finaldate")
-    public Date getFinaldate() {
+    private String finaldate;
+    public String getFinaldate() {
         return finaldate;
     }
 
-    public void setFinaldate(Date finaldate) {
+    public void setFinaldate(String finaldate) {
         this.finaldate = finaldate;
     }
 
     @Basic
     @Column(name = "total_cost")
+    private double totalCost;
     public double getTotalCost() {
         return totalCost;
     }
@@ -85,11 +83,12 @@ public class ReservationEntity implements Serializable{
 
     @Basic
     @Column(name = "approval")
+    private int approval;
     public int getApproval() {
         return approval;
     }
 
-    public void setApproval(byte approval) {
+    public void setApproval(int approval) {
         this.approval = approval;
     }
 
