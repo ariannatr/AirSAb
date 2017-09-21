@@ -18,38 +18,39 @@ public class MessagesEntity implements Serializable{
     private String apart_name;
 
     @Id
-    @Column(name = "messages_id", nullable = false)
-    private Integer messages_id;
-    public Integer getMessages_id() {
-        return messages_id;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setMessages_id(Integer msg_id) {
-        this.messages_id = msg_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @ManyToOne
-    @JoinColumn(name = "renter_users_username", referencedColumnName = "users_username")
-    private RenterEntity renter;
+    @JoinColumn(name = "renter_sends",referencedColumnName = "users_username")
+    private RenterEntity renter_sends;
 
     public RenterEntity getRenter() {
-        return renter;
+        return renter_sends;
     }
 
-    public void setRenterUsersUsername(RenterEntity renter) {
-        this.renter = renter;
+    public void setRenter(RenterEntity renter) {
+        this.renter_sends = renter;
     }
 
     @ManyToOne
-    @JoinColumn(name = "owner_users_username", referencedColumnName = "users_username")
-    private OwnerEntity owner;
+    @JoinColumn(name = "owner_receives",referencedColumnName = "users_username")
+    private OwnerEntity owner_receives;
 
     public OwnerEntity getOwner() {
-        return owner;
+        return owner_receives;
     }
 
-    public void setOwnerUsersUsername(OwnerEntity owner) {
-        this.owner = owner;
+    public void setOwner(OwnerEntity owner) {
+        this.owner_receives = owner;
     }
 
     @Basic
@@ -101,9 +102,8 @@ public class MessagesEntity implements Serializable{
         MessagesEntity that = (MessagesEntity) o;
 
         if (apart_id != that.apart_id) return false;
-//        if (renterUsersUsername != null ? !renterUsersUsername.equals(that.renterUsersUsername) : that.renterUsersUsername != null)
-//            return false;
-        if (owner != null ? !owner.equals(that.owner) : that.owner != null)
+        if (renter_sends!= null ? !renter_sends.equals(that.renter_sends) : that.renter_sends != null) return false;
+        if (owner_receives != null ? !owner_receives.equals(that.owner_receives) : that.owner_receives != null)
             return false;
         if (question != null ? !question.equals(that.question) : that.question != null) return false;
         if (response != null ? !response.equals(that.response) : that.response != null) return false;
@@ -116,7 +116,7 @@ public class MessagesEntity implements Serializable{
     public int hashCode() {
         int result=0;
 //        result = renterUsersUsername != null ? renterUsersUsername.hashCode() : 0;
-        result = 31 * result + (owner != null ? owner.hashCode() : 0);
+        result = 31 * result + (owner_receives != null ? owner_receives.hashCode() : 0);
         result = 31 * result + (question != null ? question.hashCode() : 0);
         result = 31 * result + (response != null ? response.hashCode() : 0);
         result = 31 * result + (apart_name != null ? apart_name.hashCode() : 0);

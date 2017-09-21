@@ -60,6 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/apartment","/apartment/**").permitAll()
 				.antMatchers("/apartment_update").hasAnyRole("1","3")
 				.antMatchers("/owners").permitAll()
+				.antMatchers("/messages").permitAll()
 				.antMatchers("/accept","/accept/**").permitAll()
 				.antMatchers("/aparts").hasAnyRole("1","3")
 				.anyRequest().authenticated().and().anonymous().and()

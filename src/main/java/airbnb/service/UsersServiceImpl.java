@@ -122,6 +122,9 @@ public class UsersServiceImpl implements UsersService {
         return ownerRepository.findByUsersUsername(username);
     }
 
+    @Override
+    public RenterEntity findRenterByUsername(String username){return renterRepository.findByUsersUsername(username); }
+
   /*  @Override
     public Page<UsersEntity> findUsers(){
         return userRepository.findAll();

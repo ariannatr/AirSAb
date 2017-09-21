@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("renterRepository")
 public interface RenterRepository extends PagingAndSortingRepository<RenterEntity,String> {
-    RenterEntity findByUsersByUsersUsername(String username);
+    RenterEntity findByUsersUsername(String username);
 
 }
 

@@ -110,7 +110,7 @@ public class ApartmentController {
         if (!authentication.getName().equals("anonymousUser")) {
             modelAndView.addObject("uname", authentication.getName());
             OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
-            UsersEntity user=owner.getUsersByUsersUsername();
+            UsersEntity user=userService.findByUsername(authentication.getName());
             modelAndView.addObject("type",String.valueOf( user.getType()));
             /*Set<ApartmentEntity> aps=owner.getApartments();
             ApartmentEntity ap1=aps.iterator().next();*/

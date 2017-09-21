@@ -111,6 +111,19 @@
                                     <button id="changenow" class="btn btn-outline-warning " data-wow-delay="0.5s" onclick="change()">Change</button>
                                     <br>
                                 </div>
+                                <div th:if="${(mine!='true')and ((type=='2') or(type=='3'))  and (uname!=null)}">
+                                    <button id="asknow" class="btn btn-outline-warning " data-wow-delay="0.2s" onclick="ask()">Ask owner a question</button>
+                                    <br>
+                                </div>
+                                <div id="qform" style="display: none;" class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <br>
+                                    <form method="POST" th:action="@{/question/{apartmentID}(apartmentID=${ap.id})}">
+                                        <input  name="question" id="question"   placeholder="Type your question here" required="required "maxlength="200" type="textarea"/>
+                                        <input type="submit" value="Post" class="btn  btn-sm" onclick="post()"/>
+                                    </form>
+                                    </div>
+                                </div>
                                 </article>
                             <br><br>
                     </section>
@@ -245,6 +258,15 @@
         function back(){
             $("#yourtext2").hide();
             $("#yourtext1").show();
+        }
+    </script>
+
+    <script >
+        function ask(){
+            $("#qform").show();
+        }
+        function post(){
+            $("#qform").hide();
         }
     </script>
 

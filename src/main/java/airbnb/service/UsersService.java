@@ -10,7 +10,7 @@ import java.util.List;
 public interface UsersService {
     public UsersEntity findByUsername(String username);
     public OwnerEntity findOwnerByUsername(String username);
-
+    public RenterEntity findRenterByUsername(String username);
    public void saveUser(UsersEntity user,String photopath);
     public UsersEntity findByUsernamePassword(String username, String Password);
 

@@ -82,4 +82,14 @@ public class OwnerEntity {
         this.usersByUsersUsername = usersByUsersUsername;
     }
 
+    @OneToMany(mappedBy = "owner_receives",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+    private Set<MessagesEntity> messages= new HashSet<>(0);
+
+    public Set<MessagesEntity> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<MessagesEntity> messages) {
+        this.messages = messages;
+    }
 }

@@ -14,6 +14,7 @@ public class RenterEntity {
     private String usersUsername;
     private UsersEntity usersByUsersUsername;
     private Set<ReservationEntity> reservationsByUsersUsername=new HashSet<>(0);
+    private Set<MessagesEntity> messages=new HashSet<>(0);
 
     @Id
     @Column(name = "users_username")
@@ -60,5 +61,12 @@ public class RenterEntity {
 
     public void setReservationsByUsersUsername(Set<ReservationEntity> reservationsByUsersUsername) {
         this.reservationsByUsersUsername = reservationsByUsersUsername;
+    }
+
+    @OneToMany(mappedBy = "renter_sends",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    public Set<MessagesEntity> getMessages() {return messages;}
+
+    public void setMessages(Set<MessagesEntity> messages) {
+        this.messages = messages;
     }
 }
