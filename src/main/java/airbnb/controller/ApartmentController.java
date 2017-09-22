@@ -130,7 +130,7 @@ public class ApartmentController {
            System.out.println("einai diko mou");
             modelAndView.addObject("mine","true");
         }
-        if(!authentication.getName().equals("anonymousUser") && !ap1.getOwner().getUsersUsername().equals(authentication.getName())&&( user_type==1 || user_type==3)){
+        if(!authentication.getName().equals("anonymousUser") && !ap1.getOwner().getUsersUsername().equals(authentication.getName())&&( user_type==2 || user_type==3)){
             modelAndView.addObject("renter","true");
         }
         modelAndView.addObject("ap_type",apartmentService.getType(ap1));

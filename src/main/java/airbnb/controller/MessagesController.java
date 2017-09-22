@@ -127,7 +127,7 @@ public class MessagesController {
         // prevent exception), return initial size. Otherwise, return value of
         // param. decreased by 1.
         int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
-        Page<MessagesEntity> msg=null;
+
         Pager pager=null;
         Set <MessagesEntity> allbyuser=new HashSet<>(0);
 
@@ -141,7 +141,7 @@ public class MessagesController {
             allbyuser.addAll(owner.getMessages());
         }
 
-         msg= new PageImpl<>(new ArrayList(allbyuser));
+        Page<MessagesEntity> msg= new PageImpl<>(new ArrayList(allbyuser));
         pager= new Pager(msg.getTotalPages(), msg.getNumber(), BUTTONS_TO_SHOW);
         if(msg.getTotalElements()!=0){
             modelAndView.addObject("pager", pager);
