@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
@@ -141,11 +142,35 @@ public class MessagesController {
             allbyuser.addAll(owner.getMessages());
         }
 
-        Page<MessagesEntity> msg= new PageImpl<>(new ArrayList(allbyuser));
+        ArrayList<MessagesEntity> sorted=new ArrayList(allbyuser);
+        Collections.sort(sorted, new Comparator<MessagesEntity>(){
+            @Override
+            public int compare(MessagesEntity o1, MessagesEntity o2) {
+                int c_id=o2.getId() -o1.getId();
+                if (o1.getResponse() == null) {
+                    return (o2.getResponse() == null) ? 0 : -1;
+                }
+                if (o2.getResponse() == null) {
+                    return 1;
+                }
+                return c_id;
+
+            }
+        });
+
+        ArrayList<String> bysender=new ArrayList<>(0);
+        ArrayList<String> toreceiver=new ArrayList<>(0);
+        for (MessagesEntity messagesEntity : sorted) {
+            bysender.add(messagesEntity.getRenter().getUsersUsername());
+            toreceiver.add(messagesEntity.getOwner().getUsersUsername());
+        }
+        Page<MessagesEntity> msg= new PageImpl<>(sorted);
         pager= new Pager(msg.getTotalPages(), msg.getNumber(), BUTTONS_TO_SHOW);
         if(msg.getTotalElements()!=0){
             modelAndView.addObject("pager", pager);
             modelAndView.addObject("items", msg);
+            modelAndView.addObject("items2", bysender);
+            modelAndView.addObject("items3", toreceiver);
         }
         modelAndView.addObject("url","messages");
         modelAndView.addObject("selectedPageSize", evalPageSize);
@@ -173,6 +198,26 @@ public class MessagesController {
         System.out.println("responses");
 
 
+        modelAndView.setViewName("redirect:/messages");
+        return modelAndView;
+    }
+
+    @Transactional
+    @RequestMapping(value="/remove/{messageID}", method = RequestMethod.POST)
+    public ModelAndView remove( @PathVariable String messageID){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication authentication = authenticationFacade.getAuthentication();
+        modelAndView.addObject("uname", authentication.getName());
+        UsersEntity userS = userService.findByUsername(authentication.getName());
+        modelAndView.addObject("type", String.valueOf(userS.getType()));
+
+        Integer messageID_ = Integer.parseInt(messageID);
+        MessagesEntity messagesEntity=messagesRepository.findById(messageID_);
+
+        messagesRepository.deleteById(messageID_);
+
+
+        System.out.println("removed");
         modelAndView.setViewName("redirect:/messages");
         return modelAndView;
     }

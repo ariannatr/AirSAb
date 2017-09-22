@@ -11,9 +11,10 @@
 
 
     <style>
+        .message-result { margin-top: 20px; }
         .container { margin:20px 10% 20px 10%!important; width:auto!important; padding:0!important }
         .filtersContainer{margin-top:10%}
-        .mb20 { margin-bottom: 20px; }
+        mb20 { margin-bottom: 20px; }
 
         hgroup { border-bottom: 1px solid #ccc; text-align: center; margin-top:20px}
         hgroup h1 { font: 500 normal 1.625em Verdana, Geneva, sans-serif; color: #2a3644; margin-top: 0; line-height: 1.15; }
@@ -40,23 +41,29 @@
             <div class="row>">
                 <div class="parent-wrapper"th:if ="${(items!=null)}">
                     <div class="parent">
-                        <div class= "child" th:each="msg : ${items} " style="box-shadow: 5px 5px 15px #888888;">
+                        <div class= "child" th:each="msg ,msgStat: ${items} " style="box-shadow: 5px 5px 15px #888888;">
                             <section class="col-sm-12" >
                                 <article class="message-result">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <h4 >From
-                                                <!--span th:text="${msg.renterfrom.user}">from</span--></h4>
+                                    <div class="row ">
+                                        <!--div class="col-sm-12"-->
+                                            <div th:if="${ items2[__${msgStat .index}__] != uname}"class="col-sm-10">
+                                                <h4 >From <span th:text="${items2[__${msgStat .index}__]}"> sender </span> </h4>
+                                            </div>
+                                        <div th:if="${ items2[__${msgStat .index}__] == uname}"class="col-sm-10">
+                                            <h4 >To <span th:text="${items3[__${msgStat .index}__]}"> receiver </span> </h4>
                                         </div>
+                                            <div class="col-sm-2">
+                                                <form method="POST" th:action="@{/remove/{messageID}(messageID=${msg.id})}">
+                                                <input type="submit" class="btn  btn-xs  float-right" value="Remove"/>
+                                                </form>
+                                            </div>
+                                        <!--/div-->
                                     </div>
 
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <form method="POST" >
-                                            <input type="submit" class="btn btn-default btn-sm  float-right" value="Remove"/>
-                                            </form>
-                                        </div>
                                         <p>Asking about <a th:href="@{/apartment/{apartID}(apartID=${msg.apart_id})}" th:text="${msg.apart_name}"></a></p>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12" style="color:darkgreen;">
@@ -67,13 +74,18 @@
                                         <div th:if="${msg.response!=null}" class="col-sm-12" style="color:#dba63d;">
                                             <span th:text="${msg.response}">Response</span>
                                         </div>
-                                        <div th:if="${(msg.response==null) and (type!='2')}" class="col-sm-12" style="color:#dba63d;">
+                                        <div th:if="${(msg.response==null) and ( items2[__${msgStat .index}__] != uname)}" class="col-sm-12" style="color:#dba63d;">
                                             <form   method="POST" th:action="@{/response/{messageID}(messageID=${msg.id})}">
                                                 <input  name="response" id="response"  placeholder="Response" maxlength="300" type="textarea"/>
                                                 <input type="submit" value="Post" class="btn  btn-sm" />
                                             </form>
                                         </div>
+                                        <div th:if="${(msg.response==null) and ( items2[__${msgStat .index}__] == uname)}" class="col-sm-12" >
+                                            <span>(response pending)</span>
+                                        </div>
                                     </div>
+                                    <span class="clearfix borda"></span>
+                                    <br>
                                     <span class="clearfix borda"></span>
                                     <br>
                                 </article>
@@ -81,11 +93,12 @@
                         </div>
                         <br>
                     </div>
-                    <div th:replace="/fragments/paginationbar :: paginationbar"></div>
+
                 </div>
                 <div th:if ="${(items==null)}">
                     <span class="alert alert-warning" type="" style="text-align: center;">There are no messages !</span>
                 </div>
+                <div th:replace="/fragments/paginationbar :: paginationbar"></div>
             </div>
         </div>
 

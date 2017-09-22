@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+
 /**
  * Created by Σταυρίνα on 21/9/2017.
  */
@@ -16,6 +18,9 @@ import org.springframework.stereotype.Repository;
 @Repository("messagesRepository")
 public interface MessagesRepository extends PagingAndSortingRepository<MessagesEntity,Integer>{
      MessagesEntity findById(Integer id);
+
+     @Transactional
+     void deleteById(Integer id);
      Page<MessagesEntity> findAllByRenter(RenterEntity renter, Pageable pageable);
      //Page<MessagesEntity> findByOwner(OwnerEntity owner, Pageable pageable);
 }
