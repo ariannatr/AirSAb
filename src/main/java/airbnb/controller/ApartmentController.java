@@ -110,17 +110,21 @@ public class ApartmentController {
         Authentication authentication = authenticationFacade.getAuthentication();
         if (!authentication.getName().equals("anonymousUser")) {
             modelAndView.addObject("uname", authentication.getName());
-            OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
-            UsersEntity user=owner.getUsersByUsersUsername();
-            user_type=user.getType();
-            modelAndView.addObject("type",String.valueOf( user.getType()));
+            UsersEntity userS= userService.findByUsername(authentication.getName());
+            user_type=userS.getType();
+            modelAndView.addObject("type",String.valueOf( userS.getType()));
             /*Set<ApartmentEntity> aps=owner.getApartments();
             ApartmentEntity ap1=aps.iterator().next();*/
+            if(userS.getType()==1 || userS.getType()==3) {
+                OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
+                if (owner.getApproval() == 0)
+                    modelAndView.addObject("approval", "false");
+            }
 
-            modelAndView.addObject("owner", user);
 
         }
         ApartmentEntity ap1=apartmentService.findById(apartmentID);
+        modelAndView.addObject("owner", ap1.getOwner());
         modelAndView.addObject("ap",ap1);
         if (!authentication.getName().equals("anonymousUser") && ap1.getOwner().getUsersUsername().equals(authentication.getName())) {
            System.out.println("einai diko mou");

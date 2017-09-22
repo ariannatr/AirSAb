@@ -15,6 +15,7 @@ import airbnb.service.UsersService;
 import airbnb.service.MessagesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +27,19 @@ import org.springframework.data.domain.PageRequest;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Σταυρίνα on 21/9/2017.
  */
 @Controller
 public class MessagesController {
+
+    private static final int BUTTONS_TO_SHOW = 5;
+    private static final int INITIAL_PAGE = 0;
+    private static final int INITIAL_PAGE_SIZE = 5;
+    private static final int[] PAGE_SIZES = { 5, 10, 20 };
+
     @Autowired
     private UsersService userService;
 
@@ -83,7 +89,6 @@ public class MessagesController {
 
     private void saveMessage(String Question,RenterEntity renter,Integer apartmentID_,String apartment_name,OwnerEntity owner)
     {
-
         MessagesEntity messagesEntity=new MessagesEntity();
         messagesEntity.setQuestion(Question);
         messagesEntity.setOwner(owner);
@@ -98,6 +103,78 @@ public class MessagesController {
         Set<MessagesEntity> messsagesEntitySet2= renter.getMessages();
         messsagesEntitySet2.add(messagesEntity);
         renterRepository.save(renter);
+    }
+
+    @RequestMapping(value={"/messages"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
+    public ModelAndView apartments(@RequestParam("pageSize") Optional<Integer> pageSize,
+                                   @RequestParam("page") Optional<Integer> page){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/messages");
+        Authentication authentication = authenticationFacade.getAuthentication();
+        if (!authentication.getName().equals("anonymousUser")) {
+            modelAndView.addObject("uname", authentication.getName());
+            UsersEntity userS = userService.findByUsername(authentication.getName());
+            modelAndView.addObject("type", String.valueOf(userS.getType()));
+            if(userS.getType()==1 || userS.getType()==3) {
+                OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
+                if (owner.getApproval() == 0)
+                    modelAndView.addObject("approval", "false");
+            }
+
+        }
+        int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
+        // Evaluate page. If requested parameter is null or less than 0 (to
+        // prevent exception), return initial size. Otherwise, return value of
+        // param. decreased by 1.
+        int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
+        Page<MessagesEntity> msg=null;
+        Pager pager=null;
+        Set <MessagesEntity> allbyuser=new HashSet<>(0);
+
+        UsersEntity userS = userService.findByUsername(authentication.getName());
+        if((userS.getType()==2 ) || (userS.getType()==3)){
+            RenterEntity renter=userService.findRenterByUsername(authentication.getName());
+            allbyuser.addAll(renter.getMessages());
+        }
+        if((userS.getType()==1 ) || (userS.getType()==3)){
+            OwnerEntity owner=userService.findOwnerByUsername(authentication.getName());
+            allbyuser.addAll(owner.getMessages());
+        }
+
+         msg= new PageImpl<>(new ArrayList(allbyuser));
+        pager= new Pager(msg.getTotalPages(), msg.getNumber(), BUTTONS_TO_SHOW);
+        if(msg.getTotalElements()!=0){
+            modelAndView.addObject("pager", pager);
+            modelAndView.addObject("items", msg);
+        }
+        modelAndView.addObject("url","messages");
+        modelAndView.addObject("selectedPageSize", evalPageSize);
+        modelAndView.addObject("pageSizes", PAGE_SIZES);
+
+        return modelAndView;
+    }
+
+
+
+    @RequestMapping(value="/response/{messageID}", method = RequestMethod.POST)
+    public ModelAndView response( @PathVariable String messageID, @RequestParam("response") String Response){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication authentication = authenticationFacade.getAuthentication();
+        modelAndView.addObject("uname", authentication.getName());
+        UsersEntity userS = userService.findByUsername(authentication.getName());
+        modelAndView.addObject("type", String.valueOf(userS.getType()));
+
+        Integer messageID_ = Integer.parseInt(messageID);
+        MessagesEntity messagesEntity=messagesRepository.findById(messageID_);
+        messagesEntity.setResponse(Response);
+        messagesRepository.save(messagesEntity);
+
+
+        System.out.println("responses");
+
+
+        modelAndView.setViewName("redirect:/messages");
+        return modelAndView;
     }
 }
 

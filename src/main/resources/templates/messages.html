@@ -8,6 +8,7 @@
 
     <!-- Custom styles for this template -->
     <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
+    <!--link th:href="@{/css/searchCss.css}" rel="stylesheet" type="text/css" media="all"-->
 
 </head>
 <body>
@@ -35,26 +36,27 @@
                                 <article class="message-result">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <h2 ><a th:href="@{/apartment/{apartID}(apartID=${apart.id})}" th:text="${apart.name}">From tade</a></h2>
+                                            <h4 >From <span th:text="msg.renterfrom">from</span></h4>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-sm-12"></div>
-                                        <p>Asking about "apartment_name"(link sto id)</p>
+                                        <p>Asking about <a th:href="@{/apartment/{apartID}(apartID=${msg.apart_id})}" th:text="${msg.apart_name}"></a></p>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12" style="color:darkgreen;">
-                                            <span th:text="${msg.init}">Question</span>
+                                            <span th:text="${msg.question}">Question</span>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div th:if="${msg.response!=null}" class="col-sm-12" style="color:#dba63d;">
                                             <span th:text="${msg.response}">Response</span>
                                         </div>
-                                        <div th:if="${msg.response==null}" class="col-sm-12" style="color:#dba63d;">
-                                            <form   method="POST" >
-                                            <input  name="response" id="response"  placeholder="Response" maxlength="300" type="textarea"/>
+                                        <div th:if="${(msg.response==null) and (type!='2')}" class="col-sm-12" style="color:#dba63d;">
+                                            <form   method="POST" th:action="@{/response/{messageID}(messageID=${msg.id})}">
+                                                <input  name="response" id="response"  placeholder="Response" maxlength="300" type="textarea"/>
+                                                <input type="submit" value="Post" class="btn  btn-sm" />
                                             </form>
                                         </div>
                                     </div>

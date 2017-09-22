@@ -16,6 +16,6 @@ import org.springframework.stereotype.Repository;
 @Repository("messagesRepository")
 public interface MessagesRepository extends PagingAndSortingRepository<MessagesEntity,Integer>{
      MessagesEntity findById(Integer id);
-   // Page<MessagesEntity> findAllByRenter(RenterEntity renter, Pageable pageable);
-   // Page<MessagesEntity> findAllByOwner(OwnerEntity owner, Pageable pageable);
+     Page<MessagesEntity> findAllByRenter(RenterEntity renter, Pageable pageable);
+     //Page<MessagesEntity> findByOwner(OwnerEntity owner, Pageable pageable);
 }
