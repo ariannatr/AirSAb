@@ -63,7 +63,7 @@ public class RenterEntity {
         this.reservationsByUsersUsername = reservationsByUsersUsername;
     }
 
-    @OneToMany(mappedBy = "renter_sends",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "renterfrom",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
      public Set<MessagesEntity> getMessages() {return messages;}
 
      public void setMessages(Set<MessagesEntity> messages) {

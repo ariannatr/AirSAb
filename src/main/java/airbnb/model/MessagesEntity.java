@@ -30,27 +30,27 @@ public class MessagesEntity implements Serializable{
     }
 
     @ManyToOne
-    @JoinColumn(name = "renter_sends",referencedColumnName = "users_username")
-    private RenterEntity renter_sends;
+    @JoinColumn(name = "renterfrom",referencedColumnName = "users_username")
+    private RenterEntity renterfrom;
 
     public RenterEntity getRenter() {
-        return renter_sends;
+        return renterfrom;
     }
 
     public void setRenter(RenterEntity renter) {
-        this.renter_sends = renter;
+        this.renterfrom = renter;
     }
 
     @ManyToOne
-    @JoinColumn(name = "owner_receives",referencedColumnName = "users_username")
-    private OwnerEntity owner_receives;
+    @JoinColumn(name = "ownerto",referencedColumnName = "users_username")
+    private OwnerEntity ownerto;
 
     public OwnerEntity getOwner() {
-        return owner_receives;
+        return ownerto;
     }
 
     public void setOwner(OwnerEntity owner) {
-        this.owner_receives = owner;
+        this.ownerto = owner;
     }
 
     @Basic
@@ -102,8 +102,8 @@ public class MessagesEntity implements Serializable{
         MessagesEntity that = (MessagesEntity) o;
 
         if (apart_id != that.apart_id) return false;
-        if (renter_sends!= null ? !renter_sends.equals(that.renter_sends) : that.renter_sends != null) return false;
-        if (owner_receives != null ? !owner_receives.equals(that.owner_receives) : that.owner_receives != null)
+        if (renterfrom!= null ? !renterfrom.equals(that.renterfrom) : that.renterfrom != null) return false;
+        if (ownerto != null ? !ownerto.equals(that.ownerto) : that.ownerto != null)
             return false;
         if (question != null ? !question.equals(that.question) : that.question != null) return false;
         if (response != null ? !response.equals(that.response) : that.response != null) return false;
@@ -116,7 +116,7 @@ public class MessagesEntity implements Serializable{
     public int hashCode() {
         int result=0;
 //        result = renterUsersUsername != null ? renterUsersUsername.hashCode() : 0;
-        result = 31 * result + (owner_receives != null ? owner_receives.hashCode() : 0);
+        result = 31 * result + (ownerto != null ? ownerto.hashCode() : 0);
         result = 31 * result + (question != null ? question.hashCode() : 0);
         result = 31 * result + (response != null ? response.hashCode() : 0);
         result = 31 * result + (apart_name != null ? apart_name.hashCode() : 0);
