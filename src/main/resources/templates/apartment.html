@@ -108,6 +108,12 @@
                             </div>
 
                             <span class="clearfix borda"></span>
+                            <div th:if="${success=='true'}">
+                                <span class="alert alert-success">Your reservation has been completed succesfully !</span>
+                            </div>
+                            <div th:if="${success=='false'}">
+                                <span class="alert alert-success">Your reservation has not been completed succesfully !</span>
+                            </div>
                             <div th:if ="${(mine == 'true')}">
                                 <button id="changenow" class="btn btn-outline-warning " data-wow-delay="0.5s" onclick="change()">Change</button>
                                 <br>

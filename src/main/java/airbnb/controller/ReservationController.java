@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.util.Set;
 
 /**
  * Created by Arianna on 21/9/2017.
@@ -34,7 +36,7 @@ public class ReservationController {
     private ApartmentService apartmentService;
 
     @RequestMapping(value = "/reservation/{apartmentID}", method = RequestMethod.POST)
-    public ModelAndView makeReservation(@ModelAttribute("reservation") @Valid ReservationEntity reservation,@PathVariable("apartmentID") int apartmentID){
+    public ModelAndView makeReservation(@ModelAttribute("reservation") @Valid ReservationEntity reservation,@PathVariable("apartmentID") int apartmentID) throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = authenticationFacade.getAuthentication();
         modelAndView.setViewName("redirect:/apartment/"+apartmentID);
@@ -42,11 +44,20 @@ public class ReservationController {
             ApartmentEntity apart=apartmentService.findById(apartmentID);
             RenterEntity renter=userService.findRenterByUsername(authentication.getName());
             System.out.println("Reserve from "+reservation.getStartdate()+" , to"+reservation.getFinaldate());
-            apartmentService.makeReservation(reservation,apart,renter);
+            if(apartmentService.makeReservation(reservation,apart,renter)<0)
+            {
+                System.out.println("kati pige lathos stin kratisi");
+                modelAndView.addObject("success","false");
+            }
+            else {
+                modelAndView.addObject("success", "true");
+                System.out.println("ola good");
+            }
         }
         else{
             System.out.println("You are not allowed to make a reservation");
         }
         return modelAndView;
     }
+
 }

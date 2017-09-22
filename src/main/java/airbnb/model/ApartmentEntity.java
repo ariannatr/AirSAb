@@ -486,8 +486,7 @@ public class ApartmentEntity implements Serializable{
         this.reservations = reservations;
     }
 
-    @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-    @JoinColumn(name="id")
+    @OneToMany(mappedBy = "id",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
     private Set<ReservedEntity> reservedEntities= new HashSet<>(0);
 
     public Set<ReservedEntity> getReservedEntities(){return reservedEntities;}

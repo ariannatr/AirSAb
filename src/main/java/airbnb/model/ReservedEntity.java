@@ -1,13 +1,14 @@
 package airbnb.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Arianna on 22/9/2017.
  */
 @Entity
 @Table(name = "reserved", schema = "mydb")
-public class ReservedEntity {
+public class ReservedEntity implements Serializable{
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -21,6 +22,18 @@ public class ReservedEntity {
         this.id = id;
     }
 
+    public ReservedEntity(String date,ApartmentEntity apart_id){
+        this.date=date;
+        this.apartment=apart_id;
+        System.out.println("dimiourgis tin grammi kratisii "+date);
+    }
+
+    public ReservedEntity()
+    {
+        this.date="";
+    }
+
+
     @Basic
     @Column(name = "startdate")
     private String date;
@@ -33,7 +46,7 @@ public class ReservedEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "apartment_id")
+    @JoinColumn(name ="apartment_id")
     private ApartmentEntity apartment;
 
     public ApartmentEntity getApartment() {
@@ -48,10 +61,9 @@ public class ReservedEntity {
     @Override
     public int hashCode() {
         int result=0;
-//        result = renterUsersUsername != null ? renterUsersUsername.hashCode() : 0;
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (int) id;
-
+        result = 31 * result + (apartment != null ? apartment.hashCode() : 0);
         return result;
     }
 
@@ -66,7 +78,6 @@ public class ReservedEntity {
         if (apartment != null ? !apartment.equals(that.apartment) : that.apartment != null)
             return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
-
         return true;
     }
 }

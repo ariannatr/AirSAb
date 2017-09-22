@@ -7,6 +7,8 @@ import airbnb.model.ReservationEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import java.security.acl.Owner;
@@ -29,5 +31,5 @@ public interface ApartmentService {
     public Page<ApartmentEntity> findAparts(Pageable pageable);
     public Page<ApartmentEntity> findAparts(Optional<Integer> heating,Optional<Float>  maxPrice,Optional<Integer>  kitchen,Optional<Integer>  tv,Optional<Integer>  type,Optional<Integer>  elevator,Optional<Integer>  ac,Optional<Integer>  internet,Optional<Integer>  parking,Pageable pageable);
     public Page<ApartmentEntity> findAparts(Optional<String> country,Optional<String> town,Optional<String> area,Optional<String> arrivalDate,Optional<String> departureDate,Optional< Integer> people, Pageable pageable);
-    public  void makeReservation(ReservationEntity reservation, ApartmentEntity apart, RenterEntity renter);
+    public  int makeReservation(ReservationEntity reservation, ApartmentEntity apart, RenterEntity renter) throws ParseException;
 }

@@ -1,28 +1,28 @@
 package airbnb.service;
 
-import airbnb.model.ApartmentEntity;
-import airbnb.model.OwnerEntity;
-import airbnb.model.RenterEntity;
-import airbnb.model.ReservationEntity;
-import airbnb.repository.ApartmentRepository;
-import airbnb.repository.OwnerRepository;
-import airbnb.repository.RenterRepository;
-import airbnb.repository.ReservationRepository;
+import airbnb.model.*;
+import airbnb.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Arianna on 29/8/2017.
  */
 @Service("apartmentService")
 public class ApartmentServiceImpl implements ApartmentService {
+
+    @Autowired
+    private ReservedRepository reservedRepository;
 
     @Autowired
     private ApartmentRepository apartmentRepository;
@@ -407,21 +407,69 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public  void makeReservation(ReservationEntity reservation, ApartmentEntity apart, RenterEntity renter){
-        reservation.setApartment(apart);
-        reservation.setRenterUsersUsername(renter);
-        reservation.setApproval(0);
-        reservation.setApartmentOwner(apart.getOwner());
-        System.out.println("Ty to save reservation for apart"+apart.getId()+", with owner "+apart.getOwner());
-        reservationRepository.save(reservation);
+    public  int makeReservation(ReservationEntity reservation, ApartmentEntity apart, RenterEntity renter) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String startDate=apart.getStartdate();
+        String finalDate=apart.getFinaldate();
+        String arrivalDate=reservation.getStartdate();
+        String departureDate=reservation.getFinaldate();
 
-        Set<ReservationEntity> reservationEntitySetOfRenter=renter.getReservationsByUsersUsername();
-        reservationEntitySetOfRenter.add(reservation);
-        apartmentRepository.save(apart);
+        Date date = formatter.parse(arrivalDate);
+        Date date2=formatter.parse(departureDate);
+        Date dates= formatter.parse(startDate);
+        Date datef= formatter.parse(finalDate);
 
-        Set<ReservationEntity> reservationEntitySetOfApartment=apart.getReservations();
-        reservationEntitySetOfApartment.add(reservation);
-        renterRepository.save(renter);
+        Set<ReservedEntity> reservedDays=apart.getReservedEntities(); //days occupied
+        System.out.println("To diamerisma einai kleismeno tis meres "+reservedDays);
+        if(date2.after(date)&& (date2.before(datef)|| date2.compareTo(datef)==0)&& (date.after(dates)|| date.compareTo(dates)==0)){
+            System.out.println("To diastima einai apodekto");
+            int diff = date2.getDate()- date.getDate();
+            TimeUnit timeUnit = TimeUnit.DAYS;
+            System.out.print(timeUnit.convert(diff, TimeUnit.DAYS));
+            List<String> dateslist=new ArrayList<String>();     //the days to save as reserved
+            dateslist.add(startDate);
+            for(int i=1;i<diff;i++)
+            {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                calendar.add(Calendar.DAY_OF_YEAR, 1);
+                System.out.println(formatter.format(calendar.getTime()));
+                date=calendar.getTime();
+                if(reservedDays.contains(formatter.format(calendar.getTime())))
+                    return -2;
+                dateslist.add(formatter.format(calendar.getTime()));
+            }
+            System.out.println("Tha meinw tis meres "+dateslist);
+
+            /*Save the reservation*/
+            reservation.setApartment(apart);
+            reservation.setRenterUsersUsername(renter);
+            reservation.setApproval(0);
+            reservation.setApartmentOwner(apart.getOwner());
+            System.out.println("Ty to save reservation for apart" + apart.getId() + ", with owner " + apart.getOwner());
+            reservationRepository.save(reservation);
+
+            /*Save renter's new Reservation*/
+            Set<ReservationEntity> reservationEntitySetOfRenter = renter.getReservationsByUsersUsername();// renter's reservations
+            reservationEntitySetOfRenter.add(reservation);
+            renterRepository.save(renter);
+
+            System.out.println("The days reserved before "+reservedDays);
+            /*Save the "new" Reserved Days */
+            for(int i=0;i<dateslist.size();i++)
+            {
+                ReservedEntity reservedEntity=new ReservedEntity(dateslist.get(i),apart);
+                reservedDays.add(reservedEntity);
+                System.out.println("Tha apothikeusw tin imera "+reservedEntity.getDate());
+                reservedRepository.save(reservedEntity);
+            }
+            System.out.println("The days reserved now "+reservedDays);
+            apart.setReservedEntities(reservedDays);
+            apartmentRepository.save(apart);
+            return 1;
+        }
+        else
+            return -1;
     }
 
 }
