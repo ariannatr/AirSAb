@@ -15,6 +15,22 @@
     <link th:href="@{/css/apartment_prof.css}" rel="stylesheet" type="text/css" media="all">
     <link th:href="@{/css/searchCss.css}" rel="stylesheet" type="text/css" media="all">
 
+    <style>
+        #div-1 {
+            position:relative;
+        }
+        #div-1a {
+            position:absolute;
+            top:0;
+            left:0;
+        }
+        #div-1b {
+            position:absolute;
+            bottom:0;
+            right:0;
+        }
+    </style>
+
 </head>
 <body>
 <!-- Navigation -->
@@ -38,29 +54,57 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <div th:if="${(ap.photo!= '')}">
-                                        <img alt="Apartment Pic"  th:src ="${ap.photo}" style="width: 350px;height:250px"/>
+                                        <div id="div-1">
+                                            <img alt="Apartment Pic"  th:src ="${ap.photo}" style="width: 350px;height:250px"/>
+                                            <div th:if ="${(mine == 'true')}" id="div-1a" data-role="fieldcontain">
+                                                <!--a href="index.html" data-role="button" data-icon="delete">Delete</a-->
+                                                <form method="POST" th:action="@{/removephoto/1/{apartmentID}(apartmentID=${ap.id})}" >
+                                                    <button type="submit" class="btn-xs " value="Remove">Remove</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div th:if="${(ap.photo=='')}">
-                                        <img th:src="@{/images/no_image.png}"  />
+                                        <img th:src="@{/images/no_image.png}"   style="width: 350px;height:250px"/>
                                     </div>
 
                                 </div>
 
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <div th:if="${(ap.photo2!= '')}">
-                                        <img alt=""  th:src ="${ap.photo2}" style="width: 350px;height:250px"/>
+                                        <div id="div-1">
+                                            <img alt=""  th:src ="${ap.photo2}" style="width: 350px;height:250px"/>
+                                             <div id="div-1a" data-role="fieldcontain"  th:if ="${(mine == 'true')}">
+                                                 <form method="POST" th:action="@{/removephoto/2/{apartmentID}(apartmentID=${ap.id})}" >
+                                                     <button type="submit" class="btn-xs " value="Remove">Remove</button>
+                                                 </form>
+                                             </div>
+                                        </div>
                                     </div>
-
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <div th:if="${(ap.photo3!= '')}">
-                                        <img alt=""  th:src ="${ap.photo3}" style="width: 350px;height:250px"/>
+                                        <div id="div-1">
+                                            <img alt=""  th:src ="${ap.photo3}" style="width: 350px;height:250px"/>
+                                            <div id="div-1a" data-role="fieldcontain"  th:if ="${(mine == 'true')}">
+                                                <form method="POST" th:action="@{/removephoto/3/{apartmentID}(apartmentID=${ap.id})}" >
+                                                    <button type="submit" class="btn-xs " value="Remove">Remove</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <div th:if="${(ap.photo4!= '')}">
-                                        <img alt=""  th:src ="${ap.photo4}" style="width: 350px;height:250px"/>
+                                        <div id="div-1">
+                                            <img alt=""  th:src ="${ap.photo4}" style="width: 350px;height:250px"/>
+                                            <div id="div-1a" data-role="fieldcontain"  th:if ="${(mine == 'true')}">
+                                                <form method="POST" th:action="@{/removephoto/4/{apartmentID}(apartmentID=${ap.id})}" >
+                                                    <button type="submit" class="btn-xs " value="Remove">Remove</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -102,6 +146,7 @@
                                     <ul class="meta-search">
                                         <li><strong> Floor: </strong><span th:text="${ap.floor}"></span></li>
                                         <li> <strong> Number of bathrooms: </strong><span th:text="${ap.baths}"></span></li>
+                                        <li> <strong> Number of beds: </strong><span th:text="${ap.beds}"></span></li>
                                         <li><a th:each="f : ${features}"><span th:text="${f}"></span>  </a></li>
                                     </ul>
                                 </div>

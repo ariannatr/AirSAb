@@ -141,7 +141,7 @@ public class ApartmentServiceImpl implements ApartmentService {
 
         if(!String.valueOf(old.getBeds()).replaceAll(" ","").equals(""))
         {
-            ap.setSpaceArea(old.getBeds());
+            ap.setBeds(old.getBeds());
         }
 
         if(!String.valueOf(old.getMinimumres()).replaceAll(" ","").equals(""))
@@ -472,4 +472,18 @@ public class ApartmentServiceImpl implements ApartmentService {
             return -1;
     }
 
+    @Override
+    public void removephoto(ApartmentEntity apartmentEntity, Integer num){
+        if(num==1)
+            apartmentEntity.setPhoto("");
+        else if(num==2)
+            apartmentEntity.setPhoto2("");
+        else if(num==3)
+            apartmentEntity.setPhoto3("");
+        else if(num==4)
+            apartmentEntity.setPhoto4("");
+
+        apartmentRepository.save(apartmentEntity);
+        return;
+    }
 }

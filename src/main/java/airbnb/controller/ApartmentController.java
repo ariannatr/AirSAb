@@ -191,7 +191,7 @@ public class ApartmentController {
             modelAndView.addObject("ap_type", apartmentService.getType(ap));
             ArrayList<String> features = apartmentService.getFeatures(ap);
             modelAndView.addObject("features", features);
-            redirectAttributes.addFlashAttribute("success", "true");
+            //redirectAttributes.addFlashAttribute("success", "true");
             modelAndView.setViewName("redirect:/apartment/"+apartmentID);
             return modelAndView;
         } else {
@@ -241,4 +241,24 @@ public class ApartmentController {
         modelAndView.addObject("owner", owner.getUsersByUsersUsername());
         return modelAndView;
     }
+
+
+    @RequestMapping(value="/removephoto/{num}/{apartmentID}", method = RequestMethod.POST)
+    public ModelAndView removephoto( @PathVariable String num,@PathVariable String apartmentID){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication authentication = authenticationFacade.getAuthentication();
+        modelAndView.addObject("uname", authentication.getName());
+        UsersEntity userS = userService.findByUsername(authentication.getName());
+        modelAndView.addObject("type", String.valueOf(userS.getType()));
+
+        Integer apartmetID_ = Integer.parseInt(apartmentID);
+        Integer num_ = Integer.parseInt(num);
+        ApartmentEntity ap=apartmentService.findById(apartmetID_);
+
+        apartmentService.removephoto(ap,num_);
+
+        modelAndView.setViewName("redirect:/apartment/"+apartmentID);
+        return modelAndView;
+    }
+
 }
