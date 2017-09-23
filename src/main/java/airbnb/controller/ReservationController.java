@@ -44,10 +44,20 @@ public class ReservationController {
             ApartmentEntity apart=apartmentService.findById(apartmentID);
             RenterEntity renter=userService.findRenterByUsername(authentication.getName());
             System.out.println("Reserve from "+reservation.getStartdate()+" , to"+reservation.getFinaldate());
-            if(apartmentService.makeReservation(reservation,apart,renter)<0)
+            int temp=apartmentService.makeReservation(reservation,apart,renter);
+            if(temp==-1)
             {
-                System.out.println("kati pige lathos stin kratisi");
+                System.out.println("not available");
                 modelAndView.addObject("success","false");
+            }
+            else if(temp==-2)
+            {
+                modelAndView.addObject("success","min");
+            }
+            else if(temp==-3)
+            {
+                modelAndView.addObject("success","invalid");
+
             }
             else {
                 modelAndView.addObject("success", "true");

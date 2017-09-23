@@ -13,9 +13,9 @@ public class ReservationEntity implements Serializable{
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "reservation_id")
-    private int reservation_id;
-    public int getReservation_id() {
+    @Column(name = "id")
+    private Integer reservation_id;
+    public Integer getReservation_id() {
         return reservation_id;
     }
 
@@ -86,26 +86,8 @@ public class ReservationEntity implements Serializable{
         this.approval = approval;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        ReservationEntity that = (ReservationEntity) o;
-
-        if (Double.compare(that.totalCost, totalCost) != 0) return false;
-        if (approval != that.approval) return false;
-//        if (renterUsersUsername != null ? !renterUsersUsername.equals(that.renterUsersUsername) : that.renterUsersUsername != null)
-//            return false;
-        if (apartmentOwner != null ? !apartmentOwner.equals(that.apartmentOwner) : that.apartmentOwner != null)
-            return false;
-        if (startdate != null ? !startdate.equals(that.startdate) : that.startdate != null) return false;
-        if (finaldate != null ? !finaldate.equals(that.finaldate) : that.finaldate != null) return false;
-
-        return true;
-    }
-
-    @ManyToOne
+    @ManyToOne//(fetch=FetchType.LAZY)
     @JoinColumn(name = "apartment_id")
     private ApartmentEntity apartment;
 
@@ -129,5 +111,24 @@ public class ReservationEntity implements Serializable{
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (int) approval;
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ReservationEntity that = (ReservationEntity) o;
+
+        if (Double.compare(that.totalCost, totalCost) != 0) return false;
+        if (approval != that.approval) return false;
+//        if (renterUsersUsername != null ? !renterUsersUsername.equals(that.renterUsersUsername) : that.renterUsersUsername != null)
+//            return false;
+        if (apartmentOwner != null ? !apartmentOwner.equals(that.apartmentOwner) : that.apartmentOwner != null)
+            return false;
+        if (startdate != null ? !startdate.equals(that.startdate) : that.startdate != null) return false;
+        if (finaldate != null ? !finaldate.equals(that.finaldate) : that.finaldate != null) return false;
+
+        return true;
     }
 }

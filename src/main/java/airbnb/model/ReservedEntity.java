@@ -13,8 +13,8 @@ public class ReservedEntity{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
-    public int getId() {
+    private Integer id;
+    public Integer getId() {
         return id;
     }
 
@@ -43,7 +43,7 @@ public class ReservedEntity{
     }
 
 
-    @ManyToOne
+    @ManyToOne//(fetch=FetchType.LAZY)
     @JoinColumn(name ="apartment_id")
     private ApartmentEntity apartment;
     public ApartmentEntity getApartment() {
@@ -73,7 +73,7 @@ public class ReservedEntity{
     public int hashCode() {
         int result=0;
         result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (int) id;
+       // result = 31 * result +  id;
         //result = 31 * result + (apartment != null ? apartment.hashCode() : 0);
         return result;
     }

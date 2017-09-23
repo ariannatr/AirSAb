@@ -153,17 +153,23 @@
                             </div>
 
                             <span class="clearfix borda"></span>
-                            <div th:if="${success=='true'}">
-                                <span class="alert alert-success">Your reservation has been completed succesfully !</span>
-                            </div>
-                            <div th:if="${success=='false'}">
-                                <span class="alert alert-success">Your reservation has not been completed succesfully !</span>
-                            </div>
                             <div th:if ="${(mine == 'true')}">
                                 <button id="changenow" class="btn btn-outline-warning " data-wow-delay="0.5s" onclick="change()">Change</button>
                                 <br>
                             </div>
                             <div th:if ="${(mine != 'true' and renter == 'true')}">
+                                <div th:if="${(param.success != null) and (param.success[0] == 'true')}">
+                                    <span class="alert alert-success">You reservation has been submitted !</span>
+                                </div>
+                                <div th:if="${(param.success != null) and (param.success[0] == 'invalid')}">
+                                    <span class="alert alert-success">Sorry,the given time area is invalid</span>
+                                </div>
+                                <div th:if="${(param.success != null) and (param.success[0] == 'min')}">
+                                    <span class="alert alert-warning">We are sorry,minimum reservation is <span th:text="${ap.minimumres}"></span> days !</span>
+                                </div>
+                                <div th:if="${(param.success != null) and (param.success[0] == 'false')}">
+                                    <span class="alert alert-warning">We are sorry these days are not available !</span>
+                                </div>
                                 <form method="POST" th:action="@{/reservation/{apartmentID}(apartmentID=${ap.id})}">
                                     <label >From :</label>
                                     <input name="startdate" type="text"  id="datepicker" style="width: 40%;" placeholder="Arrival Date" data-date-format='yyyy-mm-dd' >

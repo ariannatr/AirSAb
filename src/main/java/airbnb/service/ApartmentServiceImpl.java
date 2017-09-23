@@ -427,8 +427,10 @@ public class ApartmentServiceImpl implements ApartmentService {
             int diff = date2.getDate()- date.getDate();
             TimeUnit timeUnit = TimeUnit.DAYS;
             System.out.print(timeUnit.convert(diff, TimeUnit.DAYS));
+            if(diff<apart.getMinimumres())
+                return -2;
             List<String> dateslist=new ArrayList<String>();     //the days to save as reserved
-            dateslist.add(startDate);
+            dateslist.add(arrivalDate);
             for(int i=1;i<diff;i++)
             {
                 Calendar calendar = Calendar.getInstance();
@@ -436,9 +438,12 @@ public class ApartmentServiceImpl implements ApartmentService {
                 calendar.add(Calendar.DAY_OF_YEAR, 1);
                 System.out.println(formatter.format(calendar.getTime()));
                 date=calendar.getTime();
-                if(reservedDays.contains(formatter.format(calendar.getTime())))
-                    return -2;
-                dateslist.add(formatter.format(calendar.getTime()));
+                String tempDate=formatter.format(calendar.getTime());
+                if(!reservedRepository.findByApartmentAndDate(apart,tempDate).isEmpty())
+                    return -1;
+                //if(reservedDays.contains(formatter.format(calendar.getTime())))
+                  //  return -2;
+                dateslist.add(tempDate);
             }
             System.out.println("Tha meinw tis meres "+dateslist);
 
@@ -470,7 +475,7 @@ public class ApartmentServiceImpl implements ApartmentService {
             return 1;
         }
         else
-            return -1;
+            return -3;
     }
 
     @Override

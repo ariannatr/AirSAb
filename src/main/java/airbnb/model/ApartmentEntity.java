@@ -52,9 +52,9 @@ public class ApartmentEntity implements Serializable{
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="id")
-    private int id;
-    public int getId() {
+    @Column(name="apartment_id")
+    private Integer id;
+    public Integer getId() {
         return id;
     }
 
@@ -469,9 +469,19 @@ public class ApartmentEntity implements Serializable{
         this.owner = owner;
     }
 
-    //@OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
-    @OneToMany(mappedBy = "reservation_id",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    //@JoinColumn(name = "reservation_id")
+
+    @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+//    @OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+   @JoinColumn(name ="apartment_id")
+    private Set<ReservedEntity> reservedEntities= new HashSet<>(0);
+
+    public Set<ReservedEntity> getReservedEntities(){return reservedEntities;}
+
+    public void setReservedEntities(Set<ReservedEntity> reservedEntities){this.reservedEntities=reservedEntities;}
+
+    @OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+//    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name= "apartment_id")
     private Set<ReservationEntity> reservations= new HashSet<>(0);
 
     public Set<ReservationEntity> getReservations() {
@@ -481,13 +491,6 @@ public class ApartmentEntity implements Serializable{
     public void setReservations(Set<ReservationEntity> reservations) {
         this.reservations = reservations;
     }
-
-    @OneToMany(mappedBy = "id",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-    private Set<ReservedEntity> reservedEntities= new HashSet<>(0);
-
-    public Set<ReservedEntity> getReservedEntities(){return reservedEntities;}
-
-    public void setReservedEntities(Set<ReservedEntity> reservedEntities){this.reservedEntities=reservedEntities;}
 
 }
 
