@@ -389,7 +389,7 @@ public class ApartmentServiceImpl implements ApartmentService {
             nofilter = false;
             Iterator<ApartmentEntity> list = aparts.iterator();
             while (list.hasNext()) {
-//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd", Locale.ENGLISH);
+//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd", ocale.ENGLISH);
 //                LocalDate date = LocalDate.parse(list.next().getFinaldate(), formatter);
               //  if (date.compareTo(LocalDate.parse(departureDate.get(), formatter))<0)
                 if(list.next().getFinaldate().compareTo(departureDate.get())<0)
@@ -419,7 +419,8 @@ public class ApartmentServiceImpl implements ApartmentService {
         Date dates= formatter.parse(startDate);
         Date datef= formatter.parse(finalDate);
 
-        Set<ReservedEntity> reservedDays=apart.getReservedEntities(); //days occupied
+
+        Set<ReservedEntity> reservedDays= apart.getReservedEntities();//reservedRepository.findByApartment(apart.getId());////days occupied
         System.out.println("To diamerisma einai kleismeno tis meres "+reservedDays);
         if(date2.after(date)&& (date2.before(datef)|| date2.compareTo(datef)==0)&& (date.after(dates)|| date.compareTo(dates)==0)){
             System.out.println("To diastima einai apodekto");

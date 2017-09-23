@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "reserved", schema = "mydb")
-public class ReservedEntity implements Serializable{
+public class ReservedEntity{
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -18,8 +18,9 @@ public class ReservedEntity implements Serializable{
         return id;
     }
 
-    public void setReservation_id(int id) {
-        this.id = id;
+    public ReservedEntity()
+    {
+        this.date="";
     }
 
     public ReservedEntity(String date,ApartmentEntity apart_id){
@@ -28,15 +29,11 @@ public class ReservedEntity implements Serializable{
         System.out.println("dimiourgis tin grammi kratisii "+date);
     }
 
-    public ReservedEntity()
-    {
-        this.date="";
-    }
 
 
+    private String date;
     @Basic
     @Column(name = "startdate")
-    private String date;
     public String getDate() {
         return date;
     }
@@ -45,10 +42,10 @@ public class ReservedEntity implements Serializable{
         this.date = date;
     }
 
+
     @ManyToOne
     @JoinColumn(name ="apartment_id")
     private ApartmentEntity apartment;
-
     public ApartmentEntity getApartment() {
         return apartment;
     }
@@ -58,12 +55,26 @@ public class ReservedEntity implements Serializable{
     }
 
 
+//    //@ManyToOne
+//    @Basic
+//    @Column(name ="apartment_id")
+//    private int apartment;
+//    public int getApartment() {
+//        return apartment;
+//    }
+//
+//    public void setApartment(int apartment) {
+//        this.apartment = apartment;
+//    }
+
+
+
     @Override
     public int hashCode() {
         int result=0;
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (int) id;
-        result = 31 * result + (apartment != null ? apartment.hashCode() : 0);
+        //result = 31 * result + (apartment != null ? apartment.hashCode() : 0);
         return result;
     }
 
@@ -77,6 +88,8 @@ public class ReservedEntity implements Serializable{
         if (id != that.id) return false;
         if (apartment != null ? !apartment.equals(that.apartment) : that.apartment != null)
             return false;
+//         if (apartment!= that.apartment) return false;
+
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
         return true;
     }

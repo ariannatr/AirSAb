@@ -1,6 +1,7 @@
 package airbnb.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +11,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "owner", schema = "mydb")
-public class OwnerEntity {
+public class OwnerEntity implements Serializable {
 
     private int approval;
 

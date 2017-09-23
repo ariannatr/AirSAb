@@ -19,10 +19,6 @@ public class ReservationEntity implements Serializable{
         return reservation_id;
     }
 
-    public void setReservation_id(int reservation_id) {
-        this.reservation_id = reservation_id;
-    }
-
     @ManyToOne
     @JoinColumn(name = "renter_users_username", referencedColumnName = "users_username")
     private RenterEntity renter;
@@ -34,8 +30,6 @@ public class ReservationEntity implements Serializable{
     public void setRenterUsersUsername(RenterEntity renter) {
         this.renter = renter;
     }
-
-
 
     @ManyToOne
     @JoinColumn(name = "apartment_owner", referencedColumnName ="users_username")

@@ -1,13 +1,14 @@
 package airbnb.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Arianna on 23/8/2017.
  */
 @Entity
 @Table(name = "user", schema = "mydb")
-public class UsersEntity {
+public class UsersEntity implements Serializable {
     private String username;
     private String password;
     private int type;
