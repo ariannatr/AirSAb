@@ -93,12 +93,11 @@
                         </div>
                         <br>
                     </div>
-
+                    <div th:replace="/fragments/paginationbar :: paginationbar"></div>
                 </div>
                 <div th:if ="${(items==null)}">
                     <span class="alert alert-warning" type="" style="text-align: center;">There are no messages !</span>
                 </div>
-                <div th:replace="/fragments/paginationbar :: paginationbar"></div>
             </div>
         </div>
 
