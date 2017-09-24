@@ -30,8 +30,8 @@ public interface ApartmentService {
     public void uploadPhoto3(ApartmentEntity ap,String photo);
     public void uploadPhoto4(ApartmentEntity ap,String photo);
     public Page<ApartmentEntity> findAparts(Pageable pageable);
-    public Page<ApartmentEntity> findAparts(Optional<Integer> heating,Optional<Float>  maxPrice,Optional<Integer>  kitchen,Optional<Integer>  tv,Optional<Integer>  type,Optional<Integer>  elevator,Optional<Integer>  ac,Optional<Integer>  internet,Optional<Integer>  parking,Pageable pageable);
-    public Page<ApartmentEntity> findAparts(Optional<String> country,Optional<String> town,Optional<String> area,Optional<String> arrivalDate,Optional<String> departureDate,Optional< Integer> people, Pageable pageable);
+    public Page<ApartmentEntity> findAparts(Optional<String> arrivalDate,Optional<String> departureDate,Optional<Integer> people,Optional<String> town,Optional<String> area,Optional<String> country,Optional<Integer>heating,Optional<Float> maxPrice,Optional<Integer> kitchen,Optional<Integer> tv,Optional<Integer> type,Optional<Integer> elevator,Optional<Integer> ac,Optional<Integer> internet,Optional<Integer> parking,Pageable pageable) throws ParseException;
+    public Page<ApartmentEntity> findAparts(Optional<String> country,Optional<String> town,Optional<String> area,Optional<String> arrivalDate,Optional<String> departureDate,Optional< Integer> people, Pageable pageable) throws ParseException;
     public  int makeReservation(ReservationEntity reservation, ApartmentEntity apart, RenterEntity renter) throws ParseException;
     public void removephoto(ApartmentEntity apartmentEntity, Integer num);
 }

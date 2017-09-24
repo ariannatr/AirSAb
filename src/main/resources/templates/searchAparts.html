@@ -44,6 +44,12 @@ Licence URI: http://www.os-templates.com/template-terms
                 <div class="container filtersContainer">
                     <div class="row">
                         <form class="form-horizontal" th:action="@{/search2}">
+                            <input type="hidden" th:value="${departureDate}" name="departureDate"/>
+                            <input type="hidden" th:value="${arrivalDate}" name="arrivalDate"/>
+                            <input type="hidden" th:value="${people}" name="people"/>
+                            <input type="hidden" th:value="${town}" name="town"/>
+                            <input type="hidden" th:value="${area}" name="area"/>
+                            <input type="hidden" th:value="${country}" name="country"/>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="type" class="control-label"  style="text-align: left;">Apartment Type </label>
