@@ -34,4 +34,7 @@ public interface ApartmentService {
     public Page<ApartmentEntity> findAparts(Optional<String> country,Optional<String> town,Optional<String> area,Optional<String> arrivalDate,Optional<String> departureDate,Optional< Integer> people, Pageable pageable) throws ParseException;
     public  int makeReservation(ReservationEntity reservation, ApartmentEntity apart, RenterEntity renter) throws ParseException;
     public void removephoto(ApartmentEntity apartmentEntity, Integer num);
+    public Page<ApartmentEntity> findAllPageable(Pageable pageable);
+
+    public ArrayList<ApartmentEntity> findAll();
 }

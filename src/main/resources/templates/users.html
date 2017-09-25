@@ -46,6 +46,9 @@
                       <a class="dropdown-item " th:href="@{/users}">All</a>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/apartslist}">Apartments </a>
+                </li>
                 
             </ul>
         </div>
@@ -60,7 +63,7 @@
                         <!--/*Table with info about each user*/-->
                         <div id="initialtextt">
                             <p class="table-title"> Users Info</p>
-                            <p class="table-subtitle"> Below you can see the info of all users registered.<p>
+                            <p class="table-subtitle"> Below you can see the info of all users registered. OR <a th:href="@{/downloadusers/{ftype}(ftype=${ftype})}"><strong>Download</strong></a><p>
                             <div  style="background-color:#e6eaf2; opacity:0.8; width:70%; margin:0 auto;">
                                 <table >
                                     <thead>
@@ -70,6 +73,7 @@
                                         <th>Surname</th>
                                         <th>E-Mail</th>
                                         <th>Telephone</th>
+                                        <th>Type</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -79,6 +83,7 @@
                                         <td ><span th:text="${user.surname}">S</span></td>
                                         <td><span th:text="${user.email}">E</span></td>
                                         <td><span th:text="${user.telephone}">T</span></td>
+                                        <td><span th:text="${user.type}">T</span></td>
                                     </tr>
                                     </tbody>
                                 </table>

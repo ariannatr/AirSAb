@@ -228,4 +228,18 @@ public class UsersServiceImpl implements UsersService {
         userRepository.save(useron);
     }
 
+    @Override
+    public ArrayList<UsersEntity> findAll(){ return userRepository.findAll();}
+
+    @Override
+    public ArrayList<UsersEntity> findAllOwners()
+    {
+        return userRepository.findByType(1,3);
+    }
+
+    @Override
+    public ArrayList<UsersEntity> findAllRenters()
+    {
+        return userRepository.findByType(2,3);
+    }
 }

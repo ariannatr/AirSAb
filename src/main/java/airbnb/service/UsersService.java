@@ -4,6 +4,8 @@ import airbnb.model.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("usersService")
@@ -22,5 +24,8 @@ public interface UsersService {
      public void approveOwner(OwnerEntity ownerEntity);
    public void uploadPhoto(UsersEntity useron,String photopath);
     public String getType(UsersEntity user);
+    public ArrayList<UsersEntity> findAll();
+    public ArrayList<UsersEntity> findAllOwners();
+    public ArrayList<UsersEntity> findAllRenters();
 
 }

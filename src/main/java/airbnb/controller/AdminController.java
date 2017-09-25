@@ -1,9 +1,11 @@
 package airbnb.controller;
 
 import airbnb.authentication.IAuthenticationFacade;
+import airbnb.model.ApartmentEntity;
 import airbnb.model.OwnerEntity;
 import airbnb.model.Pager;
 import airbnb.model.UsersEntity;
+import airbnb.service.ApartmentService;
 import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +42,9 @@ public class AdminController {
 
     @Autowired
     private UsersService userService;
+
+    @Autowired
+    private ApartmentService apartmentService;
     @Autowired
     private IAuthenticationFacade authenticationFacade;
 
@@ -64,6 +77,7 @@ public class AdminController {
         modelAndView.addObject("url","users");
         modelAndView.addObject("selectedPageSize", evalPageSize);
         modelAndView.addObject("pageSizes", PAGE_SIZES);
+        modelAndView.addObject("ftype", "users");
         return modelAndView;
     }
 
@@ -96,6 +110,7 @@ public class AdminController {
         modelAndView.addObject("url","renters");
         modelAndView.addObject("selectedPageSize", evalPageSize);
         modelAndView.addObject("pageSizes", PAGE_SIZES);
+        modelAndView.addObject("ftype", "renters");
         return modelAndView;
     }
 
@@ -128,6 +143,7 @@ public class AdminController {
         modelAndView.addObject("url","owners");
         modelAndView.addObject("selectedPageSize", evalPageSize);
         modelAndView.addObject("pageSizes", PAGE_SIZES);
+        modelAndView.addObject("ftype", "owners");
         return modelAndView;
     }
 
@@ -176,4 +192,75 @@ public class AdminController {
         modelAndView.setViewName("redirect:/accept");
         return modelAndView;
     }
+
+
+
+    @RequestMapping(value="/apartslist", method = RequestMethod.GET)
+    public ModelAndView apartslist(@RequestParam("pageSize") Optional<Integer> pageSize,
+                              @RequestParam("page") Optional<Integer> page){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/apartslist");
+        Authentication authentication = authenticationFacade.getAuthentication();
+        if (!authentication.getName().equals("anonymousUser")) {
+            modelAndView.addObject("uname", authentication.getName());
+            UsersEntity userS = userService.findByUsername(authentication.getName());
+            modelAndView.addObject("type", String.valueOf(userS.getType()));
+        }
+
+        int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
+        // Evaluate page. If requested parameter is null or less than 0 (to
+        // prevent exception), return initial size. Otherwise, return value of
+        // param. decreased by 1.
+        int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
+        Page<ApartmentEntity> aparts=null;
+        Pager pager=null;
+        aparts= apartmentService.findAllPageable(new PageRequest(evalPage, evalPageSize));
+        pager= new Pager(aparts.getTotalPages(), aparts.getNumber(), BUTTONS_TO_SHOW);
+        if(aparts.getTotalElements()!=0){
+            modelAndView.addObject("pager", pager);
+            modelAndView.addObject("items", aparts);
+
+            ArrayList<String> owners=new ArrayList<>(0);
+            for (ApartmentEntity ap:aparts) {
+                owners.add(ap.getOwner().getUsersUsername());
+            }
+            modelAndView.addObject("items2", owners);
+        }
+
+        modelAndView.addObject("url","users");
+        modelAndView.addObject("selectedPageSize", evalPageSize);
+        modelAndView.addObject("pageSizes", PAGE_SIZES);
+        return modelAndView;
+    }
+
+
+
+
+    /**
+    @Autowired
+    ServletContext context;
+
+    @RequestMapping("/download")
+    public void downloader(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+        String downloadFolder = context.getRealPath("/uploads/");
+        Path file = Paths.get(downloadFolder, "navbar2.html");
+        // Check if file exists
+        if (Files.exists(file)) {
+            // set content type
+            response.setContentType("application/html");
+            // add response header
+            response.addHeader("Content-Disposition", "attachment; filename=navbar2.html");
+            try {
+                //copies all bytes from a file to an output stream
+                Files.copy(file, response.getOutputStream());
+                //flushes output stream
+                response.getOutputStream().flush();
+            } catch (IOException e) {
+                System.out.println("Error :- " + e.getMessage());
+            }
+        } else {
+            System.out.println("Sorry File not found!!!!");
+        }
+    }*/
 }

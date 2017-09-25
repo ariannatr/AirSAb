@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -69,5 +70,7 @@ public interface ApartmentRepository extends PagingAndSortingRepository<Apartmen
 
     @Query("select p from ApartmentEntity p where  p.finaldate>=?1 order by price")
     Page<ApartmentEntity> findAllByFinalDate(String date,Pageable pageable);
+
+    ArrayList<ApartmentEntity> findAll();
 }
 

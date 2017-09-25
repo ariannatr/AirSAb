@@ -501,4 +501,14 @@ public class ApartmentServiceImpl implements ApartmentService {
         else
             return -3;
     }
+
+
+    @Override
+    public Page<ApartmentEntity> findAllPageable(Pageable pageable){
+        return apartmentRepository.findAll(pageable);
+    }
+
+    public ArrayList<ApartmentEntity> findAll(){
+        return apartmentRepository.findAll();
+    }
 }
