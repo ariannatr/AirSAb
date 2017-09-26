@@ -15,20 +15,8 @@
     <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-     <script>
-    $(document).ready(function(){
-        //$("#secondarytext").hide();
+     <script type="text/javascript" th:src="@{/scripts/search.js}"></script>
 
-        $("#searchnow").click(function(){
-        $("#initialtext").hide();
-        $("#secondarytext").show();
-    });
-    $("#backnow").click(function(){
-        $("#secondarytext").hide();
-        $("#initialtext").show();
-    });
-    });
-    </script>
     <link th:href="@{/css/search.css}" rel="stylesheet" type="text/css" media="all"/>
 
 </head>
