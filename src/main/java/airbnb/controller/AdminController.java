@@ -224,7 +224,7 @@ public class AdminController {
             modelAndView.addObject("items2", owners);
         }
 
-        modelAndView.addObject("url","users");
+        modelAndView.addObject("url","apartslist");
         modelAndView.addObject("selectedPageSize", evalPageSize);
         modelAndView.addObject("pageSizes", PAGE_SIZES);
         return modelAndView;
@@ -268,7 +268,7 @@ public class AdminController {
             modelAndView.addObject("aparts", apartsnames);
         }
 
-        modelAndView.addObject("url","users");
+        modelAndView.addObject("url","reservationslist");
         modelAndView.addObject("selectedPageSize", evalPageSize);
         modelAndView.addObject("pageSizes", PAGE_SIZES);
 
@@ -320,7 +320,7 @@ public class AdminController {
             modelAndView.addObject("aparts", apartsnames);
         }
 
-        modelAndView.addObject("url","users");
+        modelAndView.addObject("url","reservationslist");
         modelAndView.addObject("selectedPageSize", evalPageSize);
         modelAndView.addObject("pageSizes", PAGE_SIZES);
         return modelAndView;

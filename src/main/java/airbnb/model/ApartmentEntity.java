@@ -492,5 +492,18 @@ public class ApartmentEntity implements Serializable{
         this.reservations = reservations;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+//    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name= "apartment_id")
+    private Set<CommentsEntity> comments= new HashSet<>(0);
+
+    public Set<CommentsEntity> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<CommentsEntity> comments) {
+        this.comments = comments;
+    }
+
 }
 

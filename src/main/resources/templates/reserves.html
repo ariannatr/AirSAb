@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<!--
+Template Name: Maxisonix
+Author: <a href="http://www.os-templates.com/">OS Templates</a>
+Author URI: http://www.os-templates.com/
+Licence: Free to use under our free template licence terms
+Licence URI: http://www.os-templates.com/template-terms
+-->
+<head >
+    <title>My Reservations</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"rel="stylesheet" type="text/css" media="all">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
+    <link th:href="@{/css/searchCss.css}" rel="stylesheet" type="text/css" media="all">
+</head>
+
+<body id="top" style="background-color: whitesmoke">
+
+<div th:replace="/fragments/navbar :: navbar('reservations')"></div>
+
+
+<!-- main body -->
+
+<div class="mainDiv">
+
+<h2 align="center">Reservations</h2>
+
+    <div class="sidebar one_quarter first">
+        <div class="tab">
+            <button type="button" class="tablinks  list-group-item" onclick="openCity(event, 'reservations')" th:id="${((param.tab != null)and (param.tab[0] == 'reservations')) ? 'my_active' : ''}">
+                <i class="fa fa-calendar-check-o" style="color:#cc834f"></i> Reservations<span class="badge" th:text="${#lists.size(currRes)}"></span></button>
+            <button type="button" class="tablinks  list-group-item" onclick="openCity(event, 'old_activities')" th:id="${((param.tab != null) and (param.tab[0] == 'old_activities')) ? 'my_active' : ''}">
+                <i class="fa fa-calendar-minus-o" style="color:#cc834f;"></i> Older Reservations<span class="badge" th:text="${#lists.size(pastRes)}"></span> </button>
+
+        </div>
+
+    </div>
+
+    <div class="content three_quarter">
+
+    <div id="reservations"  class="tabcontent">
+
+    <div class="group results">
+    <!--article class="one_third first"-->
+    <div th:if ="${(currRes!=null)}">
+        <div th:each="curr, iterStat : ${currRes} ">
+            <div >
+                <div th:if="${(currAparts[iterStat.index].photo!= '')}">
+                    <figure>
+                    <img style=" width:200px; height:190px;float: left; margin: 0px 15px 15px 0px;" alt="Apartment Pic"  th:src ="${currAparts[iterStat.index].photo}" style="width:300px;height:150px"/>
+                        <figcaption>
+                            <time datetime="2045-04-06T08:15+00:00" th:text="${curr.startdate}"><strong></strong> <em></em></time>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div th:if="${(currAparts[iterStat.index].photo== '')}">
+                    <figure>
+                    <img th:src="@{/images/no_image.png}"  style="width:300px;height:150px"/>
+                        <figcaption>
+                            <time datetime="2045-04-06T08:15+00:00" th:text="${curr.startdate}"><strong></strong> <em></em></time>
+                        </figcaption>
+                    </figure>
+                </div>
+                <article >
+                    <div class="txtwrap">
+                        <h4 class="heading"><span th:text="${currAparts[iterStat.index].name}"></span></h4>
+                        <ul class="nospace meta">
+                            <li><i class="fa fa-user"></i> <a href="#"><span th:text="${currAparts[iterStat.index].country}"></span></a></li>
+                            <li><i class="fa fa-tag"></i> <a href="#"><span th:text="${currAparts[iterStat.index].town}"></span></a></li>
+                        </ul>
+                        <table>
+                            <tr>
+                                <td>Price:</td>
+                                <td><span th:text="${curr.totalCost}"></span></td>
+                            </tr>
+                            <tr>
+                                <td>From:</td>
+                                <td><span th:text="${curr.startdate}"></span></td>
+                            </tr>
+                            <tr>
+                                <td>To:</td>
+                                <td><span th:text="${curr.finaldate}"></span></td>
+                            </tr>
+                        </table>
+                        <footer><a th:href="@{/apartment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">Read  more.. &raquo;</a></footer>
+                    </div>
+                </article>
+                <form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">
+                    <label>Leave your comment</label>
+                    <input name="comment" type="text"/>
+                    <label>Leave your rating</label>
+                    <input name="rating" type="number"/>
+                    <button type="submit">Comment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </br>
+    <div th:if="${(currRes==null)}">
+        <p> You have not made yet any reservations !</p>
+    </div>
+    </div>
+    </div>
+    <div id="old_activities" class="tabcontent" >
+        <!-- ################################################################################################ -->
+
+        <h2 align="center">Older Reservations</h2>
+
+        <div class="group results">
+            <!--article class="one_third first"-->
+            <div th:if ="${(pastRes!=null)}">
+                <div th:each="past, iterStat1 : ${pastRes} ">
+                    <div>
+                        <div th:if="${(pastAparts[iterStat1.index].photo!= '')}">
+                            <figure>
+                                <img style=" width:200px; height:190px;float: left; margin: 0px 15px 15px 0px;" alt="Apartment Pic"  th:src ="${pastAparts[iterStat1.index].photo}" style="width:300px;height:150px"/>
+                                <figcaption>
+                                    <time datetime="2045-04-06T08:15+00:00" th:text="${past.startdate}"><strong></strong> <em></em></time>
+                                </figcaption>
+                            </figure>
+                        </div>
+                        <div th:if="${(pastAparts[iterStat1.index].photo== '')}">
+                            <figure>
+                                <img th:src="@{/images/no_image.png}"  style="width:300px;height:150px"/>
+                                <figcaption>
+                                    <time datetime="2045-04-06T08:15+00:00" th:text="${past.startdate}"><strong></strong> <em></em></time>
+                                </figcaption>
+                            </figure>
+                        </div>
+                        <article >
+                            <div class="txtwrap">
+                                <h4 class="heading"><span th:text="${pastAparts[iterStat1.index].name}"></span></h4>
+                                <ul class="nospace meta">
+                                    <li><i class="fa fa-tag"></i> <a href="#"><span th:text="${pastAparts[iterStat1.index].country}"></span></a></li>
+                                </ul>
+                            </div>
+                            <footer><a th:href="@{/apartment/{apartmentID}(apartmentID=${pastAparts[iterStat1.index].id})}">Read  more.. &raquo;</a></footer>
+                        </article>
+                    </div>
+                    <form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${pastAparts[iterStat1.index].id})}">
+                        <label>Leave your comment:</label>
+                        <input name="comment" type="text"/>
+                        <label>Leave your rating:</label>
+                        <input name="rating" type="number"/>
+                        <button type="submit">Comment</button>
+                    </form>
+                </div>
+            </div>
+            </br>
+            <div th:if="${(pastRes==null)}">
+                <p> You have not attended any reservation yet!</p>
+            </div>
+
+        </div>
+        <div class="scrollable">
+
+        </div>
+
+        </br></br>
+
+
+        <!-- ################################################################################################ -->
+    </div>
+    </div>
+</div>
+<div th:replace="/fragments/footer :: footer"></div>
+
+</body>
+
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700">
+<script th:src="@{/scripts/reserves.js}"> </script>
+<script type="text/javascript">
+    document.getElementById("my_active").click();
+</script>
+</html>

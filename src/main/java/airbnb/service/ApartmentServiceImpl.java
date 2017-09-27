@@ -420,6 +420,7 @@ public class ApartmentServiceImpl implements ApartmentService {
             reservation.setRenterUsersUsername(renter);
             reservation.setApproval(0);
             reservation.setApartmentOwner(apart.getOwner());
+            reservation.setTotalCost(apart.getPrice()*diff);
             System.out.println("Ty to save reservation for apart" + apart.getId() + ", with owner " + apart.getOwner());
             reservationRepository.save(reservation);
 

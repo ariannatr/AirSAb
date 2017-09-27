@@ -16,6 +16,7 @@ public class RenterEntity implements Serializable{
     private UsersEntity usersByUsersUsername;
     private Set<ReservationEntity> reservationsByUsersUsername=new HashSet<>(0);
     private Set<MessagesEntity> messages=new HashSet<>(0);
+    private Set<CommentsEntity> comments=new HashSet<>(0);
 
     @Id
     @Column(name = "users_username")
@@ -70,4 +71,13 @@ public class RenterEntity implements Serializable{
      public void setMessages(Set<MessagesEntity> messages) {
                 this.messages = messages;
      }
+
+    @OneToMany(mappedBy = "renter")
+    public Set<CommentsEntity> getComments () {
+        return comments;
+    }
+
+    public void setComments(Set<CommentsEntity> comments) {
+        this.comments = comments;
+    }
 }
