@@ -37,4 +37,9 @@ public interface ApartmentService {
     public Page<ApartmentEntity> findAllPageable(Pageable pageable);
 
     public ArrayList<ApartmentEntity> findAll();
+    public Page<ReservationEntity> findAllReservations(Pageable pageable);
+    public Page<ReservationEntity> findAllReservationsByRenter(RenterEntity renter,Pageable pageable);
+
+    public ArrayList<ReservationEntity> findAllReservations();
+    public ArrayList<ReservationEntity> findAllReservationsByRenter(RenterEntity renter);
 }

@@ -511,4 +511,21 @@ public class ApartmentServiceImpl implements ApartmentService {
     public ArrayList<ApartmentEntity> findAll(){
         return apartmentRepository.findAll();
     }
+
+
+    public Page<ReservationEntity> findAllReservations(Pageable pageable){
+        return reservationRepository.findAll(pageable);
+    }
+
+    public Page<ReservationEntity> findAllReservationsByRenter(RenterEntity renter,Pageable pageable){
+        return reservationRepository.findAllByRenter(renter,pageable);
+    }
+
+    public ArrayList<ReservationEntity> findAllReservations(){
+        return reservationRepository.findAll();
+    }
+
+    public ArrayList<ReservationEntity> findAllReservationsByRenter(RenterEntity renter){
+        return reservationRepository.findAllByRenter(renter);
+    }
 }

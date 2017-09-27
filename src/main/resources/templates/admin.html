@@ -51,7 +51,18 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/apartslist}">Apartments </a>
                 </li>
-                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Reservations</a>
+                    <div class="dropdown-menu">
+                        <form class="dropdown-item" method="POST" th:action="@{/resbyrenter}">
+                            <label >By Renter</label> <br>
+                            <input name="renter"  type="text" />
+                            <input type="submit" value="Go"/>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{/reservationslist}">All</a>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
@@ -67,7 +78,7 @@
                 </div>
                 <div id="secondarytext" style="display:none;">
                     <h2 class="display-6 text-white"> Fill the form below and browse the results</h2>
-                    <form class="searchform">
+                    <form class="searchform" method="POST" th:action="@{/search}">
                         <input type="text" style="width: 30%;" placeholder="Country" >
                         <input type="text" style="width: 30%;" placeholder="Town" >
                         <input type="text" style="width: 30%;" placeholder="Area" > <br>

@@ -1,6 +1,8 @@
 package airbnb.controller;
 
 import airbnb.model.ApartmentEntity;
+import airbnb.model.RenterEntity;
+import airbnb.model.ReservationEntity;
 import airbnb.model.UsersEntity;
 import airbnb.service.ApartmentService;
 import airbnb.service.UsersService;
@@ -353,5 +355,109 @@ public class DownloadController {
         System.out.println("File saved!");
 
     }
+
+
+    @RequestMapping("/downloadreservations/{renter}")
+    public void downloadreservations(HttpServletRequest request, HttpServletResponse response,@PathVariable("renter") String renter) throws IOException {
+
+        // get absolute path of the application
+        ServletContext context = request.getServletContext();
+        String appPath = context.getRealPath("");
+        System.out.println("appPath = " + appPath);
+
+        // construct the complete absolute path of the file
+        String fullPath;
+        if(renter.equals("all"))
+            fullPath= appPath + "/uploads/reservations.xml";
+        else
+            fullPath = appPath + "/uploads/reservations_"+renter+".xml";
+        File downloadFile = new File(fullPath);
+
+        // Check if file exists
+        try {
+            String name;
+            if(renter.equals("all"))
+            {
+                createReservationsFile(apartmentService.findAllReservations(), downloadFile);
+                name="reservations.xml";
+            }
+            else
+            {
+                RenterEntity renterEntity=userService.findRenterByUsername(renter);
+                createReservationsFile(apartmentService.findAllReservationsByRenter(renterEntity), downloadFile);
+                name="reservations_"+renter+".xml";
+            }
+
+            String downloadFolder = context.getRealPath("/uploads/");
+            Path file = Paths.get(downloadFolder, new String(name));
+
+            response.setContentType("application/xml");
+            response.addHeader("Content-Disposition", "attachment; filename="+name);
+            //copies all bytes from a file to an output stream
+            Files.copy(file, response.getOutputStream());
+            //flushes output stream
+            response.getOutputStream().flush();
+        }
+        catch (Exception e){
+            System.out.println("Error :- " + e.getMessage());
+        }
+    }
+
+
+
+    private void createReservationsFile(ArrayList<ReservationEntity> reservations , File file)throws ParserConfigurationException ,TransformerException{
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        Document doc = docBuilder.newDocument();
+        Element rootElement = doc.createElement("CONFIGURATION");
+        doc.appendChild(rootElement);
+        Element browser = doc.createElement("BROWSER");
+        browser.appendChild(doc.createTextNode("chrome"));
+        rootElement.appendChild(browser);
+        Element base = doc.createElement("TITLE");
+        base.appendChild(doc.createTextNode("RESERVATIONS"));
+        rootElement.appendChild(base);
+
+        for(ReservationEntity reservationEntity :reservations) {
+            Element res= doc.createElement("RESERVATION");
+            rootElement.appendChild(res);
+
+            Element resRenter = doc.createElement("RENTER");
+            resRenter.appendChild(doc.createTextNode(reservationEntity.getRenter().getUsersUsername()));
+            res.appendChild(resRenter);
+
+            Element resApartment = doc.createElement("APARTMENT");
+            resApartment.appendChild(doc.createTextNode(reservationEntity.getApartment().getName()));
+            res.appendChild(resApartment);
+
+            Element resOwner = doc.createElement("OWNER");
+            resOwner.appendChild(doc.createTextNode(reservationEntity.getApartmentOwner().getUsersUsername()));
+            res.appendChild(resOwner);
+
+            Element startdate = doc.createElement("STARTDATE");
+            startdate.appendChild(doc.createTextNode(reservationEntity.getStartdate()));
+            res.appendChild(startdate);
+
+            Element finaldate = doc.createElement("FINALDATE");
+            finaldate.appendChild(doc.createTextNode(reservationEntity.getFinaldate()));
+            res.appendChild(finaldate);
+
+            Element resCost = doc.createElement("TOTALCOST");
+            resCost.appendChild(doc.createTextNode(String.valueOf(reservationEntity.getTotalCost())));
+            res.appendChild(resCost);
+
+        }
+
+
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(file);
+        transformer.transform(source, result);
+
+        System.out.println("File saved!");
+
+    }
+
 
 }

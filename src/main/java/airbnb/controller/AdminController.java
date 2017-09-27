@@ -1,10 +1,7 @@
 package airbnb.controller;
 
 import airbnb.authentication.IAuthenticationFacade;
-import airbnb.model.ApartmentEntity;
-import airbnb.model.OwnerEntity;
-import airbnb.model.Pager;
-import airbnb.model.UsersEntity;
+import airbnb.model.*;
 import airbnb.service.ApartmentService;
 import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -233,34 +230,100 @@ public class AdminController {
         return modelAndView;
     }
 
-
-
-
-    /**
-    @Autowired
-    ServletContext context;
-
-    @RequestMapping("/download")
-    public void downloader(HttpServletRequest request, HttpServletResponse response) throws IOException{
-
-        String downloadFolder = context.getRealPath("/uploads/");
-        Path file = Paths.get(downloadFolder, "navbar2.html");
-        // Check if file exists
-        if (Files.exists(file)) {
-            // set content type
-            response.setContentType("application/html");
-            // add response header
-            response.addHeader("Content-Disposition", "attachment; filename=navbar2.html");
-            try {
-                //copies all bytes from a file to an output stream
-                Files.copy(file, response.getOutputStream());
-                //flushes output stream
-                response.getOutputStream().flush();
-            } catch (IOException e) {
-                System.out.println("Error :- " + e.getMessage());
-            }
-        } else {
-            System.out.println("Sorry File not found!!!!");
+    @RequestMapping(value="/reservationslist", method = RequestMethod.GET)
+    public ModelAndView reservationslist(@RequestParam("pageSize") Optional<Integer> pageSize,
+                                   @RequestParam("page") Optional<Integer> page){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/reservationslist");
+        Authentication authentication = authenticationFacade.getAuthentication();
+        if (!authentication.getName().equals("anonymousUser")) {
+            modelAndView.addObject("uname", authentication.getName());
+            UsersEntity userS = userService.findByUsername(authentication.getName());
+            modelAndView.addObject("type", String.valueOf(userS.getType()));
         }
-    }*/
+
+        int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
+        // Evaluate page. If requested parameter is null or less than 0 (to
+        // prevent exception), return initial size. Otherwise, return value of
+        // param. decreased by 1.
+        int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
+        Page<ReservationEntity> reservations=null;
+        Pager pager=null;
+        reservations= apartmentService.findAllReservations(new PageRequest(evalPage, evalPageSize));
+        pager= new Pager(reservations.getTotalPages(), reservations.getNumber(), BUTTONS_TO_SHOW);
+        if(reservations.getTotalElements()!=0){
+            modelAndView.addObject("pager", pager);
+            modelAndView.addObject("items", reservations);
+
+            ArrayList<String> owners=new ArrayList<>(0);
+            ArrayList<String> renters=new ArrayList<>(0);
+            ArrayList<String> apartsnames=new ArrayList<>(0);
+            for (ReservationEntity res:reservations) {
+                apartsnames.add(res.getApartment().getName());
+                owners.add(res.getApartmentOwner().getUsersUsername());
+                renters.add(res.getRenter().getUsersUsername());
+            }
+            modelAndView.addObject("owners", owners);
+            modelAndView.addObject("renters", renters);
+            modelAndView.addObject("aparts", apartsnames);
+        }
+
+        modelAndView.addObject("url","users");
+        modelAndView.addObject("selectedPageSize", evalPageSize);
+        modelAndView.addObject("pageSizes", PAGE_SIZES);
+
+        modelAndView.addObject("renter","all");
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value="/resbyrenter", method = RequestMethod.POST)
+    public ModelAndView resbyrenter(  @RequestParam("renter") String Renter,@RequestParam("pageSize") Optional<Integer> pageSize,
+                                      @RequestParam("page") Optional<Integer> page){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/reservationslist");
+        Authentication authentication = authenticationFacade.getAuthentication();
+        if (!authentication.getName().equals("anonymousUser")) {
+            modelAndView.addObject("uname", authentication.getName());
+            UsersEntity userS = userService.findByUsername(authentication.getName());
+            modelAndView.addObject("type", String.valueOf(userS.getType()));
+        }
+
+        RenterEntity renterEntity=userService.findRenterByUsername(Renter);
+        if(renterEntity!=null)
+            modelAndView.addObject("renter",Renter);
+        else
+            modelAndView.addObject("renter","false");
+        int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
+        // Evaluate page. If requested parameter is null or less than 0 (to
+        // prevent exception), return initial size. Otherwise, return value of
+        // param. decreased by 1.
+        int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
+        Page<ReservationEntity> reservations=null;
+        Pager pager=null;
+        reservations= apartmentService.findAllReservationsByRenter(renterEntity,new PageRequest(evalPage, evalPageSize));
+        pager= new Pager(reservations.getTotalPages(), reservations.getNumber(), BUTTONS_TO_SHOW);
+        if(reservations.getTotalElements()!=0){
+            modelAndView.addObject("pager", pager);
+            modelAndView.addObject("items", reservations);
+
+            ArrayList<String> owners=new ArrayList<>(0);
+            ArrayList<String> renters=new ArrayList<>(0);
+            ArrayList<String> apartsnames=new ArrayList<>(0);
+            for (ReservationEntity res:reservations) {
+                apartsnames.add(res.getApartment().getName());
+                owners.add(res.getApartmentOwner().getUsersUsername());
+                renters.add(res.getRenter().getUsersUsername());
+            }
+            modelAndView.addObject("owners", owners);
+            modelAndView.addObject("renters", renters);
+            modelAndView.addObject("aparts", apartsnames);
+        }
+
+        modelAndView.addObject("url","users");
+        modelAndView.addObject("selectedPageSize", evalPageSize);
+        modelAndView.addObject("pageSizes", PAGE_SIZES);
+        return modelAndView;
+    }
+
 }
