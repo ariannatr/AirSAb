@@ -8,7 +8,7 @@ Licence: Free to use under our free template licence terms
 Licence URI: http://www.os-templates.com/template-terms
 -->
 <head >
-    <title>My apartments</title>
+    <title>Search Results</title>
     <!-- Bootstrap core CSS -->
     <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"rel="stylesheet" type="text/css" media="all">
 
@@ -140,7 +140,7 @@ Licence URI: http://www.os-templates.com/template-terms
                                         <img alt="Apartment Pic"  th:src ="${apart.photo}" style="width:300px;height:150px"/>
                                     </div>
                                     <div th:if="${(apart.photo== '')}">
-                                        <img th:src="@{/images/no_image.png}"  />
+                                        <img th:src="@{/images/no_image.png}"  style="width:300px;height:150px"/>
                                     </div>
                                 </div>
                         <!--<a href="#" th:title="${event.name}" class="thumbnail"><img th:src="@{images/demo/event1.jpg}" alt="Lorem ipsum" /></a>-->

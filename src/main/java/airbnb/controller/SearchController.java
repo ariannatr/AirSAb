@@ -44,8 +44,11 @@ public class SearchController {
 
 
     @RequestMapping(value={"/search"}, method = RequestMethod.POST/*, produces= "application/javascript"*/)
-    public ModelAndView search(@RequestParam("pageSize") Optional<Integer> pageSize,
-                                   @RequestParam("page") Optional<Integer> page,@RequestParam("country") Optional<String> country,@RequestParam("town") Optional<String> town,@RequestParam("area") Optional<String> area,@RequestParam("arrivalDate") Optional<String> arrivalDate,@RequestParam("departureDate") Optional<String> departureDate,@RequestParam("people") Optional<Integer> people) throws ParseException {
+    public ModelAndView search(@RequestParam("pageSize") Optional<Integer> pageSize, @RequestParam("page") Optional<Integer> page,
+                               @RequestParam("country") Optional<String> country,@RequestParam("town") Optional<String> town,@RequestParam("area") Optional<String> area,
+                               @RequestParam("arrivalDate") Optional<String> arrivalDate,@RequestParam("departureDate") Optional<String> departureDate,
+                               @RequestParam("people") Optional<Integer> people) throws ParseException {
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/searchAparts");
         System.out.println("Country "+country+" , town "+town+" , area "+area+" ,arrival date " +arrivalDate+ " ,depdate "+departureDate +" ,people "+people);
@@ -65,6 +68,7 @@ public class SearchController {
         int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
         Page<ApartmentEntity> aparts=null;
         Pager pager=null;
+        //System.out.println("is "+people.get());
         aparts= apartmentService.findAparts(country,town,area,arrivalDate,departureDate,people,new PageRequest(evalPage, evalPageSize));
         pager= new Pager(aparts.getTotalPages(), aparts.getNumber(), BUTTONS_TO_SHOW);
         if(aparts.getTotalElements()!=0){

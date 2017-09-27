@@ -71,6 +71,9 @@ public interface ApartmentRepository extends PagingAndSortingRepository<Apartmen
     @Query("select p from ApartmentEntity p where  p.finaldate>=?1 order by price")
     Page<ApartmentEntity> findAllByFinalDate(String date,Pageable pageable);
 
+    //@Query("select p from ApartmentEntity p where p.capacity=?1 order by price")
+    Page<ApartmentEntity> findByCapacity(Integer capacity,Pageable pageable);
+
     ArrayList<ApartmentEntity> findAll();
 }
 
