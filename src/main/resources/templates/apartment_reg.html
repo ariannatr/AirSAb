@@ -17,7 +17,12 @@
     <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
     <link th:href="@{css/apartment_reg.css}" rel="stylesheet" type="text/css" media="all">
 
-
+    <style type="text/css">
+        #map_canvas {
+            height: 300px;
+            width: 300px;
+        }
+    </style>
 
 </head>
 <body>
@@ -33,14 +38,37 @@
             <div th:if ="${(param.success != null) and (param.success[0] == 'true')}">
                 <div class="alert alert-success" style="text-align: center;"> Your registration has been succesfully completed! <br>  <a  th:href="@{/index}">Back to homepage .</a></div>
             </div >
-            <form class="register"  method="POST"  enctype="multipart/form-data" th:action="@{/apartment_reg}">
+            <label class="divider" style="color: white">Define Apartment's Location </label>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div id="map_canvas" width="300" height="300"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="searchResults">
+                        <h2 style="color: white">
+                            You searched for:
+                        </h2>
+                        <input type="text" id="search_country" name="search_country" value="Greece" placeholder="Country"><br>
+                        <input type="text" id="search_town" name="search_town" value="Athens" placeholder="Town"><br>
+                        <input type="text" id="search_area" name="search_area" value="Argiroupoli" placeholder="Area"><br>
+                        <input type="text" id="search_address" name="search_address" value="Thiras" placeholder="Address"><br>
+                        <input type="text" id="search_address_number" name="search_address_number" value="74" placeholder="Address Number"><br>
+                    </div>
 
+                    <input type="submit" id="search" value="search"/>
+                </div>
+            </div>
+
+            <form class="register"  method="POST"  enctype="multipart/form-data" th:action="@{/apartment_reg}">
 
                 <input  name="name" id="name" required="required" placeholder="Name"   type="text"/>
                 <input  name="description" id="description" required="required" placeholder="Description" maxlength="300" type="textarea"/>
-                <input  name="country" id="country" required="required" placeholder="Country" style="width:30%" type="text"/>
-                <input  name="town" id="town" required="required" placeholder="Town" style="width:30%" type="text"/>
-                <input  name="area" id="area" required="required" placeholder="Area" style="width:30%"  type="text"/>
+                <input  name="country" id="country" required="required" placeholder="Country" value="Greece" style="width:30%" type="text"/>
+                <input  name="town" id="town" required="required" placeholder="Town" value="Athens" style="width:30%" type="text"/>
+                <input  name="area" id="area" required="required" placeholder="Area" value="Argiroupoli" style="width:30%"  type="text"/>
+                <input  name="address" id="address" required="required" placeholder="Address"  value="Thiras" style="width:50%"  type="text"/>
+                <input  name="address_number" id="address_number" required="required" value="74" placeholder="Address Number" style="width:50%"  type="number"/>
+
                 <br>
                 <label class="divider">Important Info</label>
                 <br>
@@ -106,12 +134,76 @@
 <script type="text/javascript">
     jQuery(function(){
         jQuery($(":input[id^='datepicker']")).datepicker({
-            dateFormat: 'yyyy/mm/dd',
+            dateFormat: 'yyyy-MM-dd',
             inline: true,
             showOtherMonths: true
         });
     });
 </script>
+
+<script async defer src="https://maps.google.com/maps/api/js?key=AIzaSyBEcboHJ3HmCOtpiaUMW_0mKw0C20qPVpk"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var gmarkers = [];
+        var latlng = new google.maps.LatLng(0.0, 0.0),
+            options  = {
+                zoom               : 10,
+                mapTypeId          : google.maps.MapTypeId.TERRAIN,
+                center             : latlng,
+                streetViewControl  : true,
+                scaleControl       : true,
+                scrollwheel        : true,
+                mapTypeControl     : true,
+                overviewMapControl : true,
+                panControlOptions  : {
+                    position         : google.maps.ControlPosition.TOP_LEFT
+                },
+                zoomControlOptions : {
+                    position         : google.maps.ControlPosition.TOP_LEFT
+                }
+            };
+        map = new google.maps.Map(document.getElementById('map_canvas'), options),
+            geocoder = new google.maps.Geocoder(),
+            search = document.getElementById('search');
+
+        function codeAddress() {
+            //otan tha ginetai anazhthsh event me krithrio px thn perioxh, tha exoume polla apotelesmata opote tha prepei
+            //na yparxei ena loop poy tha dhmiourgei tous pollous markers gia na fanoun ston xarth.
+            //opws einai tr o kwdikas kalyptei thn periptwsh p o xrhsths pataei panw se ena event gia na dei tis
+            //plhrofories tou, opote i metablhth address pairnei timi apo thn html selida kateutheian
+            var address = document.getElementById("search_town").value + " " +document.getElementById("search_country").value+ " " + document.getElementById("search_area").value + " " +
+                document.getElementById("search_address").value + " " + document.getElementById("search_address_number").value;
+
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                    gmarkers.push(marker);
+                } else {
+                    alert("Οι χάρτες της Google αντιμετώπισαν το εξής πρόβλημα: " + status);
+                }
+            });
+        }
+
+        function removeMarkers(){
+            var i;
+            for(i=0; i<gmarkers.length; i++){
+                gmarkers[i].setMap(null);
+            }
+        }
+
+        codeAddress();
+
+        search.onclick = function() {
+            removeMarkers();
+            codeAddress();
+        };
+    };
+</script>
+<script  type="text/javascript" th:src="@{/scripts/apartment.js}"></script>
 </body>
 </html>
 

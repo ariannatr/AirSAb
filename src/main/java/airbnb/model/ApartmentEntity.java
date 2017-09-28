@@ -50,12 +50,36 @@ public class ApartmentEntity implements Serializable{
 
     private int reviews;
 
+    private String address;
+
+    private int address_number;
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="apartment_id")
     private Integer id;
     public Integer getId() {
         return id;
+    }
+
+    @Basic
+    @Column(name = "address")
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Basic
+    @Column(name = "address_number")
+    public int getAddress_number() {
+        return address_number;
+    }
+
+    public void setAddress_number(int address_number) {
+        this.address_number = address_number;
     }
 
     @Basic

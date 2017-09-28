@@ -136,6 +136,11 @@ public class ApartmentController {
         modelAndView.addObject("ap_type",apartmentService.getType(ap1));
         ArrayList<String> features=apartmentService.getFeatures(ap1);
         modelAndView.addObject("features",features);
+        modelAndView.addObject("country",ap1.getCountry());
+        modelAndView.addObject("town",ap1.getTown());
+        modelAndView.addObject("area",ap1.getArea());
+        modelAndView.addObject("address",ap1.getAddress());
+        modelAndView.addObject("address_number",ap1.getAddress_number());
         return modelAndView;
     }
 
