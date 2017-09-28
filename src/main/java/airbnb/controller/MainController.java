@@ -21,6 +21,8 @@ import java.nio.file.Files;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import airbnb.sentimental.sentiment;
+
 /**
  * Created by Arianna on 22/8/2017.
  */
@@ -48,6 +50,9 @@ public class MainController {
                     modelAndView.addObject("approval", "false");
             }
         }
+        sentiment news=new sentiment();
+        System.out.println("I did it"+news.getsentiment("it's very good"));
+        System.out.println("I did it 2"+news.getsentiment("it was bad"));
         return modelAndView;
     }
 
