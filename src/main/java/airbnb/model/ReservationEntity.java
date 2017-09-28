@@ -14,9 +14,9 @@ public class ReservationEntity implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer reservation_id;
-    public Integer getReservation_id() {
-        return reservation_id;
+    private Integer id;
+    public Integer getId() {
+        return id;
     }
 
     @ManyToOne

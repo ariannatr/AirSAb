@@ -10,20 +10,20 @@
     <div th:if="${items.totalPages != 1}" class="form-group col-md-11 pagination-centered">
         <ul class="pagination">
             <li th:class="${items.number == 0} ? disabled">
-                <a class="pageLink" th:href="@{${url}(pageSize=${selectedPageSize}, page=1)}">&laquo;</a>
+                <a class="pageLink" th:href="@{${url}(pageSize=${selectedPageSize}, page=1 ,country=${country},town=${town},area=${area},departureDate=${departureDate},arrivalDate=${arrivalDate},people=${people},heating=${heating},ac=${ac},internet=${internet},maxPrice=${maxPrice},typeAp=${typeAp},kitchen=${kitchen},parking=${parking},elevator=${elevator},tv=${tv})}">&laquo;</a>
             </li>
             <li th:class="${items.number == 0} ? disabled">
-                <a class="pageLink" th:href="@{${url}(pageSize=${selectedPageSize}, page=${items.number})}">&larr;</a>
+                <a class="pageLink" th:href="@{${url}(pageSize=${selectedPageSize}, page=${items.number},country=${country},town=${town},area=${area},departureDate=${departureDate},arrivalDate=${arrivalDate},people=${people},heating=${heating},ac=${ac},internet=${internet},maxPrice=${maxPrice},typeAp=${typeAp},kitchen=${kitchen},parking=${parking},elevator=${elevator},tv=${tv})}">&larr;</a>
             </li>
             <li th:class="${items.number == (page - 1)} ? 'active pointer-disabled'"
                 th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                <a class="pageLink" th:href="@{${url}(pageSize=${selectedPageSize}, page=${page})}" th:text="${page}"></a>
+                <a class="pageLink" th:href="@{${url}(pageSize=${selectedPageSize}, page=${page},country=${country},town=${town},area=${area},departureDate=${departureDate},arrivalDate=${arrivalDate},people=${people},heating=${heating},ac=${ac},internet=${internet},maxPrice=${maxPrice},typeAp=${typeAp},kitchen=${kitchen},parking=${parking},elevator=${elevator},tv=${tv})}" th:text="${page}"></a>
             </li>
             <li th:class="${items.number + 1 == items.totalPages} ? disabled">
-                <a class="pageLink" th:href="@{${url}(pageSize=${selectedPageSize}, page=${items.number + 2})}">&rarr;</a>
+                <a class="pageLink" th:href="@{${url}(pageSize=${selectedPageSize}, page=${items.number + 2},country=${country},town=${town},area=${area},departureDate=${departureDate},arrivalDate=${arrivalDate},people=${people},heating=${heating},ac=${ac},internet=${internet},maxPrice=${maxPrice},typeAp=${typeAp},kitchen=${kitchen},parking=${parking},elevator=${elevator},tv=${tv})}">&rarr;</a>
             </li>
             <li th:class="${items.number + 1 == items.totalPages} ? disabled">
-                <a class="pageLink" th:href="@{${url}(pageSize=${selectedPageSize}, page=${items.totalPages})}">&raquo;</a>
+                <a class="pageLink" th:href="@{${url}(pageSize=${selectedPageSize}, page=${items.totalPages},country=${country},town=${town},area=${area},departureDate=${departureDate},arrivalDate=${arrivalDate},people=${people},heating=${heating},ac=${ac},internet=${internet},maxPrice=${maxPrice},typeAp=${typeAp},kitchen=${kitchen},parking=${parking},elevator=${elevator},tv=${tv})}">&raquo;</a>
             </li>
         </ul>
     </div>

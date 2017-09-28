@@ -5,6 +5,7 @@ import airbnb.model.*;
 import airbnb.repository.ReservationRepository;
 import airbnb.service.ApartmentService;
 import airbnb.service.CommentsService;
+import airbnb.service.ReservationService;
 import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -36,6 +37,9 @@ public class ReservationController {
 
     @Autowired
     private CommentsService commentsService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @Autowired
     private IAuthenticationFacade authenticationFacade;
@@ -148,4 +152,73 @@ public class ReservationController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/apartReserves", method = RequestMethod.GET)
+    public ModelAndView viewApartReservations() throws ParseException {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication authentication = authenticationFacade.getAuthentication();
+        modelAndView.setViewName("/reserves");
+        if (!authentication.getName().equals("anonymousUser")) {
+            modelAndView.addObject("uname", authentication.getName());
+            UsersEntity userS = userService.findByUsername(authentication.getName());
+            modelAndView.addObject("type", String.valueOf(userS.getType()));
+            OwnerEntity owner=userService.findOwnerByUsername(authentication.getName());
+            Set<ReservationEntity> reservations=apartmentService.findAllReservationByOwner(owner);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate localDate = LocalDate.now();
+            String currDate1 = dtf.format(localDate).toString();
+            if(reservations!=null) {
+                List<ReservationEntity> currReservations = new ArrayList<>();
+                List<ApartmentEntity> currAparts = new ArrayList<>();
+                List<ReservationEntity> pastReservations = new ArrayList<>();
+                List<ApartmentEntity> pastAparts = new ArrayList<>();
+                for (ReservationEntity res : reservations) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        ApartmentEntity apartmentEntity = res.getApartment();
+                        Date currDate = sdf.parse(currDate1);
+                        Date reservationDate = sdf.parse(res.getStartdate());
+                        if (reservationDate.after(currDate)) {
+                            currAparts.add(apartmentEntity);
+                            currReservations.add(res);
+                        } else {
+                            pastAparts.add(apartmentEntity);
+                            pastReservations.add(res);
+                        }
+                    } catch (ParseException e) {
+
+                    }
+                }
+
+                // if (pastReservations.size() > 0)
+                modelAndView.addObject("pastRes", pastReservations);
+                //if (currReservations.size() > 0)
+                modelAndView.addObject("currRes", currReservations);
+                //  if (pastAparts.size() > 0)
+                modelAndView.addObject("pastAparts", pastAparts);
+                //if (currAparts.size() > 0)
+                modelAndView.addObject("currAparts", currAparts);
+                modelAndView.addObject("approveOption", "true");
+            }
+
+        }
+        else{
+            System.out.println("You are not allowed here");
+        }
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/approveReserve/{reserveID}", method = RequestMethod.POST)
+    public ModelAndView makeReservation(@PathVariable("reserveID") int reserveID) throws ParseException {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication authentication = authenticationFacade.getAuthentication();
+        modelAndView.setViewName("redirect:/apartReserves");
+        if (!authentication.getName().equals("anonymousUser")) {
+            ReservationEntity reservationEntity=reservationService.findByReservationId(reserveID);
+            reservationService.approveReservation(reservationEntity);
+        }
+        else{
+            System.out.println("You are not allowed to make a reservation");
+        }
+        return modelAndView;
+    }
 }

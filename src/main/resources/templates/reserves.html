@@ -45,7 +45,10 @@ Licence URI: http://www.os-templates.com/template-terms
 
     <div class="group results">
     <!--article class="one_third first"-->
-    <div th:if ="${(currRes!=null)}">
+        <div th:if="${(#lists.size(currRes)==0)}">
+            <p> You have not attended any reservation yet!</p>
+        </div>
+    <div th:if ="${(currRes!=null and #lists.size(currRes)!=0)}">
         <div th:each="curr, iterStat : ${currRes} ">
             <div >
                 <div th:if="${(currAparts[iterStat.index].photo!= '')}">
@@ -67,6 +70,12 @@ Licence URI: http://www.os-templates.com/template-terms
                 <article >
                     <div class="txtwrap">
                         <h4 class="heading"><span th:text="${currAparts[iterStat.index].name}"></span></h4>
+                        <div th:if="${(curr.approval==0)}">
+                            <span class="alert alert-warning">Not approved!</span>
+                        </div>
+                        <div th:if="${(curr.approval==1)}">
+                            <span class="alert alert-success">Approved!</span>
+                        </div>
                         <ul class="nospace meta">
                             <li><i class="fa fa-user"></i> <a href="#"><span th:text="${currAparts[iterStat.index].country}"></span></a></li>
                             <li><i class="fa fa-tag"></i> <a href="#"><span th:text="${currAparts[iterStat.index].town}"></span></a></li>
@@ -95,13 +104,15 @@ Licence URI: http://www.os-templates.com/template-terms
                     <input name="rating" type="number"/>
                     <button type="submit">Comment</button>
                 </form>
+                <div th:if="${(approveOption=='true' and curr.approval==0)}">
+                    <form  method="post" th:action="@{/approveReserve/{reserveID}(reserveID=${curr.id})}">
+                        <button type="submit">Approve</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
     </br>
-    <div th:if="${(currRes==null)}">
-        <p> You have not made yet any reservations !</p>
-    </div>
     </div>
     </div>
     <div id="old_activities" class="tabcontent" >
@@ -111,7 +122,10 @@ Licence URI: http://www.os-templates.com/template-terms
 
         <div class="group results">
             <!--article class="one_third first"-->
-            <div th:if ="${(pastRes!=null)}">
+            <div th:if="${(#lists.size(pastRes)==0)}">
+                <p> You have not attended any reservation yet!</p>
+            </div>
+            <div th:if ="${(pastRes!=null and #lists.size(pastRes)!=0)}">
                 <div th:each="past, iterStat1 : ${pastRes} ">
                     <div>
                         <div th:if="${(pastAparts[iterStat1.index].photo!= '')}">
@@ -150,9 +164,6 @@ Licence URI: http://www.os-templates.com/template-terms
                 </div>
             </div>
             </br>
-            <div th:if="${(pastRes==null)}">
-                <p> You have not attended any reservation yet!</p>
-            </div>
 
         </div>
         <div class="scrollable">

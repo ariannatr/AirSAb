@@ -164,7 +164,7 @@ public class MessagesController {
             bysender.add(messagesEntity.getRenter().getUsersUsername());
             toreceiver.add(messagesEntity.getOwner().getUsersUsername());
         }
-        Page<MessagesEntity> msg= new PageImpl<>(sorted);
+        Page<MessagesEntity> msg= new PageImpl<MessagesEntity>(sorted);
         pager= new Pager(msg.getTotalPages(), msg.getNumber(), BUTTONS_TO_SHOW);
         if(msg.getTotalElements()!=0){
             modelAndView.addObject("pager", pager);

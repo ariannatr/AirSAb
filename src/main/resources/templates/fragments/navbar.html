@@ -58,10 +58,17 @@
                                 <a class="dropdown-item" th:href="@{/aparts}" >View All </a>
                             </div>
                         </li>
-                        <li th:if ="${(type == '2') or (type=='3')}" class="nav-item dropdown" th:classappend="${module == 'reservations' ? 'active' : ''}">
+                        <li th:if ="${(type == '2') or (type=='3') or (type=='1')}" class="nav-item dropdown" th:classappend="${module == 'reservations' ? 'active' : ''}">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false"> My Reservations</a>
-                            <div th:if ="${(type == '2') or (type=='3')}"  class="dropdown-menu">
-                                <a class="dropdown-item" th:href="@{/reserves}" >View All </a>
+                            <div th:if ="${(type == '3')}"  class="dropdown-menu">
+                                <a class="dropdown-item" th:href="@{/reserves}" >For my Pleasure </a>
+                                <a class="dropdown-item" th:href="@{/apartReserves}" >For my Apartments </a>
+                            </div>
+                            <div th:if ="${(type == '1') }"  class="dropdown-menu">
+                                <a class="dropdown-item" th:href="@{/apartReserves}" >For my Apartments </a>
+                            </div>
+                            <div th:if ="${(type == '2') }"  class="dropdown-menu">
+                                <a class="dropdown-item" th:href="@{/reserves}" >For my Pleasure </a>
                             </div>
                         </li>
                         <li class="nav-item" th:classappend="${module == 'about' ? 'active' : ''}">

@@ -3,6 +3,7 @@ package airbnb.service;
 import airbnb.model.*;
 import airbnb.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -275,7 +276,15 @@ public class ApartmentServiceImpl implements ApartmentService {
                     list.remove();
             }
         }
-        return aparts;
+        Page<ApartmentEntity> dtoPage = aparts.map(new Converter<ApartmentEntity, ApartmentEntity>() {
+            @Override
+            public ApartmentEntity convert(ApartmentEntity entity) {
+                ApartmentEntity dto = entity;
+                // Conversion logic
+                return dto;
+            }
+        });
+        return dtoPage;
     }
 
     @Override
@@ -324,7 +333,7 @@ public class ApartmentServiceImpl implements ApartmentService {
             nofilter = false;
             aparts = apartmentRepository.findAllByCapacityIsGreaterThanEqual(people.get(), pageable);
         }
-        if(arrivalDate.isPresent() && departureDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && !arrivalDate.get().replaceAll(" ","").equals("") && nofilter==false){
+        if(arrivalDate.isPresent() && departureDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && !departureDate.get().replaceAll(" ","").equals("") && nofilter==false){
             nofilter = false;
             Iterator<ApartmentEntity> list = aparts.iterator();
             while (list.hasNext())
@@ -333,7 +342,7 @@ public class ApartmentServiceImpl implements ApartmentService {
                     list.remove();
             }
         }
-        else if(arrivalDate.isPresent() && departureDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && !arrivalDate.get().replaceAll(" ","").equals("") && nofilter==true)
+        else if(arrivalDate.isPresent() && departureDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && !departureDate.get().replaceAll(" ","").equals("") && nofilter==true)
         {
             aparts=apartmentRepository.findAll(pageable);
             nofilter = false;
@@ -341,8 +350,12 @@ public class ApartmentServiceImpl implements ApartmentService {
             while (list.hasNext())
             {
                 if(available(arrivalDate.get(),departureDate.get(),list.next())<0)
+                {
                     list.remove();
+                }
             }
+            System.out.println("exoume "+aparts.getTotalElements()+" stoixeia");
+            System.out.println("exoume "+aparts.getNumberOfElements()+" stoixeia");
         }
         else if (arrivalDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && nofilter==false) {
             nofilter = false;
@@ -371,7 +384,15 @@ public class ApartmentServiceImpl implements ApartmentService {
         }
         if(nofilter==true)
             aparts=apartmentRepository.findAllOrderByPrice(pageable);
-        return aparts;
+        Page<ApartmentEntity> dtoPage = aparts.map(new Converter<ApartmentEntity, ApartmentEntity>() {
+            @Override
+            public ApartmentEntity convert(ApartmentEntity entity) {
+                ApartmentEntity dto = entity;
+                // Conversion logic
+                return dto;
+            }
+        });
+        return dtoPage;
     }
 
     @Override
@@ -529,4 +550,10 @@ public class ApartmentServiceImpl implements ApartmentService {
     public ArrayList<ReservationEntity> findAllReservationsByRenter(RenterEntity renter){
         return reservationRepository.findAllByRenter(renter);
     }
+
+    @Override
+    public Set<ReservationEntity> findAllReservationByOwner(OwnerEntity owner){
+        return reservationRepository.findAllByApartmentOwner(owner);
+    }
+
 }

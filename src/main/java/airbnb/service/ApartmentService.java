@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.security.acl.Owner;
 import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
 
 
 @Service("apartmentService")
@@ -42,4 +43,5 @@ public interface ApartmentService {
 
     public ArrayList<ReservationEntity> findAllReservations();
     public ArrayList<ReservationEntity> findAllReservationsByRenter(RenterEntity renter);
+    public Set<ReservationEntity> findAllReservationByOwner(OwnerEntity owner);
 }

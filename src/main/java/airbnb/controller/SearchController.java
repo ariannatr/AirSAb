@@ -72,6 +72,7 @@ public class SearchController {
         aparts= apartmentService.findAparts(country,town,area,arrivalDate,departureDate,people,new PageRequest(evalPage, evalPageSize));
         pager= new Pager(aparts.getTotalPages(), aparts.getNumber(), BUTTONS_TO_SHOW);
         if(aparts.getTotalElements()!=0){
+            System.out.println("----------------- vrika "+aparts.getTotalElements()+" diamerismata");
             modelAndView.addObject("pager", pager);
             modelAndView.addObject("items", aparts);
         }
@@ -124,6 +125,7 @@ public class SearchController {
         aparts= apartmentService.findAparts(country,town,area,arrivalDate,departureDate,people,new PageRequest(evalPage, evalPageSize));
         pager= new Pager(aparts.getTotalPages(), aparts.getNumber(), BUTTONS_TO_SHOW);
         if(aparts.getTotalElements()!=0){
+            System.out.println("--------------vrika "+aparts.getTotalElements()+" diamerismata");
             modelAndView.addObject("pager", pager);
             modelAndView.addObject("items", aparts);
         }
@@ -148,7 +150,7 @@ public class SearchController {
 
     @RequestMapping(value={"/search2"}, method = RequestMethod.POST/*, produces= "application/javascript"*/)
     public ModelAndView search2(@RequestParam("pageSize") Optional<Integer> pageSize,
-                                  @RequestParam("page") Optional<Integer> page,@RequestParam("heating") Optional<Integer> heating,@RequestParam("ac") Optional<Integer> ac,@RequestParam("internet") Optional<Integer> internet,@RequestParam("maxPrice") Optional<Float> maxPrice,@RequestParam("type") Optional<Integer> type,@RequestParam("kitchen") Optional<Integer> kitchen,@RequestParam("parking") Optional<Integer> parking,@RequestParam("elevator") Optional<Integer> elevator,@RequestParam("tv") Optional<Integer> tv,@RequestParam("country") Optional<String> country,@RequestParam("town") Optional<String> town,@RequestParam("area") Optional<String> area,@RequestParam("arrivalDate") Optional<String> arrivalDate,@RequestParam("departureDate") Optional<String> departureDate,@RequestParam("people") Optional<Integer> people) throws ParseException {
+                                  @RequestParam("page") Optional<Integer> page,@RequestParam("heating") Optional<Integer> heating,@RequestParam("ac") Optional<Integer> ac,@RequestParam("internet") Optional<Integer> internet,@RequestParam("maxPrice") Optional<Float> maxPrice,@RequestParam("typeAp") Optional<Integer> type,@RequestParam("kitchen") Optional<Integer> kitchen,@RequestParam("parking") Optional<Integer> parking,@RequestParam("elevator") Optional<Integer> elevator,@RequestParam("tv") Optional<Integer> tv,@RequestParam("country") Optional<String> country,@RequestParam("town") Optional<String> town,@RequestParam("area") Optional<String> area,@RequestParam("arrivalDate") Optional<String> arrivalDate,@RequestParam("departureDate") Optional<String> departureDate,@RequestParam("people") Optional<Integer> people) throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/searchAparts");
         System.out.println("Capacity "+people);
@@ -193,7 +195,7 @@ public class SearchController {
 
     @RequestMapping(value={"/search2"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
     public ModelAndView getsearch2(@RequestParam("pageSize") Optional<Integer> pageSize,
-                                @RequestParam("page") Optional<Integer> page,@RequestParam("heating") Optional<Integer> heating,@RequestParam("ac") Optional<Integer> ac,@RequestParam("internet") Optional<Integer> internet,@RequestParam("maxPrice") Optional<Float> maxPrice,@RequestParam("type") Optional<Integer> type,@RequestParam("kitchen") Optional<Integer> kitchen,@RequestParam("parking") Optional<Integer> parking,@RequestParam("elevator") Optional<Integer> elevator,@RequestParam("tv") Optional<Integer> tv,@RequestParam("country") Optional<String> country,@RequestParam("town") Optional<String> town,@RequestParam("area") Optional<String> area,@RequestParam("arrivalDate") Optional<String> arrivalDate,@RequestParam("departureDate") Optional<String> departureDate,@RequestParam("people") Optional<Integer> people) throws ParseException {
+                                @RequestParam("page") Optional<Integer> page,@RequestParam("heating") Optional<Integer> heating,@RequestParam("ac") Optional<Integer> ac,@RequestParam("internet") Optional<Integer> internet,@RequestParam("maxPrice") Optional<Float> maxPrice,@RequestParam("typeAp") Optional<Integer> type,@RequestParam("kitchen") Optional<Integer> kitchen,@RequestParam("parking") Optional<Integer> parking,@RequestParam("elevator") Optional<Integer> elevator,@RequestParam("tv") Optional<Integer> tv,@RequestParam("country") Optional<String> country,@RequestParam("town") Optional<String> town,@RequestParam("area") Optional<String> area,@RequestParam("arrivalDate") Optional<String> arrivalDate,@RequestParam("departureDate") Optional<String> departureDate,@RequestParam("people") Optional<Integer> people) throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/searchAparts");
         System.out.println("Max price "+maxPrice+" ,heating "+heating+" ,kitchen "+kitchen+" ,tv "+tv+" ,type "+type+" ,elevator "+elevator+" ,ac "+ac+" ,heating "+heating+" ,internet "+ internet);
