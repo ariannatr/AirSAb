@@ -107,3 +107,5 @@ img{
     margin: 5px;
     width: 80%;
 }
+
+li div { display: table-cell; vertical-align: middle; }

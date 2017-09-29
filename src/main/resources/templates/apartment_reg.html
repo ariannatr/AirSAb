@@ -2,7 +2,7 @@
 <html  xmlns="http://www.w3.org/1999/xhtml"
        xmlns:th="http://www.thymeleaf.org">
 <head>
-
+    <meta th:replace="/fragments/head :: head">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -16,13 +16,7 @@
     <!-- Custom styles for this template -->
     <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
     <link th:href="@{css/apartment_reg.css}" rel="stylesheet" type="text/css" media="all">
-
-    <style type="text/css">
-        #map_canvas {
-            height: 300px;
-            width: 300px;
-        }
-    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
 
 </head>
 <body>
@@ -129,8 +123,6 @@
 <script th:src="@{/vendor/popper/popper.min.js}"></script>
 <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
-
 
 <script type="text/javascript">
     jQuery(function(){

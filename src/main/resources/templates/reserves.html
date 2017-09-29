@@ -8,15 +8,21 @@ Licence: Free to use under our free template licence terms
 Licence URI: http://www.os-templates.com/template-terms
 -->
 <head >
+    <meta th:replace="/fragments/head :: head">
     <title>My Reservations</title>
     <!-- Bootstrap core CSS -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
     <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" type="text/css" media="all">
-
-    <!-- Custom styles for this template -->
     <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
-    <link th:href="@{/css/searchCss.css}" rel="stylesheet" type="text/css" media="all">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--<link th:href="@{/css/searchCss.css}" rel="stylesheet" type="text/css" media="all">-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700">
+
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>-->
     <style>
         .animated {
         -webkit-transition: height 0.2s;
@@ -264,15 +270,10 @@ Licence URI: http://www.os-templates.com/template-terms
 
 
 <!-- Include jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
-
-<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700">
 <script th:src="@{/scripts/reserves.js}"> </script>
 <script type="text/javascript">
     document.getElementById("my_active").click();
 </script>
+
 </html>

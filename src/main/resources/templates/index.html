@@ -2,7 +2,7 @@
 <html  xmlns="http://www.w3.org/1999/xhtml"
        xmlns:th="http://www.thymeleaf.org">
 <head>
-
+    <meta th:replace="/fragments/head :: head">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -19,7 +19,7 @@
 
     <link th:href="@{/css/search.css}" rel="stylesheet" type="text/css" media="all">
     <link th:href="@{/css/searchCss.css}" rel="stylesheet" type="text/css" media="all">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
 
 </head>
 
@@ -182,8 +182,6 @@
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
-
 
 <script type="text/javascript">
 jQuery(function(){

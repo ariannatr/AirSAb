@@ -137,3 +137,8 @@ form.register a:hover
 {
     color: #2ecc71;
 }
+
+#map_canvas {
+    height: 300px;
+    width: 300px;
+}
