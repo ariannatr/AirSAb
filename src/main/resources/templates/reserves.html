@@ -50,49 +50,64 @@ Licence URI: http://www.os-templates.com/template-terms
 
 <h2 align="center">Reservations</h2>
 
-    <div class="sidebar one_quarter first">
-        <div class="tab">
-            <button type="button" class="tablinks  list-group-item" onclick="openCity(event, 'reservations')" th:id="${((param.tab != null)and (param.tab[0] == 'reservations')) ? 'my_active' : ''}">
-                <i class="fa fa-calendar-check-o" style="width:30%" ></i> Reservations<span class="badge" th:text="${#lists.size(currRes)}"></span></button>
-            <button type="button" class="tablinks  list-group-item" onclick="openCity(event, 'old_activities')" th:id="${((param.tab != null) and (param.tab[0] == 'old_activities')) ? 'my_active' : ''}">
-                <i class="fa fa-calendar-minus-o" style="width:30%"></i> Older Reservations<span class="badge" th:text="${#lists.size(pastRes)}"></span> </button>
+<div class="container">
 
+    <!--<div class="sidebar one_quarter first">-->
+        <!--<div class="tab">-->
+            <!--<button type="button" class="tablinks  list-group-item" onclick="openCity(event, 'reservations')" th:id="${((param.tab != null)and (param.tab[0] == 'reservations')) ? 'my_active' : ''}">-->
+                <!--<i class="fa fa-calendar-check-o" style="width:30%" ></i> Reservations<span class="badge" th:text="${#lists.size(currRes)}"></span></button>-->
+            <!--<button type="button" class="tablinks  list-group-item" onclick="openCity(event, 'old_activities')" th:id="${((param.tab != null) and (param.tab[0] == 'old_activities')) ? 'my_active' : ''}">-->
+                <!--<i class="fa fa-calendar-minus-o" style="width:30%"></i> Older Reservations<span class="badge" th:text="${#lists.size(pastRes)}"></span> </button>-->
+
+        <!--</div>-->
+        <div class="col-lg-12">
+            <!--<nav class="specialnavbar">-->
+            <!--<div>-->
+            <!--<ul>-->
+            <!--<li class="active" ><h5><a class="fa fa-info" href="#generalInfo"> <b><em> General Info</em></b></a></h5></li>-->
+            <!--<li class=""><h5><a class="fa fa-calendar" href="#ownerInfo" ><b><em>  Owner's Info</em></b></a></h5></li>-->
+            <!--<li class=""><h5><a class="fa fa-star" href="#ratings" id="ratings-link"><b><em>  Reviews</em></b></a></h5></li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--</nav>-->
+            <ul class="nav nav-tabs">
+                <li class="active" style="width: 25%"><a data-toggle="tab" class="fa fa-calendar-check-o" href="#futureReservations"><b><em> Future Reservations</em></b></a></li>
+                <li style="width: 25%"><a data-toggle="tab" class="fa fa-calendar-minus-o" href="#pastReservations" ><b><em>  Past Reservations</em></b></a></li>
+                <!--<li style="width: 25%"><a data-toggle="tab" class="fa fa-star" href="#ratings"><b><em>  Reviews</em></b></a></li>-->
+                <!--<li style="width: 25%"><a data-toggle="tab" class="fa fa-star" href="#ratings"><b><em>  Reviews</em></b></a></li>-->
+            </ul>
         </div>
 
-    </div>
+    <!--</div>-->
 
-    <div class="content three_quarter">
+    <!--<div class="content three_quarter">-->
+    <div class="tab-content">
+    <div id="futureReservations"  class="tab-pane fade in active">
 
-    <div id="reservations"  class="tabcontent">
+        <h2 align="center">Future Reservations</h2>
 
-    <div class="group results">
+        <div class="group results">
     <!--article class="one_third first"-->
         <div th:if="${(#lists.size(currRes)==0)}">
-            <p> You have not attended any reservation yet!</p>
+            <span class="alert alert-warning"> You have not attended any reservation yet!</span>
         </div>
     <div th:if ="${(currRes!=null and #lists.size(currRes)!=0)}">
-        <div th:each="curr, iterStat : ${currRes} ">
-            <div >
+        <div class="row" th:each="curr, iterStat : ${currRes} ">
+            <div class="col-lg-12">
                 <div th:if="${(currAparts[iterStat.index].photo!= '')}">
                     <figure>
-                    <img style=" width:200px; height:190px;float: left; margin: 0px 15px 15px 0px;" alt="Apartment Pic"  th:src ="${currAparts[iterStat.index].photo}" style="width:300px;height:150px"/>
-                        <figcaption>
-                            <time datetime="2045-04-06T08:15+00:00" th:text="${curr.startdate}"><strong></strong> <em></em></time>
-                        </figcaption>
+                        <img style=" width:200px; height:190px;float: left; margin: 0px 15px 15px 0px;" alt="Apartment Pic"  th:src ="${currAparts[iterStat.index].photo}" style="width:300px;height:150px"/>
                     </figure>
                 </div>
                 <div th:if="${(currAparts[iterStat.index].photo== '')}">
                     <figure>
-                    <img th:src="@{/images/no_image.png}"  style="width:300px;height:150px"/>
-                        <figcaption>
-                            <time datetime="2045-04-06T08:15+00:00" th:text="${curr.startdate}"><strong></strong> <em></em></time>
-                        </figcaption>
+                        <img th:src="@{/images/no_image.png}"  style="width:300px;height:150px"/>
                     </figure>
                 </div>
                 <article >
                     <div class="txtwrap">
-                        <h4 class="heading"><span th:text="${currAparts[iterStat.index].name}"></span></h4>
-                        <div class="rown">
+                        <h4 class="heading"><i class="fa fa-home"> </i><span th:text="${currAparts[iterStat.index].name}"></span></h4>
+                        <div class="row">
                             <div class="col-lg-6">
                                 <div th:if="${(curr.approval==0)}">
                                     <span class="alert alert-warning">Not approved!</span>
@@ -109,23 +124,18 @@ Licence URI: http://www.os-templates.com/template-terms
                         <div class="row">
                             <div class="col-lg-6">
                             <ul class="nospace meta">
-                                <li><i class="fa fa-user"></i> <a href="#"><span th:text="${currAparts[iterStat.index].country}"></span></a></li>
+                                <li><i class="fa fa-tags"></i> <a href="#"><span th:text="${currAparts[iterStat.index].area}"></span></a></li>
                                 <li><i class="fa fa-tag"></i> <a href="#"><span th:text="${currAparts[iterStat.index].town}"></span></a></li>
                             </ul>
-                            <table>
-                                <tr>
-                                    <td>Price:</td>
-                                    <td><span th:text="${curr.totalCost}"></span></td>
-                                </tr>
-                                <tr>
-                                    <td>From:</td>
-                                    <td><span th:text="${curr.startdate}"></span></td>
-                                </tr>
-                                <tr>
-                                    <td>To:</td>
-                                    <td><span th:text="${curr.finaldate}"></span></td>
-                                </tr>
-                            </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                    <ul class="nospace meta">
+                                        <li><i class="fa fa-euro"></i> <a href="#"><span  th:text="${curr.totalCost}"></span></a></li>
+                                        <li><i class="fa fa-calendar"></i> <em> From : </em><a href="#"><span th:text="${curr.startdate}"></span></a></li>
+                                        <li><i class="fa fa-calendar"></i> <em> To : </em><a href="#"><span th:text="${curr.finaldate}"></span></a></li>
+                                    </ul>
                             </div>
                         </div>
                         <div th:if="${( currAparts!=null and #lists.size(currAparts)!=0 )}">
@@ -160,13 +170,6 @@ Licence URI: http://www.os-templates.com/template-terms
 
                         </div>
                     </div>
-                    <!--<form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">-->
-                        <!--<label>Leave your comment</label>-->
-                        <!--<input name="comment" type="text"/>-->
-                        <!--<label>Leave your rating</label>-->
-                        <!--<input name="rating" type="number" max="5"/>-->
-                        <!--<button type="submit">Comment</button>-->
-                    <!--</form>-->
                 </div>
                 <div th:if="${(approveOption=='true' and curr.approval==0)}">
                     <form  method="post" th:action="@{/approveReserve/{reserveID}(reserveID=${curr.id})}">
@@ -179,7 +182,7 @@ Licence URI: http://www.os-templates.com/template-terms
     </br>
     </div>
     </div>
-    <div id="old_activities" class="tabcontent" >
+    <div id="pastReservations" class="tab-pane fade" >
         <!-- ################################################################################################ -->
 
         <h2 align="center">Older Reservations</h2>
@@ -187,7 +190,7 @@ Licence URI: http://www.os-templates.com/template-terms
         <div class="group results">
             <!--article class="one_third first"-->
             <div th:if="${(#lists.size(pastRes)==0)}">
-                <p> You have not attended any reservation yet!</p>
+                <span class="alert alert-warning"> You have not attended any reservation yet!</span>
             </div>
             <div th:if ="${(pastRes!=null and #lists.size(pastRes)!=0)}">
                 <div th:each="past, iterStat1 : ${pastRes} ">
@@ -210,9 +213,9 @@ Licence URI: http://www.os-templates.com/template-terms
                         </div>
                         <article >
                             <div class="txtwrap">
-                                <h4 class="heading"><span th:text="${pastAparts[iterStat1.index].name}"></span></h4>
+                                <h4 class="heading"><i class="fa fa-home"></i> <span th:text="${pastAparts[iterStat1.index].name}"> </span></h4>
                                 <ul class="nospace meta">
-                                    <li><i class="fa fa-tag"></i> <a href="#"><span th:text="${pastAparts[iterStat1.index].country}"></span></a></li>
+                                    <li><i class="fa fa-tag"></i> <a href="#"><span th:text="${pastAparts[iterStat1.index].area}"></span></a></li>
                                 </ul>
                             </div>
                             <div th:if="${( pastAparts!=null and #lists.size(pastAparts)!=0 )}">
@@ -245,7 +248,6 @@ Licence URI: http://www.os-templates.com/template-terms
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                     </div>
                 </div>
@@ -265,7 +267,7 @@ Licence URI: http://www.os-templates.com/template-terms
     </div>
 </div>
 </div>
-
+</div>
 <div th:replace="/fragments/footer :: footer"></div>
 
 </body>
