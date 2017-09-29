@@ -44,19 +44,19 @@
                     <div id="map_canvas" width="300" height="300"></div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="searchResults">
+                    <!--div class="searchResults">
                         <h2 style="color: white">
                             You searched for:
                         </h2>
                         <input type="text" id="search_country" name="search_country" value="Greece" placeholder="Country"><br>
-                        <input type="text" id="search_town" name="search_town" value="Athens" placeholder="Town"><br>
-                        <input type="text" id="search_area" name="search_area" value="Argiroupoli" placeholder="Area"><br>
-                        <input type="text" id="search_address" name="search_address" value="Thiras" placeholder="Address"><br>
-                        <input type="text" id="search_address_number" name="search_address_number" value="74" placeholder="Address Number"><br>
+                        <input type="text" id="search_town" name="search_town"  placeholder="Town"><br>
+                        <input type="text" id="search_area" name="search_area"  placeholder="Area"><br>
+                        <input type="text" id="search_address" name="search_address"  placeholder="Address"><br>
+                        <input type="text" id="search_address_number" name="search_address_number"  placeholder="Address Number"><br>
                     </div>
 
                     <input type="submit" id="search" value="search"/>
-                </div>
+                </div-->
             </div>
 
             <form class="register"  method="POST"  enctype="multipart/form-data" th:action="@{/apartment_reg}">
@@ -64,10 +64,11 @@
                 <input  name="name" id="name" required="required" placeholder="Name"   type="text"/>
                 <input  name="description" id="description" required="required" placeholder="Description" maxlength="300" type="textarea"/>
                 <input  name="country" id="country" required="required" placeholder="Country" value="Greece" style="width:30%" type="text"/>
-                <input  name="town" id="town" required="required" placeholder="Town" value="Athens" style="width:30%" type="text"/>
-                <input  name="area" id="area" required="required" placeholder="Area" value="Argiroupoli" style="width:30%"  type="text"/>
-                <input  name="address" id="address" required="required" placeholder="Address"  value="Thiras" style="width:50%"  type="text"/>
-                <input  name="address_number" id="address_number" required="required" value="74" placeholder="Address Number" style="width:50%"  type="number"/>
+                <input  name="town" id="town" required="required" placeholder="Town"  style="width:30%" type="text"/>
+                <input  name="area" id="area" required="required" placeholder="Area"  style="width:30%"  type="text"/> <br>
+                <input   name="address" id="address" style="width:35% " required="required" placeholder="Address"   style="width:50%"  type="text"/>
+                <input   name="address_number" style="width:10%" id="address_number" required="required"  placeholder="Address Number" style="width:50%"  type="number"/>
+                <input type="submit" id="search" value="Find on Map" style="width:25%"/>
 
                 <br>
                 <label class="divider">Important Info</label>
@@ -168,8 +169,8 @@
 
         function codeAddress() {
 
-            var address = document.getElementById("search_town").value + " " +document.getElementById("search_country").value+ " " + document.getElementById("search_area").value + " " +
-                document.getElementById("search_address").value + " " + document.getElementById("search_address_number").value;
+            var address = document.getElementById("town").value + " " +document.getElementById("country").value+ " " + document.getElementById("area").value + " " +
+                document.getElementById("address").value + " " + document.getElementById("address_number").value;
             geocoder.geocode( { 'address': address}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     map.setCenter(results[0].geometry.location);
