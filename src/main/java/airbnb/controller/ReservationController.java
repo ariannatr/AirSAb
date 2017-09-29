@@ -127,6 +127,7 @@ public class ReservationController {
                      modelAndView.addObject("pastAparts", pastAparts);
                  //if (currAparts.size() > 0)
                      modelAndView.addObject("currAparts", currAparts);
+                 modelAndView.addObject("mine", "false");
              }
 
         }
@@ -198,6 +199,7 @@ public class ReservationController {
                 //if (currAparts.size() > 0)
                 modelAndView.addObject("currAparts", currAparts);
                 modelAndView.addObject("approveOption", "true");
+                modelAndView.addObject("mine", "true");
             }
 
         }
