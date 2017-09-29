@@ -128,7 +128,9 @@ Licence URI: http://www.os-templates.com/template-terms
                             </table>
                             </div>
                         </div>
-                        <footer><a th:href="@{/apartment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">Read  more.. &raquo;</a></footer>
+                        <div th:if="${( currAparts!=null and #lists.size(currAparts)!=0 )}">
+                            <footer><a th:href="@{/apartment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">Read  more.. &raquo;</a></footer>
+                        </div>
                     </div>
                 </article>
                 <div th:if="${(approveOption!='true') and (mine=='false')}">
@@ -213,7 +215,10 @@ Licence URI: http://www.os-templates.com/template-terms
                                     <li><i class="fa fa-tag"></i> <a href="#"><span th:text="${pastAparts[iterStat1.index].country}"></span></a></li>
                                 </ul>
                             </div>
-                            <footer><a th:href="@{/apartment/{apartmentID}(apartmentID=${pastAparts[iterStat1.index].id})}">Read  more.. &raquo;</a></footer>
+                            <div th:if="${( pastAparts!=null and #lists.size(pastAparts)!=0 )}">
+
+                             <footer><a th:href="@{/apartment/{apartmentID}(apartmentID=${pastAparts[iterStat1.index].id})}">Read  more.. &raquo;</a></footer>
+                            </div>
                         </article>
                     </div>
                     <div th:if="${(mine=='false')}">
@@ -226,7 +231,7 @@ Licence URI: http://www.os-templates.com/template-terms
 
                                     <div class="row" id="post-review-box" style="display:none;">
                                         <div class="col-md-12">
-                                            <form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">
+                                            <form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${pastAparts[iterStat1.index].id})}">
                                                 <input required id="ratings-hidden" name="rating" type="hidden" value="0">
                                                 <textarea  required class="form-control animated" cols="50" id="new-review" type="text" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
 
