@@ -113,5 +113,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	       .antMatchers("/fragments/**","/resources/**","/static/**", "/css/**", "/js/**", "/images/**","/scripts/**","/vendor/**");
 		web.ignoring().antMatchers("/the_js_path/**");
 		web.ignoring().antMatchers("/image/**","/jquery/**");
+//		web.ignoring().antMatchers("/apartment/**");
 	}
 }

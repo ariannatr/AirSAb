@@ -9,31 +9,16 @@
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"rel="stylesheet" type="text/css" media="all">
-
+    <link th:href="@{/css/lightbox.css}" rel="stylesheet" type="text/css" media="all">
     <!-- Custom styles for this template -->
     <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
     <link th:href="@{/css/apartment_prof.css}" rel="stylesheet" type="text/css" media="all">
     <link th:href="@{/css/searchCss.css}" rel="stylesheet" type="text/css" media="all">
-
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        #map_canvas {
-            height: 300px;
-            width: 300px;
-        }
-
-        #div-1 {
-            position:relative;
-        }
-        #div-1a {
-            position:absolute;
-            top:0;
-            left:0;
-        }
-        #div-1b {
-            position:absolute;
-            bottom:0;
-            right:0;
-        }
+        .mySlides {display:none}
+        .demo {cursor:pointer}
     </style>
 
 </head>
@@ -48,159 +33,292 @@
         <div class="parent-wrapper">
             <div class="parent">
                 <div class= "child" style="height: 100%;" >
-                    <section class="col-xs-12 col-sm-9 col-md-12 col-lg-12">
+                    <section class="col-lg-12">
                         <article class="search-result">
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-lg-12">
                                     <h2 class="heading"><a  th:text="${ap.name}">Voluptatem, exercitationem, suscipit, distinctio</a></h2>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div th:if="${(ap.photo!= '')}">
-                                        <div id="div-1">
-                                            <img alt="Apartment Pic"  th:src ="${ap.photo}" style="width: 350px;height:250px"/>
-                                            <div th:if ="${(mine == 'true')}" id="div-1a" data-role="fieldcontain">
+                                <div id="act-imgs" class="content col-lg-7">
+                                    <div style="height: 500px;">
+                                        <div class="w3-content" >
+                                            <div th:if="${(ap.photo!= '')}">
+                                                <!--<a  data-lightbox="image-1" data-title="My caption">-->
+                                                <!--<div class="act-img">-->
+                                                    <img class="mySlides" th:src="${ap.photo}" alt="img here" style="width:auto">
+                                                <!--</div>-->
+                                                <div th:if ="${(mine == 'true')}" id="div-1a" data-role="fieldcontain">
                                                 <!--a href="index.html" data-role="button" data-icon="delete">Delete</a-->
-                                                <form method="POST" th:action="@{/removephoto/1/{apartmentID}(apartmentID=${ap.id})}" >
-                                                    <button type="submit" class="btn-xs " value="Remove">Remove</button>
-                                                </form>
+                                                    <form method="POST" th:action="@{/removephoto/1/{apartmentID}(apartmentID=${ap.id})}" >
+                                                        <button type="submit" class="btn-xs " value="Remove">Remove</button>
+                                                    </form>
+                                                </div>
+                                                <!--</a>-->
+                                            </div>
+                                            <div th:if="${(ap.photo=='')}">
+                                                <img class="mySlides" th:src="@{/images/no_image.png}" style="width: 350px;height:250px"/>
+                                            </div>
+                                            <div th:if="${(ap.photo2!= '')}">
+                                                <!--<a  data-lightbox="image-1" data-title="My caption">-->
+                                                   <!--<div class="act-img">-->
+                                                       <img class="mySlides" th:src="${ap.photo2}" alt="img here" style="width:auto">
+                                                   <!--</div>-->
+                                                    <div th:if ="${(mine == 'true')}" id="div-1a" data-role="fieldcontain">
+                                                        <!--a href="index.html" data-role="button" data-icon="delete">Delete</a-->
+                                                        <form method="POST" th:action="@{/removephoto/2/{apartmentID}(apartmentID=${ap.id})}" >
+                                                            <button type="submit" class="btn-xs " value="Remove">Remove</button>
+                                                        </form>
+                                                    </div>
+                                                <!--</a>-->
+                                            </div>
+                                            <div th:if="${(ap.photo3!= '')}">
+                                                <!--<a  data-lightbox="image-1" data-title="My caption">-->
+                                                    <!--<div class="act-img">-->
+                                                        <img class="mySlides" th:src="${ap.photo3}" alt="img here" style="width:auto">
+                                                    <!--</div>-->
+                                                    <div th:if ="${(mine == 'true')}" id="div-1a" data-role="fieldcontain">
+                                                        <!--a href="index.html" data-role="button" data-icon="delete">Delete</a-->
+                                                        <form method="POST" th:action="@{/removephoto/3/{apartmentID}(apartmentID=${ap.id})}" >
+                                                            <button type="submit" class="btn-xs " value="Remove">Remove</button>
+                                                        </form>
+                                                    </div>
+                                                <!--</a>-->
+                                            </div>
+                                            <div th:if="${(ap.photo4!= '')}">
+                                                <!--<a  data-lightbox="image-1" data-title="My caption">-->
+                                                   <!--<div class="act-img">-->
+                                                       <img class="mySlides" th:src="${ap.photo4}" alt="img here" style="width:auto">
+                                            <!--</div>-->
+                                                    <div th:if ="${(mine == 'true')}" id="div-1a" data-role="fieldcontain">
+                                                        <!--a href="index.html" data-role="button" data-icon="delete">Delete</a-->
+                                                        <form method="POST" th:action="@{/removephoto/4/{apartmentID}(apartmentID=${ap.id})}" >
+                                                            <button type="submit" class="btn-xs " value="Remove">Remove</button>
+                                                        </form>
+                                                    </div>
+                                                <!--</a>-->
+                                            </div>
+                                            <div class="w3-row-padding w3-section">
+                                                <div th:if="${(ap.photo!= '')}">
+                                                    <div class="w3-col s3">
+                                                        <img class="demo w3-opacity  w3-hover-opacity-off" style="width:90%"
+                                                             th:src="${ap.photo}" onclick="currentDiv(1)">
+                                                    </div>
+                                                </div>
+                                                <div th:if="${(ap.photo2!= '')}">
+                                                    <div class="w3-col s3">
+                                                        <img class="demo w3-opacity  w3-hover-opacity-off" style="width:90%"
+                                                             th:src="${ap.photo2}" onclick="currentDiv(2)">
+                                                    </div>
+                                                </div>
+                                                <div th:if="${(ap.photo3!= '')}">
+                                                    <div class="w3-col s3">
+                                                        <img class="demo w3-opacity  w3-hover-opacity-off" style="width:90%"
+                                                             th:src="${ap.photo3}" onclick="currentDiv(3)">
+                                                    </div>
+                                                </div>
+                                                <div th:if="${(ap.photo4!= '')}">
+                                                    <div class="w3-col s3">
+                                                        <img class="demo w3-opacity  w3-hover-opacity-off" style="width:90%"
+                                                             th:src="${ap.photo4}" onclick="currentDiv(4)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                </div>
+                                </div>
+                                <div class="side-content col-lg-5">
+                                    <div style="height:500px">
+                                        <h3 style="text-align:center;"><b>Find as in the Map</b></h3>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div id="side-content" style="height: 350px">
+                                                    <div id="map_canvas" style="width:100%;height:100%;"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <ul>
+                                                    <li ><i class="fa fa-tag"></i><input  type="hidden" id="search_country" th:value="${ap.country}" th:text="${ap.country}"/>, <input type="hidden" id="search_town" th:value="${ap.town}" th:text="${ap.town}"/>, <input type="hidden" id="search_area" th:value="${ap.area}" th:text="${ap.area}"/></li>
+                                                    <li><i class="fa fa-home"></i><input  type=hidden" id="search_address" th:value="${ap.address}" th:text="${ap.address}"/>,<input type="hidden" id="search_address_number" th:value="${ap.address_number}" th:text="${ap.address_number}"/></li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div th:if="${(ap.photo=='')}">
-                                        <img th:src="@{/images/no_image.png}"   style="width: 350px;height:250px"/>
-                                    </div>
-
                                 </div>
+                            </div>
 
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div th:if="${(ap.photo2!= '')}">
-                                        <div id="div-1">
-                                            <img alt=""  th:src ="${ap.photo2}" style="width: 350px;height:250px"/>
-                                             <div id="div-1a" data-role="fieldcontain"  th:if ="${(mine == 'true')}">
-                                                 <form method="POST" th:action="@{/removephoto/2/{apartmentID}(apartmentID=${ap.id})}" >
-                                                     <button type="submit" class="btn-xs " value="Remove">Remove</button>
-                                                 </form>
-                                             </div>
+                            <div class="col-lg-12">
+                                <nav class="specialnavbar">
+                                    <div>
+                                        <ul>
+                                            <li class="active" ><h5><a class="fa fa-info" href="#generalInfo"> <b><em> General Info</em></b></a></h5></li>
+                                            <li class=""><h5><a class="fa fa-calendar" href="#ownerInfo" ><b><em>  Owner's Info</em></b></a></h5></li>
+                                            <li class=""><h5><a class="fa fa-star" href="#ratings" id="ratings-link"><b><em>  Reviews</em></b></a></h5></li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+
+                            <div  id="generalInfo">
+                                <label class="divider">Description </label>
+                                <div class="row">
+                                    <div  class="col-lg-6 ">
+                                        <p>
+                                           <i class="fa fa-book"></i> <span th:text="${ap.description}"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <label class="divider">Space </label>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <ul class="meta-search">
+                                            <li > <i class="fa fa-home"></i><strong> Floor: </strong><span th:text="${ap.floor}"></span></li>
+                                            <li > <i class="fa fa-bath"></i> <strong> Number of bathrooms: </strong><span  th:text="${ap.baths}"></span></li>
+                                            <li > <i class="fa fa-bed"> </i><strong> Number of beds: </strong><span th:text="${ap.beds}"></span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <ul class="meta-search">
+                                            <!--<li><i class="fa fa-user"></i> <a ><strong>Owned by:</strong> <span th:text="${ owner.name}" ></span> <span th:text="${ owner.surname }"></span></a></li>-->
+                                            <li> <i class="fa fa-tags"> </i><span th:text="${ap_type}"> </span></li>
+                                            <li><i class="fa fa-group"></i><strong> For <span th:text="${ap.capacity}"></span> people</strong> ,<span th:text="${ap.spaceArea}">-</span>s.m.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <label class="divider">Rental Rules </label>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <p><i class="fa fa-euro"></i> <span th:text="${ap.price}">price in</span>€/day</p>
+                                        <p><i class="fa fa-calendar"></i><strong> Minimum reservation:</strong><span th:text="${ap.minimumres}"></span> days</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <p><strong>Available from: </strong><span th:text="${ap.startdate}"></span> <strong>to: </strong><span th:text="${ap.finaldate}"></span> </p>
+                                    </div>
+                                </div>
+                                <span class="clearfix borda"></span>
+
+                                <div class="row">
+                                    <div th:if="${#lists.size(features)!=0}">
+                                        <label class="divider">Features </label>
+                                        <div class="col-lg-6">
+                                            <ul class="meta-search" th:each="f : ${features}">
+                                                <li >
+                                                    <i class="fa-li fa fa-check-square"></i> <span th:text="${f}"></span>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div th:if="${(ap.photo3!= '')}">
-                                        <div id="div-1">
-                                            <img alt=""  th:src ="${ap.photo3}" style="width: 350px;height:250px"/>
-                                            <div id="div-1a" data-role="fieldcontain"  th:if ="${(mine == 'true')}">
-                                                <form method="POST" th:action="@{/removephoto/3/{apartmentID}(apartmentID=${ap.id})}" >
-                                                    <button type="submit" class="btn-xs " value="Remove">Remove</button>
-                                                </form>
+
+                            </div>
+
+                            <div  id="ownerInfo">
+                                <label class="divider">Owner's Info </label>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <ul>
+                                            <li><i class="fa fa-user"></i> <a ><strong> Owned by:</strong> <span th:text="${ owner.name}" ></span> <span th:text="${ owner.surname }"></span></a></li>
+                                            <li><i class="fa fa-phone"></i> <a ><span th:text="${ owner.telephone}" ></span></a></li>
+                                            <li><i class="fa fa-envelope"></i> <a ><span th:text="${ owner.email}" ></span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div th:if="${(mine!='true')and ((type=='2') or(type=='3'))  and (uname!=null)}">
+                                    <label class="divider">Contact Owner </label>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                    <button id="asknow" class="btn btn-outline-warning " data-wow-delay="0.2s" onclick="ask()">Ask owner a question</button>
+                                    <br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="qform" style="display: none;" class="row">
+                                    <div class="col-lg-6">
+                                        <br>
+                                        <form method="POST" th:action="@{/question/{apartmentID}(apartmentID=${ap.id})}">
+                                            <input  name="question" id="question"   placeholder="Type your question here" required="required "maxlength="200" type="textarea"/>
+                                            <input type="submit" value="Post" class="btn  btn-sm" onclick="post()"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div  id="ratings">
+                                <label class="divider"> Renters' Reviews</label>
+                                <div th:if ="${(comments!=null)}">
+                                    <li th:each="comment : ${comments}" class="media">
+                                        <a class="pull-left" href="#">
+                                            <img class="media-object img-circle" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" alt="profile">
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="well well-lg">
+                                                <h4 class="media-heading text-uppercase reviews"> <a th:each="user: ${comment.renter}"><span th:text="${user.usersUsername}"></span></a></h4>
+                                                <ul class="media-date text-uppercase reviews list-inline">
+                                                </ul>
+                                                <p class="media-comment">
+                                                    <span th:text="${comment.comment}"></span>
+                                                </p>
+                                                <div class="rate">
+                                                    <input type="radio" id="1-star5" name="rating" value="5" checked/>
+                                                    <label for="1-star5" title="text">5 stars</label>
+                                                    <input type="radio" id="1-star4" name="rating" value="4" />
+                                                    <label for="1-star4" title="text">4 stars</label>
+                                                    <input type="radio" id="1-star3" name="rating" value="3" />
+                                                    <label for="1-star3" title="text">3 stars</label>
+                                                    <input type="radio" id="1-star2" name="rating" value="2" />
+                                                    <label for="1-star2" title="text">2 stars</label>
+                                                    <input type="radio" id="1-star1" name="rating" value="1" />
+                                                    <label for="1-star1" title="text">1 star</label>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div th:if="${(ap.photo4!= '')}">
-                                        <div id="div-1">
-                                            <img alt=""  th:src ="${ap.photo4}" style="width: 350px;height:250px"/>
-                                            <div id="div-1a" data-role="fieldcontain"  th:if ="${(mine == 'true')}">
-                                                <form method="POST" th:action="@{/removephoto/4/{apartmentID}(apartmentID=${ap.id})}" >
-                                                    <button type="submit" class="btn-xs " value="Remove">Remove</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-6">
-                                    <div id="map_canvas" width="300" height="300"></div>
+                                    </li>
                                 </div>
                             </div>
 
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 excerpet border">
-                                <p th:text="${ap.description}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <ul class="meta-search">
-                                        <!--<li><i class="fa fa-user"></i> <a><strong>Owned by:</strong> <span th:text="${ ap.owner.name}" ></span> <span th:text="${ owner.surname }"></span></a></li>-->
-                                        <li> <a><input  type="hidden" id="search_country" th:value="${ap.country}" th:text="${ap.country}"/>, <input type="hidden" id="search_town" th:value="${ap.town}" th:text="${ap.town}"/>, <input type="hidden" id="search_area" th:value="${ap.area}" th:text="${ap.area}"/></a></li>
-                                        <li><a><input  type=hidden" id="search_address" th:value="${ap.address}" th:text="${ap.address}"/>,<input type="hidden" id="search_address_number" th:value="${ap.address_number}" th:text="${ap.address_number}"/></a></li>
-                                        <!--<li> <a><span  id="search_country" th:value="${ap.country}" th:text="${ap.country}"></span>, <span id="search_town" th:value="${ap.town}" th:text="${ap.town}"></span>, <span id="search_area" th:value="${ap.area}" th:text="${ap.area}"></span></a></li>-->
-                                        <!--<li><a><span  id="search_address" th:value="${ap.address}" th:text="${ap.address}"></span>,<span id="search_address_number" th:value="${ap.address_number}" th:text="${ap.address_number}"></span></a></li>-->
-
-                                        <li> <span th:text="${ap_type}"></span></li>
-                                        <li><strong>For <span th:text="${ap.capacity}"></span>people</strong> ,<span th:text="${ap.spaceArea}">-</span>s.m.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <p><strong>Available from: </strong><span th:text="${ap.startdate}"></span> <strong>to: </strong><span th:text="${ap.finaldate}"></span> </p>
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <p><span th:text="${ap.price}">price in</span>€/day</p>
-                                    <p><strong>Minimum reservation:</strong><span th:text="${ap.minimumres}"></span> days</p>
-
-                                </div>
-                            </div>
 
                             <span class="clearfix borda"></span>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <ul class="meta-search">
-                                        <li><strong> Floor: </strong><span th:text="${ap.floor}"></span></li>
-                                        <li> <strong> Number of bathrooms: </strong><span th:text="${ap.baths}"></span></li>
-                                        <li> <strong> Number of beds: </strong><span th:text="${ap.beds}"></span></li>
-                                        <li><a th:each="f : ${features}"><span th:text="${f}"></span>  </a></li>
-                                    </ul>
-                                </div>
-                            </div>
 
-                            <span class="clearfix borda"></span>
                             <div th:if ="${(mine == 'true')}">
-                                <button id="changenow" class="btn btn-outline-warning " data-wow-delay="0.5s" onclick="change()">Change</button>
-                                <br>
+                                <label class="divider">Change Infos</label>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <button id="changenow" class="btn btn-outline-warning " data-wow-delay="0.5s" onclick="change()">Change</button>
+                                        <br>
+                                    </div>
+                                </div>
                             </div>
                             <div th:if ="${(mine != 'true' and renter == 'true')}">
-                                <div th:if="${(param.success != null) and (param.success[0] == 'true')}">
-                                    <span class="alert alert-success">You reservation has been submitted !</span>
-                                </div>
-                                <div th:if="${(param.success != null) and (param.success[0] == 'invalid')}">
-                                    <span class="alert alert-success">Sorry,the given time area is invalid</span>
-                                </div>
-                                <div th:if="${(param.success != null) and (param.success[0] == 'min')}">
-                                    <span class="alert alert-warning">We are sorry,minimum reservation is <span th:text="${ap.minimumres}"></span> days !</span>
-                                </div>
-                                <div th:if="${(param.success != null) and (param.success[0] == 'false')}">
-                                    <span class="alert alert-warning">We are sorry these days are not available !</span>
-                                </div>
-                                <form method="POST" th:action="@{/reservation/{apartmentID}(apartmentID=${ap.id})}">
-                                    <label >From :</label>
-                                    <input name="startdate" type="text"  id="datepicker" style="width: 40%;" placeholder="Arrival Date" data-date-format='yyyy-mm-dd' >
-                                    <label> To: </label>
-                                    <input name="finaldate" type="text" id="datepicker" style="width: 40%;" placeholder="Departure Date" data-date-format='yyyy-mm-dd' > <br>
-                                    <button id="rent" type="submit" class="btn btn-outline-warning " >Make a reservation</button>
-                                    <br>
-                                </form>
-                            </div>
-                            <div th:if="${(mine!='true')and ((type=='2') or(type=='3'))  and (uname!=null)}">
-                                <button id="asknow" class="btn btn-outline-warning " data-wow-delay="0.2s" onclick="ask()">Ask owner a question</button>
-                                <br>
-                            </div>
-                            <div id="qform" style="display: none;" class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <br>
-                                    <form method="POST" th:action="@{/question/{apartmentID}(apartmentID=${ap.id})}">
-                                        <input  name="question" id="question"   placeholder="Type your question here" required="required "maxlength="200" type="textarea"/>
-                                        <input type="submit" value="Post" class="btn  btn-sm" onclick="post()"/>
-                                    </form>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div th:if="${(param.success != null) and (param.success[0] == 'true')}">
+                                            <span class="alert alert-success">You reservation has been submitted !</span>
+                                        </div>
+                                        <div th:if="${(param.success != null) and (param.success[0] == 'invalid')}">
+                                            <span class="alert alert-success">Sorry,the given time area is invalid</span>
+                                        </div>
+                                        <div th:if="${(param.success != null) and (param.success[0] == 'min')}">
+                                            <span class="alert alert-warning">We are sorry,minimum reservation is <span th:text="${ap.minimumres}"></span> days !</span>
+                                        </div>
+                                        <div th:if="${(param.success != null) and (param.success[0] == 'false')}">
+                                            <span class="alert alert-warning">We are sorry these days are not available !</span>
+                                        </div>
+                                        <form method="POST" th:action="@{/reservation/{apartmentID}(apartmentID=${ap.id})}">
+                                            <label >From :</label>
+                                            <input name="startdate" type="text"  id="datepicker" style="width: 40%;" placeholder="Arrival Date" data-date-format='yyyy-mm-dd' >
+                                            <label> To: </label>
+                                            <input name="finaldate" type="text" id="datepicker" style="width: 40%;" placeholder="Departure Date" data-date-format='yyyy-mm-dd' > <br>
+                                            <button id="rent" type="submit" class="btn btn-outline-warning " >Make a reservation</button>
+                                            <br>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </article>
@@ -388,6 +506,35 @@
             codeAddress();
         };
     };
+</script>
+<script th:src="@{/scripts/lightbox.js}" ></script>
+<script>
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function currentDiv(n) {
+        showDivs(slideIndex = n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        if (n > x.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = x.length}
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+        }
+        x[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " w3-opacity-off";
+    }
 </script>
 
 </body>

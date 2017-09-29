@@ -15,6 +15,8 @@ Licence URI: http://www.os-templates.com/template-terms
     <!-- Custom styles for this template -->
     <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
     <link th:href="@{/css/searchCss.css}" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
         li div { display: table-cell; vertical-align: middle; }
     </style>
@@ -148,15 +150,15 @@ Licence URI: http://www.os-templates.com/template-terms
                             <div class="col-sm-12">
                                 <ul class="meta-search">
                                     <!--<li><span th:text="${apart.country}"></span>,<span th:text="${apart.town}"></span>,<span th:text="${apart.area}"></span></li>-->
-                                    <li>for <span th:text="${apart.capacity}"></span> people</li>
-                                    <li><span th:text="${apart.capacity}"></span> beds</li>
-                                    <li><span th:text="${apart.rating}"></span> ( <span th:text="${apart.reviews}"></span> reviews)</li>
+                                    <li><i class="fa fa-users"></i> <span th:text="${apart.capacity}"></span> people</li>
+                                    <li><i class="fa fa-bed"></i> <span th:text="${apart.beds}"></span> beds</li>
+                                    <li><i class="fa fa-star>"></i> <span th:text="${apart.rating}"></span> ( <span th:text="${apart.reviews}"></span> reviews)</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="row">
-                                <div class="col-sm-12"><span th:text="${apart.price}"></span><span>€</span></div>
+                                <div class="col-sm-12"><i class="fa fa-euro"></i> <span th:text="${apart.price}"> </span></div>
                                 <div class="col-sm-12"> <span class="plus"><a th:href="@{/apartment/{apartID}(apartID=${apart.id})}"> More .. <i class="glyphicon glyphicon-plus"></i></a></span></div>
                             </div>
                             <span class="clearfix borda"></span>

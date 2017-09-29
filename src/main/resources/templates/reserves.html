@@ -10,11 +10,27 @@ Licence URI: http://www.os-templates.com/template-terms
 <head >
     <title>My Reservations</title>
     <!-- Bootstrap core CSS -->
-    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"rel="stylesheet" type="text/css" media="all">
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" type="text/css" media="all">
 
     <!-- Custom styles for this template -->
     <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
     <link th:href="@{/css/searchCss.css}" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .animated {
+        -webkit-transition: height 0.2s;
+        -moz-transition: height 0.2s;
+        transition: height 0.2s;
+        }
+
+        .stars
+        {
+        margin: 20px 0;
+        font-size: 24px;
+        color: #d17581;
+        }
+    </style>
 </head>
 
 <body id="top" style="background-color: whitesmoke">
@@ -31,9 +47,9 @@ Licence URI: http://www.os-templates.com/template-terms
     <div class="sidebar one_quarter first">
         <div class="tab">
             <button type="button" class="tablinks  list-group-item" onclick="openCity(event, 'reservations')" th:id="${((param.tab != null)and (param.tab[0] == 'reservations')) ? 'my_active' : ''}">
-                <i class="fa fa-calendar-check-o" style="color:#cc834f"></i> Reservations<span class="badge" th:text="${#lists.size(currRes)}"></span></button>
+                <i class="fa fa-calendar-check-o" style="width:30%" ></i> Reservations<span class="badge" th:text="${#lists.size(currRes)}"></span></button>
             <button type="button" class="tablinks  list-group-item" onclick="openCity(event, 'old_activities')" th:id="${((param.tab != null) and (param.tab[0] == 'old_activities')) ? 'my_active' : ''}">
-                <i class="fa fa-calendar-minus-o" style="color:#cc834f;"></i> Older Reservations<span class="badge" th:text="${#lists.size(pastRes)}"></span> </button>
+                <i class="fa fa-calendar-minus-o" style="width:30%"></i> Older Reservations<span class="badge" th:text="${#lists.size(pastRes)}"></span> </button>
 
         </div>
 
@@ -70,41 +86,79 @@ Licence URI: http://www.os-templates.com/template-terms
                 <article >
                     <div class="txtwrap">
                         <h4 class="heading"><span th:text="${currAparts[iterStat.index].name}"></span></h4>
-                        <div th:if="${(curr.approval==0)}">
-                            <span class="alert alert-warning">Not approved!</span>
+                        <div class="rown">
+                            <div class="col-lg-6">
+                                <div th:if="${(curr.approval==0)}">
+                                    <span class="alert alert-warning">Not approved!</span>
+                                </div>
+                            </div>
                         </div>
-                        <div th:if="${(curr.approval==1)}">
-                            <span class="alert alert-success">Approved!</span>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div th:if="${(curr.approval==1)}">
+                                    <span class="alert alert-success">Approved!</span>
+                                </div>
+                            </div>
                         </div>
-                        <ul class="nospace meta">
-                            <li><i class="fa fa-user"></i> <a href="#"><span th:text="${currAparts[iterStat.index].country}"></span></a></li>
-                            <li><i class="fa fa-tag"></i> <a href="#"><span th:text="${currAparts[iterStat.index].town}"></span></a></li>
-                        </ul>
-                        <table>
-                            <tr>
-                                <td>Price:</td>
-                                <td><span th:text="${curr.totalCost}"></span></td>
-                            </tr>
-                            <tr>
-                                <td>From:</td>
-                                <td><span th:text="${curr.startdate}"></span></td>
-                            </tr>
-                            <tr>
-                                <td>To:</td>
-                                <td><span th:text="${curr.finaldate}"></span></td>
-                            </tr>
-                        </table>
+                        <div class="row">
+                            <div class="col-lg-6">
+                            <ul class="nospace meta">
+                                <li><i class="fa fa-user"></i> <a href="#"><span th:text="${currAparts[iterStat.index].country}"></span></a></li>
+                                <li><i class="fa fa-tag"></i> <a href="#"><span th:text="${currAparts[iterStat.index].town}"></span></a></li>
+                            </ul>
+                            <table>
+                                <tr>
+                                    <td>Price:</td>
+                                    <td><span th:text="${curr.totalCost}"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>From:</td>
+                                    <td><span th:text="${curr.startdate}"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>To:</td>
+                                    <td><span th:text="${curr.finaldate}"></span></td>
+                                </tr>
+                            </table>
+                            </div>
+                        </div>
                         <footer><a th:href="@{/apartment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">Read  more.. &raquo;</a></footer>
                     </div>
                 </article>
                 <div th:if="${(approveOption!='true') and (mine=='false')}">
-                    <form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">
-                        <label>Leave your comment</label>
-                        <input name="comment" type="text"/>
-                        <label>Leave your rating</label>
-                        <input name="rating" type="number" max="5"/>
-                        <button type="submit">Comment</button>
-                    </form>
+                    <div class="row" style="margin-top:40px;">
+                        <div class="col-lg-6">
+                            <div class="well well-sm">
+                                <div class="text-right">
+                                    <a class="btn btn-success btn-green" href="#reviews-anchor" id="open-review-box">Leave a Review</a>
+                                </div>
+
+                                <div class="row" id="post-review-box" style="display:none;">
+                                    <div class="col-md-12">
+                                        <form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">
+                                            <input required id="ratings-hidden" name="rating" type="hidden" value="0">
+                                            <textarea required class="form-control animated" cols="50" id="new-review" type="text" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
+
+                                            <div class="text-right">
+                                                <div class="stars starrr" data-rating="0"></div>
+                                                <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
+                                                    <span class="glyphicon glyphicon-remove"></span>Cancel</a>
+                                                <button class="btn btn-success btn-lg" type="submit">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--<form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">-->
+                        <!--<label>Leave your comment</label>-->
+                        <!--<input name="comment" type="text"/>-->
+                        <!--<label>Leave your rating</label>-->
+                        <!--<input name="rating" type="number" max="5"/>-->
+                        <!--<button type="submit">Comment</button>-->
+                    <!--</form>-->
                 </div>
                 <div th:if="${(approveOption=='true' and curr.approval==0)}">
                     <form  method="post" th:action="@{/approveReserve/{reserveID}(reserveID=${curr.id})}">
@@ -157,13 +211,31 @@ Licence URI: http://www.os-templates.com/template-terms
                         </article>
                     </div>
                     <div th:if="${(mine=='false')}">
-                        <form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${pastAparts[iterStat1.index].id})}">
-                            <label>Leave your comment:</label>
-                            <input name="comment" type="text"/>
-                            <label>Leave your rating:</label>
-                            <input name="rating" type="number"  max="5"/>
-                            <button type="submit">Comment</button>
-                        </form>
+                        <div class="row" style="margin-top:40px;">
+                            <div class="col-md-6">
+                                <div class="well well-sm">
+                                    <div class="text-right">
+                                        <a class="btn btn-success btn-green" href="#reviews-anchor" id="open-review-box">Leave a Review</a>
+                                    </div>
+
+                                    <div class="row" id="post-review-box" style="display:none;">
+                                        <div class="col-md-12">
+                                            <form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">
+                                                <input required id="ratings-hidden" name="rating" type="hidden" value="0">
+                                                <textarea  required class="form-control animated" cols="50" id="new-review" type="text" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
+
+                                                <div class="text-right">
+                                                    <div class="stars starrr" data-rating="0"></div>
+                                                    <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
+                                                        <span class="glyphicon glyphicon-remove"></span>Cancel</a>
+                                                    <button class="btn btn-success btn-lg" type="submit">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                     </div>
                 </div>
             </div>
@@ -181,6 +253,8 @@ Licence URI: http://www.os-templates.com/template-terms
     </div>
     </div>
 </div>
+</div>
+
 <div th:replace="/fragments/footer :: footer"></div>
 
 </body>

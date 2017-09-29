@@ -1,10 +1,7 @@
 package airbnb.controller;
 
 import airbnb.authentication.IAuthenticationFacade;
-import airbnb.model.ApartmentEntity;
-import airbnb.model.OwnerEntity;
-import airbnb.model.UsersEntity;
-import airbnb.model.Pager;
+import airbnb.model.*;
 import airbnb.service.ApartmentService;
 import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by Σταυρίνα on 28/8/2017.
@@ -124,8 +122,12 @@ public class ApartmentController {
 
         }
         ApartmentEntity ap1=apartmentService.findById(apartmentID);
-        modelAndView.addObject("owner", ap1.getOwner());
+        OwnerEntity ownerEntity=ap1.getOwner();
+        Set<CommentsEntity> comments=ap1.getComments();
+        UsersEntity user_owner=userService.findByUsername(ownerEntity.getUsersUsername());
+        modelAndView.addObject("owner", user_owner);
         modelAndView.addObject("ap",ap1);
+        modelAndView.addObject("comments",comments);
         if (!authentication.getName().equals("anonymousUser") && ap1.getOwner().getUsersUsername().equals(authentication.getName())) {
            System.out.println("einai diko mou");
             modelAndView.addObject("mine","true");
