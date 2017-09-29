@@ -1,9 +1,7 @@
 package airbnb.controller;
 
-import airbnb.model.ApartmentEntity;
-import airbnb.model.RenterEntity;
-import airbnb.model.ReservationEntity;
-import airbnb.model.UsersEntity;
+import airbnb.model.*;
+import airbnb.repository.CommentsRepository;
 import airbnb.service.ApartmentService;
 import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +46,9 @@ public class DownloadController {
 
     @Autowired
     ServletContext context;
+
+    @Autowired
+    private CommentsRepository commentsRepository;
 
     @RequestMapping("/downloadusers/{ftype}")
     public void downloadusers(@PathVariable("ftype") String ftype,HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -460,4 +461,174 @@ public class DownloadController {
     }
 
 
+
+    @RequestMapping("/downloadcriticsR/{renter}")
+    public void downloadcriticsR(HttpServletRequest request, HttpServletResponse response,@PathVariable("renter") String renter) throws IOException {
+
+        // get absolute path of the application
+        ServletContext context = request.getServletContext();
+        String appPath = context.getRealPath("");
+        System.out.println("appPath = " + appPath);
+
+        // construct the complete absolute path of the file
+        String fullPath = appPath + "/uploads/criticsby_"+renter+".xml";
+        File downloadFile = new File(fullPath);
+
+        // Check if file exists
+        try {
+            String name;
+
+                RenterEntity renterEntity=userService.findRenterByUsername(renter);
+                createCommentsRFile(commentsRepository.findAllByRenter(renterEntity), downloadFile);
+                name="criticsby_"+renter+".xml";
+
+            String downloadFolder = context.getRealPath("/uploads/");
+            Path file = Paths.get(downloadFolder, new String(name));
+
+            response.setContentType("application/xml");
+            response.addHeader("Content-Disposition", "attachment; filename="+name);
+            //copies all bytes from a file to an output stream
+            Files.copy(file, response.getOutputStream());
+            //flushes output stream
+            response.getOutputStream().flush();
+        }
+        catch (Exception e){
+            System.out.println("Error :- " + e.getMessage());
+        }
+    }
+
+
+    private void createCommentsRFile(ArrayList<CommentsEntity> comments , File file)throws ParserConfigurationException ,TransformerException{
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        Document doc = docBuilder.newDocument();
+        Element rootElement = doc.createElement("CONFIGURATION");
+        doc.appendChild(rootElement);
+        Element browser = doc.createElement("BROWSER");
+        browser.appendChild(doc.createTextNode("chrome"));
+        rootElement.appendChild(browser);
+        Element base = doc.createElement("TITLE");
+        base.appendChild(doc.createTextNode("COMMENTSBYRENTER"));
+        rootElement.appendChild(base);
+
+        for(CommentsEntity commentsEntity :comments) {
+            Element com= doc.createElement("CRITIC");
+            rootElement.appendChild(com);
+
+            Element comRenter = doc.createElement("RENTER");
+            comRenter.appendChild(doc.createTextNode(commentsEntity.getRenter().getUsersUsername()));
+            com.appendChild(comRenter);
+
+            Element comApartment = doc.createElement("APARTMENT");
+            comApartment.appendChild(doc.createTextNode(commentsEntity.getApartmentEntity().getName()));
+            com.appendChild(comApartment);
+
+            Element comOwner = doc.createElement("OWNER");
+            comOwner.appendChild(doc.createTextNode(commentsEntity.getApartmentOwner().getUsersUsername()));
+            com.appendChild(comOwner);
+
+            Element rating = doc.createElement("RATING");
+            rating.appendChild(doc.createTextNode(String.valueOf(commentsEntity.getRating())));
+            com.appendChild(rating);
+
+            Element comment = doc.createElement("COMMENT");
+            comment.appendChild(doc.createTextNode(commentsEntity.getComment()));
+            com.appendChild(comment);
+
+        }
+
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(file);
+        transformer.transform(source, result);
+
+        System.out.println("File saved!");
+
+    }
+
+    @RequestMapping("/downloadcriticsO/{owner}")
+    public void downloadcriticsO(HttpServletRequest request, HttpServletResponse response,@PathVariable("owner") String owner) throws IOException {
+
+        // get absolute path of the application
+        ServletContext context = request.getServletContext();
+        String appPath = context.getRealPath("");
+        System.out.println("appPath = " + appPath);
+
+        // construct the complete absolute path of the file
+        String fullPath = appPath + "/uploads/criticsfor_"+owner+".xml";
+        File downloadFile = new File(fullPath);
+        // Check if file exists
+        try {
+            String name;
+
+            OwnerEntity ownerEntity=userService.findOwnerByUsername(owner);
+            createCommentsRFile(commentsRepository.findAllByApartmentOwner(ownerEntity), downloadFile);
+            name="criticsfor_"+owner+".xml";
+
+            String downloadFolder = context.getRealPath("/uploads/");
+            Path file = Paths.get(downloadFolder, new String(name));
+
+            response.setContentType("application/xml");
+            response.addHeader("Content-Disposition", "attachment; filename="+name);
+            //copies all bytes from a file to an output stream
+            Files.copy(file, response.getOutputStream());
+            //flushes output stream
+            response.getOutputStream().flush();
+        }
+        catch (Exception e){
+            System.out.println("Error :- " + e.getMessage());
+        }
+    }
+
+
+    private void createCommentsOFile(ArrayList<CommentsEntity> comments , File file)throws ParserConfigurationException ,TransformerException{
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        Document doc = docBuilder.newDocument();
+        Element rootElement = doc.createElement("CONFIGURATION");
+        doc.appendChild(rootElement);
+        Element browser = doc.createElement("BROWSER");
+        browser.appendChild(doc.createTextNode("chrome"));
+        rootElement.appendChild(browser);
+        Element base = doc.createElement("TITLE");
+        base.appendChild(doc.createTextNode("COMMENTSFOROWNER"));
+        rootElement.appendChild(base);
+
+        for(CommentsEntity commentsEntity :comments) {
+            Element com= doc.createElement("CRITIC");
+            rootElement.appendChild(com);
+
+            Element comOwner = doc.createElement("OWNER");
+            comOwner.appendChild(doc.createTextNode(commentsEntity.getApartmentOwner().getUsersUsername()));
+            com.appendChild(comOwner);
+
+
+            Element comApartment = doc.createElement("APARTMENT");
+            comApartment.appendChild(doc.createTextNode(commentsEntity.getApartmentEntity().getName()));
+            com.appendChild(comApartment);
+
+            Element comRenter = doc.createElement("RENTER");
+            comRenter.appendChild(doc.createTextNode(commentsEntity.getRenter().getUsersUsername()));
+            com.appendChild(comRenter);
+
+            Element rating = doc.createElement("RATING");
+            rating.appendChild(doc.createTextNode(String.valueOf(commentsEntity.getRating())));
+            com.appendChild(rating);
+
+            Element comment = doc.createElement("COMMENT");
+            comment.appendChild(doc.createTextNode(commentsEntity.getComment()));
+            com.appendChild(comment);
+
+        }
+
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(file);
+        transformer.transform(source, result);
+
+        System.out.println("File saved!");
+
+    }
 }

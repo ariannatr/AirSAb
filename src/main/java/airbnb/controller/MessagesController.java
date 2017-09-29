@@ -12,7 +12,6 @@ import airbnb.repository.OwnerRepository;
 import airbnb.repository.RenterRepository;
 import airbnb.service.ApartmentService;
 import airbnb.service.UsersService;
-import airbnb.service.MessagesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageImpl;

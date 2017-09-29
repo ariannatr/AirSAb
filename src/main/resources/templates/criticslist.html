@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Apartments</title>
+    <title>Critics</title>
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"  rel="stylesheet" type="text/css" media="all"/>
@@ -46,7 +46,7 @@
                     <a class="dropdown-item " th:href="@{/users}">All</a>
                 </div>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link" th:href="@{/apartslist}">Apartments </a>
             </li>
             <li class="nav-item dropdown">
@@ -61,7 +61,7 @@
                     <a class="dropdown-item" th:href="@{/reservationslist}">All</a>
                 </div>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Critics</a>
                 <div class="dropdown-menu">
                     <form class="dropdown-item" method="POST" th:action="@{/critbyrenter}">
@@ -88,43 +88,56 @@
     <div class="overlay" >
 
         <div th:if="${(items != null)}">
-            <div id="allaparts"  class="well" style="display:block;">
+            <div id="allreserv"  class="well" style="display:block;">
 
                 <!--/*Table with info about each user*/-->
-                <div id="initialtext">
-                    <p class="table-title"> Apartments Info</p>
-                    <p class="table-subtitle"> Below you can see the info of all apartments registered. OR <a th:href="@{/downloadapartments}"><strong>Download</strong></a><p>
-                    <div  style="background-color:#e6eaf2; opacity:0.8; width:90%; margin:0 auto;">
+                <div id="initialtext" th:if="${(owner==null)}">
+                    <p class="table-title"> Critics Info</p>
+                    <p class="table-subtitle"> Below you can see the info of all critics made. OR <a th:href="@{/downloadcriticsR/{renter}(renter=${renter})}"><strong>Download</strong></a><p>
+                    <div  style="background-color:#e6eaf2; opacity:0.8; width:60%; margin:0 auto;" >
                         <table >
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Whereabouts</th >
-                                <th >StartDate</th>
-                                <th >FinalDate</th>
+                                <th>Renter</th>
+                                <th>Apartment</th >
                                 <th>Owner</th>
-                                <th >Price</th>
-                                <th>Type</th>
-                                <th >Capacity</th>
-                                <th>Min Rese</th>
-                                <th>Space Area</th>
-                                <th>More</th>
-
+                                <th >Rating</th>
+                                <th >Comment</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="ap ,apStat : ${items}">
-                                <td><span th:text="${ap.name}">N</span></td>
-                                <td> <span th:text="${ap.country}">C</span>,<span th:text="${ap.town}">T</span>,<span th:text="${ap.area}">A</span></td>
-                                <td ><span th:text="${ap.startdate}">S</span></td>
-                                <td><span th:text="${ap.finaldate}">F</span></td>
-                                <td><span th:text="${items2[__${apStat .index}__]}">O</span></td>
-                                <td><span th:text="${ap.price}">P</span></td>
-                                <td><span th:text="${ap.type}">T</span></td>
-                                <td><span th:text="${ap.capacity}">C</span></td>
-                                <td><span th:text="${ap.minimumres}">M</span></td>
-                                <td><span th:text="${ap.spaceArea}">S</span></td>
-                                <td><a th:href="@{/apartment/{apartID}(apartID=${ap.id})}">more..</a></td>
+                            <tr th:each="res ,resStat : ${items}">
+                                <td><span th:text="${renters[__${resStat .index}__]}">R</span></td>
+                                <td><span th:text="${aparts[__${resStat .index}__]}">A</span></td>
+                                <td><span th:text="${owners[__${resStat .index}__]}">O</span></td>
+                                <td ><span th:text="${res.rating}">R</span></td>
+                                <td><span th:text="${res.comment}">C</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="initialtext2" th:if="${(renter==null)}">
+                    <p class="table-title"> Critics Info</p>
+                    <p class="table-subtitle"> Below you can see the info of all critics made. OR <a th:href="@{/downloadcriticsO/{owner}(owner=${owner})}"><strong>Download</strong></a><p>
+                    <div  style="background-color:#e6eaf2; opacity:0.8; width:60%; margin:0 auto;">
+                        <table >
+                            <thead>
+                            <tr>
+                                <th>Owner</th>
+                                <th>Apartment</th >
+                                <th>Renter</th>
+                                <th >Rating</th>
+                                <th >Comment</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="res ,resStat : ${items}">
+                                <td><span th:text="${owners[__${resStat .index}__]}">O</span></td>
+                                <td><span th:text="${aparts[__${resStat .index}__]}">A</span></td>
+                                <td><span th:text="${renters[__${resStat .index}__]}">R</span></td>
+                                <td ><span th:text="${res.rating}">R</span></td>
+                                <td><span th:text="${res.comment}">C</span></td>
                             </tr>
                             </tbody>
                         </table>
@@ -136,8 +149,19 @@
             </div>
         </div>
 
-        <div th:if="${(items==null)}">
-            <div class="alert alert-success" style="text-align: center;"> There are no apartments ! <br>  </div>
+
+        <div th:if="${(items==null)  and (renter!='false') and (owner==null)}">
+            <div class="alert alert-success" style="text-align: center;"> There are no critics by <span th:text="${renter}">this</span> ! <br>  </div>
+        </div>
+        <div th:if="${(items==null) and  (renter=='false')and (owner==null)}">
+            <div class="alert alert-success" style="text-align: center;"> No such renter exists !<br>  </div>
+        </div>
+
+        <div th:if="${(items==null)  and (owner!='false') and (renter==null)}">
+            <div class="alert alert-success" style="text-align: center;"> There are no critics for <span th:text="${owner}">this</span> ! <br>  </div>
+        </div>
+        <div th:if="${(items==null) and  (owner=='false')and (renter==null)}">
+            <div class="alert alert-success" style="text-align: center;"> No such owner exists !<br>  </div>
         </div>
     </div>
 </header>

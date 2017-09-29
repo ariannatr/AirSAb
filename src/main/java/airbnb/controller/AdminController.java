@@ -2,6 +2,7 @@ package airbnb.controller;
 
 import airbnb.authentication.IAuthenticationFacade;
 import airbnb.model.*;
+import airbnb.repository.CommentsRepository;
 import airbnb.service.ApartmentService;
 import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,9 @@ public class AdminController {
     private ApartmentService apartmentService;
     @Autowired
     private IAuthenticationFacade authenticationFacade;
+
+    @Autowired
+    private CommentsRepository commentsRepository;
 
     @RequestMapping(value="/users", method = RequestMethod.GET)
     public ModelAndView users(@RequestParam("pageSize") Optional<Integer> pageSize,
@@ -312,6 +316,109 @@ public class AdminController {
             ArrayList<String> apartsnames=new ArrayList<>(0);
             for (ReservationEntity res:reservations) {
                 apartsnames.add(res.getApartment().getName());
+                owners.add(res.getApartmentOwner().getUsersUsername());
+                renters.add(res.getRenter().getUsersUsername());
+            }
+            modelAndView.addObject("owners", owners);
+            modelAndView.addObject("renters", renters);
+            modelAndView.addObject("aparts", apartsnames);
+        }
+
+        modelAndView.addObject("url","reservationslist");
+        modelAndView.addObject("selectedPageSize", evalPageSize);
+        modelAndView.addObject("pageSizes", PAGE_SIZES);
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/critbyrenter", method = RequestMethod.POST)
+    public ModelAndView critbyrenter(  @RequestParam("renter") String Renter,@RequestParam("pageSize") Optional<Integer> pageSize,
+                                      @RequestParam("page") Optional<Integer> page){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/criticslist");
+        Authentication authentication = authenticationFacade.getAuthentication();
+        if (!authentication.getName().equals("anonymousUser")) {
+            modelAndView.addObject("uname", authentication.getName());
+            UsersEntity userS = userService.findByUsername(authentication.getName());
+            modelAndView.addObject("type", String.valueOf(userS.getType()));
+        }
+
+        RenterEntity renterEntity=userService.findRenterByUsername(Renter);
+        if(renterEntity!=null)
+            modelAndView.addObject("renter",Renter);
+        else
+            modelAndView.addObject("renter","false");
+        int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
+        // Evaluate page. If requested parameter is null or less than 0 (to
+        // prevent exception), return initial size. Otherwise, return value of
+        // param. decreased by 1.
+        int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
+        Page<CommentsEntity> critics=null;
+        Pager pager=null;
+
+        critics=commentsRepository.findAllByRenter(renterEntity,new PageRequest(evalPage, evalPageSize));
+        //reservations= apartmentService.findAllReservationsByRenter(renterEntity,new PageRequest(evalPage, evalPageSize));
+        pager= new Pager(critics.getTotalPages(), critics.getNumber(), BUTTONS_TO_SHOW);
+        if(critics.getTotalElements()!=0){
+            modelAndView.addObject("pager", pager);
+            modelAndView.addObject("items", critics);
+
+            ArrayList<String> owners=new ArrayList<>(0);
+            ArrayList<String> renters=new ArrayList<>(0);
+            ArrayList<String> apartsnames=new ArrayList<>(0);
+            for (CommentsEntity res:critics) {
+                apartsnames.add(res.getApartmentEntity().getName());
+                owners.add(res.getApartmentOwner().getUsersUsername());
+                renters.add(res.getRenter().getUsersUsername());
+            }
+            modelAndView.addObject("owners", owners);
+            modelAndView.addObject("renters", renters);
+            modelAndView.addObject("aparts", apartsnames);
+        }
+
+        modelAndView.addObject("url","reservationslist");
+        modelAndView.addObject("selectedPageSize", evalPageSize);
+        modelAndView.addObject("pageSizes", PAGE_SIZES);
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value="/critforowner", method = RequestMethod.POST)
+    public ModelAndView critforowner (  @RequestParam("owner") String Owner,@RequestParam("pageSize") Optional<Integer> pageSize,
+                                       @RequestParam("page") Optional<Integer> page){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/criticslist");
+        Authentication authentication = authenticationFacade.getAuthentication();
+        if (!authentication.getName().equals("anonymousUser")) {
+            modelAndView.addObject("uname", authentication.getName());
+            UsersEntity userS = userService.findByUsername(authentication.getName());
+            modelAndView.addObject("type", String.valueOf(userS.getType()));
+        }
+
+        OwnerEntity ownerEntity=userService.findOwnerByUsername(Owner);
+        if(ownerEntity!=null)
+            modelAndView.addObject("owner",Owner);
+        else
+            modelAndView.addObject("owner","false");
+        int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
+        // Evaluate page. If requested parameter is null or less than 0 (to
+        // prevent exception), return initial size. Otherwise, return value of
+        // param. decreased by 1.
+        int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
+        Page<CommentsEntity> critics=null;
+        Pager pager=null;
+
+        critics=commentsRepository.findAllByApartmentOwner(ownerEntity,new PageRequest(evalPage, evalPageSize));
+        //reservations= apartmentService.findAllReservationsByRenter(renterEntity,new PageRequest(evalPage, evalPageSize));
+        pager= new Pager(critics.getTotalPages(), critics.getNumber(), BUTTONS_TO_SHOW);
+        if(critics.getTotalElements()!=0){
+            modelAndView.addObject("pager", pager);
+            modelAndView.addObject("items", critics);
+
+            ArrayList<String> owners=new ArrayList<>(0);
+            ArrayList<String> renters=new ArrayList<>(0);
+            ArrayList<String> apartsnames=new ArrayList<>(0);
+            for (CommentsEntity res:critics) {
+                apartsnames.add(res.getApartmentEntity().getName());
                 owners.add(res.getApartmentOwner().getUsersUsername());
                 renters.add(res.getRenter().getUsersUsername());
             }

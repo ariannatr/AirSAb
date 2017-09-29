@@ -32,7 +32,7 @@ public class CommentsServiceImpl implements CommentsService {
     @Autowired
     private ApartmentRepository apartmentRepository;
 
-    @Override
+   @Override
     public  void saveComment(CommentsEntity comment, RenterEntity renter, ApartmentEntity apartment){
         comment.setApartmentEntity(apartment);
         comment.setRenter(renter);
@@ -54,5 +54,6 @@ public class CommentsServiceImpl implements CommentsService {
         renter.setComments(renterComments);
         renterRepository.save(renter);
     }
+
 
 }
