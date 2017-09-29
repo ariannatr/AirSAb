@@ -97,13 +97,15 @@ Licence URI: http://www.os-templates.com/template-terms
                         <footer><a th:href="@{/apartment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">Read  more.. &raquo;</a></footer>
                     </div>
                 </article>
-                <form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">
-                    <label>Leave your comment</label>
-                    <input name="comment" type="text"/>
-                    <label>Leave your rating</label>
-                    <input name="rating" type="number"/>
-                    <button type="submit">Comment</button>
-                </form>
+                <div th:if="${approveOption!='true'}">
+                    <form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">
+                        <label>Leave your comment</label>
+                        <input name="comment" type="text"/>
+                        <label>Leave your rating</label>
+                        <input name="rating" type="number"/>
+                        <button type="submit">Comment</button>
+                    </form>
+                </div>
                 <div th:if="${(approveOption=='true' and curr.approval==0)}">
                     <form  method="post" th:action="@{/approveReserve/{reserveID}(reserveID=${curr.id})}">
                         <button type="submit">Approve</button>
@@ -180,6 +182,17 @@ Licence URI: http://www.os-templates.com/template-terms
 <div th:replace="/fragments/footer :: footer"></div>
 
 </body>
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/popper/popper.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+
+
+<!-- Include jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
 
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700">
 <script th:src="@{/scripts/reserves.js}"> </script>
