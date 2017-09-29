@@ -24,6 +24,7 @@ public class nlp {
     public static int findSentiment(String tweet) {
 
         int mainSentiment = 0;
+        String mainSentiment2="";
         if (tweet != null && tweet.length() > 0) {
             int longest = 0;
             Annotation annotation = pipeline.process(tweet);
@@ -32,13 +33,16 @@ public class nlp {
                 Tree tree = sentence
                         .get(SentimentAnnotatedTree.class);
                 int sentiment = RNNCoreAnnotations.getPredictedClass(tree);
+                String sentiment2 = sentence.get(SentimentCoreAnnotations.SentimentClass.class);
                 String partText = sentence.toString();
                 if (partText.length() > longest) {
                     mainSentiment = sentiment;
+                    mainSentiment2=sentiment2;
                     longest = partText.length();
                 }
             }
         }
+       // System.out.println("feeling "+mainSentiment2);
         return mainSentiment;
     }
 

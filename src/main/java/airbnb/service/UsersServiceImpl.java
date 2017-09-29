@@ -102,6 +102,9 @@ public class UsersServiceImpl implements UsersService {
             RenterEntity renter=new RenterEntity();
             renter.setUsersUsername(user.getUsername());
             renter.setUsersByUsersUsername(user);
+
+            Set<ReservationEntity> res0=new HashSet<ReservationEntity>(0);
+            renter.setReservationsByUsersUsername(res0);
             ownerRepository.save(owner);
             renterRepository.save(renter);
         }
@@ -234,12 +237,12 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public ArrayList<UsersEntity> findAllOwners()
     {
-        return userRepository.findByType(1,3);
+        return userRepository.findAllByType(1,3);
     }
 
     @Override
     public ArrayList<UsersEntity> findAllRenters()
     {
-        return userRepository.findByType(2,3);
+        return userRepository.findAllByType(2,3);
     }
 }

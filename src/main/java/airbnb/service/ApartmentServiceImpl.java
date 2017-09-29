@@ -52,6 +52,8 @@ public class ApartmentServiceImpl implements ApartmentService {
         apartmentEntity.setPhoto4("");
         apartmentEntity.setRating((float)0);
         apartmentEntity.setReviews(0);
+        Set<CommentsEntity> coms0=new HashSet<CommentsEntity>(0);
+        apartmentEntity.setComments( coms0);
         apartmentRepository.save(apartmentEntity);
         Set<ApartmentEntity> apartmentEntitySet=ownerEntity.getApartments();
         apartmentEntitySet.add(apartmentEntity);

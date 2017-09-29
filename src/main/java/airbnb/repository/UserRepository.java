@@ -22,5 +22,5 @@ public interface UserRepository extends PagingAndSortingRepository<UsersEntity,S
     ArrayList<UsersEntity> findAll();
 
     @Query("select p from UsersEntity p where p.type=?1 or p.type=?2")
-    ArrayList<UsersEntity> findByType(int type,int type2);
+    ArrayList<UsersEntity> findAllByType(int type,int type2);
 }
