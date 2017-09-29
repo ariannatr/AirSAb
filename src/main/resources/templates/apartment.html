@@ -116,13 +116,7 @@
 
                             </div>
                             <div class="col-lg-6">
-                                <div id="map_canvas" width="300" height="300">
-                                    <input type="hidden" id="search_country" name="country" th:value="${country}"/>
-                                    <input type="hidden" id="search_town" name="town" th:value="${town}"/>
-                                    <input type="hidden" id="search_area" name="area" th:value="${area}"/>
-                                    <input type="hidden" id="search_address" name="address" th:value="${address}"/>
-                                    <input type="hidden" id="search_address_number" name="address_number" th:value="${address_number}"/>
-                                </div>
+                                <div id="map_canvas" width="300" height="300"></div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 excerpet border">
                                 <p th:text="${ap.description}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
@@ -132,8 +126,11 @@
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <ul class="meta-search">
                                         <!--<li><i class="fa fa-user"></i> <a><strong>Owned by:</strong> <span th:text="${ ap.owner.name}" ></span> <span th:text="${ owner.surname }"></span></a></li>-->
-                                        <li> <a><span  th:value="${ap.country}" th:text="${ap.country}"></span>, <span  th:value="${ap.town}" th:text="${ap.town}"></span>, <span  th:value="${ap.area}" th:text="${ap.area}"></span></a></li>
-                                        <li><a><span  th:value="${ap.address}" th:text="${ap.address}"></span>,<span  th:value="${ap.address_number}" th:text="${ap.address_number}"></span></a></li>
+                                        <li> <a><input  type="hidden" id="search_country" th:value="${ap.country}" th:text="${ap.country}"/>, <input type="hidden" id="search_town" th:value="${ap.town}" th:text="${ap.town}"/>, <input type="hidden" id="search_area" th:value="${ap.area}" th:text="${ap.area}"/></a></li>
+                                        <li><a><input  type=hidden" id="search_address" th:value="${ap.address}" th:text="${ap.address}"/>,<input type="hidden" id="search_address_number" th:value="${ap.address_number}" th:text="${ap.address_number}"/></a></li>
+                                        <!--<li> <a><span  id="search_country" th:value="${ap.country}" th:text="${ap.country}"></span>, <span id="search_town" th:value="${ap.town}" th:text="${ap.town}"></span>, <span id="search_area" th:value="${ap.area}" th:text="${ap.area}"></span></a></li>-->
+                                        <!--<li><a><span  id="search_address" th:value="${ap.address}" th:text="${ap.address}"></span>,<span id="search_address_number" th:value="${ap.address_number}" th:text="${ap.address_number}"></span></a></li>-->
+
                                         <li> <span th:text="${ap_type}"></span></li>
                                         <li><strong>For <span th:text="${ap.capacity}"></span>people</strong> ,<span th:text="${ap.spaceArea}">-</span>s.m.</li>
                                     </ul>
@@ -241,6 +238,8 @@
                                     <td style="width: 30%"><strong>Country</strong><br><input  name="country" id="country"  th:placeholder="${ap.country}"  type="text"/></td>
                                     <td style="width: 30%"><strong>Town</strong><br><input  name="town" id="town"  th:placeholder="${ap.town}"  type="text"/></td>
                                     <td style="width: 30%"><strong>Area</strong><br><input  name="area" id="area"  th:placeholder="${ap.area}"  type="text"/></td>
+                                    <td style="width: 30%"><strong>Address</strong><br><input  name="address" id="address"  th:placeholder="${ap.address}"  type="text"/></td>
+                                    <td style="width: 30%"><strong>Address</strong><br><input  name="address_number" id="address_number"  th:placeholder="${ap.address_number}"  type="number"/></td>
                                 </tr>
                             </table>
                             <table>
@@ -325,7 +324,7 @@
 <script type="text/javascript">
     jQuery(function(){
         jQuery($(":input[id^='datepicker']")).datepicker({
-            dateFormat: 'yy-mm-dd',
+            dateFormat: 'yyyy-MM-dd',
             inline: true,
             showOtherMonths: true
         });
@@ -358,12 +357,9 @@
             search = document.getElementById('search');
 
         function codeAddress() {
-            //otan tha ginetai anazhthsh event me krithrio px thn perioxh, tha exoume polla apotelesmata opote tha prepei
-            //na yparxei ena loop poy tha dhmiourgei tous pollous markers gia na fanoun ston xarth.
-            //opws einai tr o kwdikas kalyptei thn periptwsh p o xrhsths pataei panw se ena event gia na dei tis
-            //plhrofories tou, opote i metablhth address pairnei timi apo thn html selida kateutheian
-            var address = document.getElementByName("town").value + " " +document.getElementByName("country").value+ " " + document.getElementByName("area").value + " " +
-                document.getElementByName("address").value + " " + document.getElementByName("address_number").value;
+
+          var address = document.getElementById("search_town").value + " " +document.getElementById("search_country").value+ " " + document.getElementById("search_area").value + " " +
+                document.getElementById("search_address").value + " " + document.getElementById("search_address_number").value;
             geocoder.geocode( { 'address': address}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     map.setCenter(results[0].geometry.location);

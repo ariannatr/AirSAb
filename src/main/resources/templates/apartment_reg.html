@@ -167,13 +167,9 @@
             search = document.getElementById('search');
 
         function codeAddress() {
-            //otan tha ginetai anazhthsh event me krithrio px thn perioxh, tha exoume polla apotelesmata opote tha prepei
-            //na yparxei ena loop poy tha dhmiourgei tous pollous markers gia na fanoun ston xarth.
-            //opws einai tr o kwdikas kalyptei thn periptwsh p o xrhsths pataei panw se ena event gia na dei tis
-            //plhrofories tou, opote i metablhth address pairnei timi apo thn html selida kateutheian
+
             var address = document.getElementById("search_town").value + " " +document.getElementById("search_country").value+ " " + document.getElementById("search_area").value + " " +
                 document.getElementById("search_address").value + " " + document.getElementById("search_address_number").value;
-
             geocoder.geocode( { 'address': address}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     map.setCenter(results[0].geometry.location);
@@ -203,7 +199,7 @@
         };
     };
 </script>
-<script  type="text/javascript" th:src="@{/scripts/apartment.js}"></script>
+<script  type="text/javascript" th:src="@{/scripts/apart_reg.js}"></script>
 </body>
 </html>
 
