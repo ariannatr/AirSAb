@@ -29,4 +29,7 @@ public interface UsersService {
     public ArrayList<UsersEntity> findAllRenters();
 
     public Boolean checkforRenterActivity(RenterEntity renterEntity);
+
+    public ArrayList<RenterEntity> findAllRentersEntity();
+
 }

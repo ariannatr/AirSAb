@@ -29,4 +29,6 @@ public interface ReservationRepository extends PagingAndSortingRepository<Reserv
     ReservationEntity findById(Integer id);
 
     Set<ReservationEntity> findAllByApartmentAndRenter(ApartmentEntity apartment,RenterEntity renter);
+
+
 }

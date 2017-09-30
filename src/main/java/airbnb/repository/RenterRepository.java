@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public interface RenterRepository extends PagingAndSortingRepository<RenterEntity,String> {
     RenterEntity findByUsersUsername(String username);
 
+
     ArrayList<RenterEntity > findAll();
 
 

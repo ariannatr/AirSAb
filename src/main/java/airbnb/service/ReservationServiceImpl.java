@@ -7,6 +7,8 @@ import airbnb.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 /**
  * Created by Arianna on 28/9/2017.
  */
@@ -33,6 +35,12 @@ public class ReservationServiceImpl implements ReservationService {
         if(!reservationRepository.findAllByApartmentAndRenter(apartment,renter).isEmpty())
             return true;
         return false;
+    }
+
+    @Override
+    public ArrayList<ReservationEntity> findAllByRenter(RenterEntity renterEntity)
+    {
+        return  reservationRepository.findAllByRenter(renterEntity);
     }
 
 }

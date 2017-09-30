@@ -15,5 +15,5 @@ public interface ReservationService  {
     public void approveReservation(ReservationEntity reservation);
     public ReservationEntity findByReservationId(Integer id);
     public boolean hasReserved(RenterEntity renter, ApartmentEntity apartment);
-   // public ArrayList<ReservationEntity> findByRenter
+    public ArrayList<ReservationEntity> findAllByRenter(RenterEntity renterEntity);
 }

@@ -247,12 +247,18 @@ public class UsersServiceImpl implements UsersService {
     }
 
 
-
+    @Override
     public Boolean checkforRenterActivity(RenterEntity renterEntity)
     {
         if((renterEntity.getReservationsByUsersUsername().size()==0) || (renterEntity.getComments().size()==0))
             return  true;
         else
             return false;
+    }
+
+    @Override
+    public ArrayList<RenterEntity> findAllRentersEntity()
+    {
+        return  renterRepository.findAll();
     }
 }
