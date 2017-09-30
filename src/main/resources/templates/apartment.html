@@ -158,20 +158,11 @@
                             </div>
 
                             <div class="col-lg-12">
-                                <!--<nav class="specialnavbar">-->
-                                    <!--<div>-->
-                                        <!--<ul>-->
-                                            <!--<li class="active" ><h5><a class="fa fa-info" href="#generalInfo"> <b><em> General Info</em></b></a></h5></li>-->
-                                            <!--<li class=""><h5><a class="fa fa-calendar" href="#ownerInfo" ><b><em>  Owner's Info</em></b></a></h5></li>-->
-                                            <!--<li class=""><h5><a class="fa fa-star" href="#ratings" id="ratings-link"><b><em>  Reviews</em></b></a></h5></li>-->
-                                        <!--</ul>-->
-                                    <!--</div>-->
-                                <!--</nav>-->
                                 <ul class="nav nav-tabs">
                                     <li class="active" style="width: 25%"><a data-toggle="tab" class="fa fa-info" href="#generalInfo"><b><em> General Info</em></b></a></li>
-                                    <li style="width: 25%"><a data-toggle="tab" class="fa fa-calendar" href="#ownerInfo" ><b><em>  Owner's Info</em></b></a></li>
+                                    <li style="width: 25%"><a data-toggle="tab" class="fa fa-user" href="#ownerInfo" ><b><em>  Owner's Info</em></b></a></li>
                                     <li style="width: 25%"><a data-toggle="tab" class="fa fa-star" href="#ratings"><b><em>  Reviews</em></b></a></li>
-                                    <!--<li style="width: 25%"><a data-toggle="tab" class="fa fa-star" href="#ratings"><b><em>  Reviews</em></b></a></li>-->
+                                    <li  th:if ="${(mine != 'true' and renter == 'true')}" style="width: 25%"><a data-toggle="tab" class="fa fa-calendar-check-o" href="#makeReservation"><b><em>  Make Reservation</em></b></a></li>
                                 </ul>
                             </div>
 
@@ -231,11 +222,30 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                    <div th:if ="${(mine == 'true')}">
+                                        <label class="divider">Change Infos</label>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <button id="changenow" class="btn btn-outline-warning " data-wow-delay="0.5s" onclick="change()">Change</button>
+                                                <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
                                 </div>
                                 <div id="ownerInfo" class="tab-pane fade">
                                     <label class="divider">Owner's Info </label>
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div  class="col-lg-5">
+                                            <div th:if="${(owner.photo!= '')}">
+                                                <img class="img-responsive user-photo" th:src="${owner.photo}" alt="img here" style="width:auto">
+                                            </div>
+                                            <div th:if="${(owner.photo=='')}">
+                                                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                            </div>
+                                        </div>
+                                        <div class="side-content col-lg-7">
                                             <ul>
                                                 <li><i class="fa fa-user"></i> <a ><strong> Owned by:</strong> <span th:text="${ owner.name}" ></span> <span th:text="${ owner.surname }"></span></a></li>
                                                 <li><i class="fa fa-phone"></i> <a ><span th:text="${ owner.telephone}" ></span></a></li>
@@ -243,27 +253,41 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <div th:if="${(mine!='true')and ((type=='2') or(type=='3'))  and (uname!=null)}">
+                                    <div th:if="${(mine!='true')and ((type=='2') or(type=='3'))  and (uname!=null)}" class="row">
                                         <label class="divider">Contact Owner </label>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <button id="asknow" class="btn btn-outline-warning " data-wow-delay="0.2s" onclick="ask()">Ask owner a question</button>
-                                                <br>
-                                            </div>
+                                        <div  class="col-lg-12">
+                                        <button id="asknow" class="btn btn-outline-warning " data-wow-delay="0.2s" onclick="ask()">Ask owner a question</button>
                                         </div>
                                     </div>
                                     <div id="qform" style="display: none;" class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <br>
-                                            <form method="POST" th:action="@{/question/{apartmentID}(apartmentID=${ap.id})}">
-                                                <input  name="question" id="question"   placeholder="Type your question here" required="required "maxlength="200" type="textarea"/>
-                                                <input type="submit" value="Post" class="btn  btn-sm" onclick="post()"/>
-                                            </form>
+                                            <div class="row">
+                                                <form method="POST" th:action="@{/question/{apartmentID}(apartmentID=${ap.id})}">
+                                                    <div class="col-lg-12">
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-body">
+                                                                <form accept-charset="UTF-8" action="" method="POST">
+                                                                    <textarea class="form-control counted" id="question" name="question" placeholder="Type in your message" rows="5" style="margin-bottom:10px;"></textarea>
+                                                                    <h6 class="pull-right" id="counter">320 characters remaining</h6>
+                                                                    <button type="submit" class="btn  btn-sm" onclick="post()">Post question</button>
+                                                                    <!--<button class="btn btn-info" type="submit">Post New Message</button>-->
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                         </div>
                                     </div>
                                 </div>
                                 <div id="ratings" class="tab-pane fade">
                                     <label class="divider"> Renters' Reviews</label>
+                                    <div class="row">
+                                        <ul>
+                                            <li ><a class="fa fa-group" ><b><em> <span th:text="${ap.reviews}"> </span> Reviews</em></b></a></li>
+                                            <li ><a class="fa fa-star" ><b><em>  <span th:text="${ap.rating}"> </span></em></b></a></li>
+                                        </ul>
+                                    </div>
                                     <div th:if ="${(comments!=null)}">
                                             <div th:each="comment : ${comments}" class="row">
                                                 <div class="col-sm-1">
@@ -296,47 +320,40 @@
                                             </div>
                                     </div>
                                 </div>
-
                             </div>
 
 
                             <span class="clearfix borda"></span>
+                            <div id="makeReservation" class="tab-pane fade">
+                                <div th:if ="${(mine != 'true' and renter == 'true')}">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div th:if="${(param.success != null) and (param.success[0] == 'true')}">
+                                                <span class="alert alert-success">You reservation has been submitted !</span>
+                                            </div>
+                                            <div th:if="${(param.success != null) and (param.success[0] == 'invalid')}">
+                                                <span class="alert alert-success">Sorry,the given time area is invalid</span>
+                                            </div>
+                                            <div th:if="${(param.success != null) and (param.success[0] == 'min')}">
+                                                <span class="alert alert-warning">We are sorry,minimum reservation is <span th:text="${ap.minimumres}"></span> days !</span>
+                                            </div>
+                                            <div th:if="${(param.success != null) and (param.success[0] == 'false')}">
+                                                <span class="alert alert-warning">We are sorry these days are not available !</span>
+                                            </div>
 
-                            <div th:if ="${(mine == 'true')}">
-                                <label class="divider">Change Infos</label>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <button id="changenow" class="btn btn-outline-warning " data-wow-delay="0.5s" onclick="change()">Change</button>
-                                        <br>
+                                            <form method="POST" th:action="@{/reservation/{apartmentID}(apartmentID=${ap.id})}">
+                                                <label >From :</label>
+                                                <input name="startdate" type="text"  id="datepicker" style="width: 40%;" placeholder="Arrival Date" data-date-format='yyyy-mm-dd' >
+                                                <label> To: </label>
+                                                <input name="finaldate" type="text" id="datepicker" style="width: 40%;" placeholder="Departure Date" data-date-format='yyyy-mm-dd' > <br>
+                                                <button id="rent" type="submit" class="btn btn-outline-warning " >Make a reservation</button>
+                                                <br>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div th:if ="${(mine != 'true' and renter == 'true')}">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div th:if="${(param.success != null) and (param.success[0] == 'true')}">
-                                            <span class="alert alert-success">You reservation has been submitted !</span>
-                                        </div>
-                                        <div th:if="${(param.success != null) and (param.success[0] == 'invalid')}">
-                                            <span class="alert alert-success">Sorry,the given time area is invalid</span>
-                                        </div>
-                                        <div th:if="${(param.success != null) and (param.success[0] == 'min')}">
-                                            <span class="alert alert-warning">We are sorry,minimum reservation is <span th:text="${ap.minimumres}"></span> days !</span>
-                                        </div>
-                                        <div th:if="${(param.success != null) and (param.success[0] == 'false')}">
-                                            <span class="alert alert-warning">We are sorry these days are not available !</span>
-                                        </div>
-                                        <form method="POST" th:action="@{/reservation/{apartmentID}(apartmentID=${ap.id})}">
-                                            <label >From :</label>
-                                            <input name="startdate" type="text"  id="datepicker" style="width: 40%;" placeholder="Arrival Date" data-date-format='yyyy-mm-dd' >
-                                            <label> To: </label>
-                                            <input name="finaldate" type="text" id="datepicker" style="width: 40%;" placeholder="Departure Date" data-date-format='yyyy-mm-dd' > <br>
-                                            <button id="rent" type="submit" class="btn btn-outline-warning " >Make a reservation</button>
-                                            <br>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                         </div>
                         </article>
                         <br><br>
                     </section>
@@ -524,6 +541,8 @@
     };
 </script>
 <script th:src="@{/scripts/lightbox.js}" ></script>
+<script th:src="@{/scripts/ask.js}" ></script>
+
 <script>
     var slideIndex = 1;
     showDivs(slideIndex);

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Error Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" type="text/css" media="all"/>
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     <script type="text/javascript" th:src="@{/scripts/search.js}"></script>
+
+    <link th:href="@{/css/search.css}" rel="stylesheet" type="text/css" media="all"/>
+
+</head>
+
+<body>
+<div th:replace="/fragments/navbar :: navbar('')"></div>
+<header class="masthead">
+        <div class="overlay">
+            <div class="container">
+                <div id="initialtext">
+                    <h1 class="display-1 text-white">Air S A & B </h1>
+                    <h2 class="display-4 text-white">Rent an apartment now</h2>
+                    <p style="color: white!important;">  We are Sorry,Something went wrong ...</p>
+                    <div> <br> </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+
+    <!-- Footer -->
+    <div th:replace="/fragments/footer :: footer"></div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/popper/popper.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all"/>
+
+
+    <script type="text/javascript">
+    jQuery(function(){
+    jQuery($(":input[id^='datepicker']")).datepicker({
+        inline: true,
+        showOtherMonths: true
+    });
+    });
+    </script>
+
+
+</body>
+
+</html>

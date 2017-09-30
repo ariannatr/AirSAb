@@ -2,25 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
+    <meta th:replace="/fragments/head :: head">
     <meta charset="UTF-8">
     <title>Messages</title>
     <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"rel="stylesheet" type="text/css" media="all">
 
     <!-- Custom styles for this template -->
     <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
+    <link th:href="@{/css/messages.css}" rel="stylesheet" type="text/css" media="all">
 
-
-    <style>
-        .message-result { margin-top: 20px; }
-        .container { margin:20px 10% 20px 10%!important; width:auto!important; padding:0!important }
-        .filtersContainer{margin-top:10%}
-        mb20 { margin-bottom: 20px; }
-
-        hgroup { border-bottom: 1px solid #ccc; text-align: center; margin-top:20px}
-        hgroup h1 { font: 500 normal 1.625em Verdana, Geneva, sans-serif; color: #2a3644; margin-top: 0; line-height: 1.15; }
-        hgroup h2.lead { font: normal normal 1.125em Verdana, Geneva, sans-serif; color: #2a3644; margin: 0; padding-bottom: 10px; }
-
-    </style>
 </head>
 <body>
     <div th:replace="/fragments/navbar :: navbar('messages')"></div>

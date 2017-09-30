@@ -20,69 +20,9 @@
 </head>
 
 <body>
+<!--Navigation-->
+<div th:replace="/fragments/navbar :: navbar('apartments')"></div>
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Air SA&B</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-
-        <ul class="navbar-nav nav-pills ml-auto">
-            <li class="nav-item">
-                <a class="nav-link disabled" style="color:#dba63d;" >admin</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" th:href="@{/admin}">Home </a>
-            </li>
-            <li class="nav-item  dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown"  role="button" href="" aria-haspopup="true" aria-expanded="false">Users</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item " th:href="@{/owners}">Owners</a>
-                    <a class="dropdown-item " th:href="@{/renters}">Renters</a>
-                    <a class="dropdown-item " th:href="@{/accept}">Requests</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item " th:href="@{/users}">All</a>
-                </div>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/apartslist}">Apartments </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Reservations</a>
-                <div class="dropdown-menu">
-                    <form class="dropdown-item" method="POST" th:action="@{/resbyrenter}">
-                        <label >By Renter</label> <br>
-                        <input name="renter"  type="text" />
-                        <input type="submit" value="Go"/>
-                    </form>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" th:href="@{/reservationslist}">All</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Critics</a>
-                <div class="dropdown-menu">
-                    <form class="dropdown-item" method="POST" th:action="@{/critbyrenter}">
-                        <label >By Renter</label> <br>
-                        <input name="renter"  type="text" />
-                        <input type="submit" value="Go"/>
-                    </form>
-                    <div class="dropdown-divider"></div>
-                    <form class="dropdown-item" method="POST" th:action="@{/critforowner}">
-                        <label >For Owner</label> <br>
-                        <input name="owner"  type="text" />
-                        <input type="submit" value="Go"/>
-                    </form>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">||</a>
-            </li>
-        </ul>
-    </div>
-</nav>
 
 <header class="masthead">
     <div class="overlay" >
@@ -92,8 +32,8 @@
 
                 <!--/*Table with info about each user*/-->
                 <div id="initialtext">
-                    <p class="table-title"> Apartments Info</p>
-                    <p class="table-subtitle"> Below you can see the info of all apartments registered. OR <a th:href="@{/downloadapartments}"><strong>Download</strong></a><p>
+                    <p class="table-title" style="color: black!important;"> Apartments Info</p>
+                    <p class="table-subtitle" style="color: black!important;"> Below you can see the info of all apartments registered. OR <a th:href="@{/downloadapartments}"><strong>Download</strong></a><p>
                     <div  style="background-color:#e6eaf2; opacity:0.8; width:90%; margin:0 auto;">
                         <table >
                             <thead>

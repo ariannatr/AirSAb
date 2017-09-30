@@ -35,7 +35,7 @@
             </div>
 
 
-                <div  th:if ="${(uname != null)}" class="collapse navbar-collapse" id="navbarResponsive2">
+                <div  th:if ="${(uname != null and type!='0')}" class="collapse navbar-collapse" id="navbarResponsive2">
                     <ul class="navbar-nav nav-pills ml-auto  ">
                         <li class="nav-item dropdown" th:classappend="${module == 'profile' ? 'active' : ''}">
                             <a style="color:#dba63d;" class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false"><span th:text="${uname}"></span></a>
@@ -81,7 +81,65 @@
                         </li>
                     </ul>
                 </div>
-
+        <div th:if="${(uname!=null and type == '0')}" class="collapse navbar-collapse" id="navbarResponsive2">
+                <ul class="navbar-nav nav-pills ml-auto">
+                    <li class="nav-item dropdown" th:classappend="${module == 'profile' ? 'active' : ''}">
+                        <a style="color:#dba63d;" class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false"><span th:text="${uname}"></span></a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" th:href="@{/profile}" >Profile/Update</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                        </div>
+                    </li>
+                    <li class="nav-item" th:classappend="${module == 'home' ? 'active' : ''}">
+                        <a class="nav-link" th:href="@{/index}">Home</a>
+                    </li>
+                    <li class="nav-item dropdown" th:classappend="${module == 'users' ? 'active' : ''}">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Users</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" th:href="@{/owners}" >Owners</a>
+                            <a class="dropdown-item" th:href="@{/renters}">Renters</a>
+                            <a class="dropdown-item" th:href="@{/accept}">Requests</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{/users}">All</a>
+                        </div>
+                    </li>
+                    <li class="nav-item" th:classappend="${module == 'apartments' ? 'active' : ''}">
+                        <a class="nav-link" th:href="@{/apartslist}">Apartments </a>
+                    </li>
+                    <li class="nav-item dropdown" th:classappend="${module == 'reservations' ? 'active' : ''}">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Reservations</a>
+                        <div class="dropdown-menu">
+                            <form class="dropdown-item" method="POST" th:action="@{/resbyrenter}">
+                                <label >By Renter</label> <br>
+                                <input name="renter"  type="text" />
+                                <input type="submit" value="Go"/>
+                            </form>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{/reservationslist}">All</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown" th:classappend="${module == 'critics' ? 'active' : ''}">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Critics</a>
+                        <div class="dropdown-menu">
+                            <form class="dropdown-item" method="POST" th:action="@{/critbyrenter}">
+                                <label >By Renter</label> <br>
+                                <input name="renter"  type="text" />
+                                <input type="submit" value="Go"/>
+                            </form>
+                            <div class="dropdown-divider"></div>
+                            <form class="dropdown-item" method="POST" th:action="@{/critforowner}">
+                                <label >For Owner</label> <br>
+                                <input name="owner"  type="text" />
+                                <input type="submit" value="Go"/>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">||</a>
+                    </li>
+                </ul>
+            </div>
     </nav>
 </div>
 </body>
