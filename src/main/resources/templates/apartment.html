@@ -9,19 +9,11 @@
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"rel="stylesheet" type="text/css" media="all">
-    <!--link th:href="@{/css/lightbox.css}" rel="stylesheet" type="text/css" media="all">
     <!-- Custom styles for this template -->
     <link th:href="@{/css/one-page-wonder.css}" rel="stylesheet" type="text/css" media="all">
     <link th:href="@{/css/apartment_prof.css}" rel="stylesheet" type="text/css" media="all">
     <link th:href="@{/css/searchCss.css}" rel="stylesheet" type="text/css" media="all">
-    <!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" type="text/css" media="all">-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
-
-    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
-    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-    <!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>-->
 
     <style>
         .mySlides {display:none}
@@ -498,10 +490,6 @@
 <!-- Footer -->
 <div th:replace="/fragments/footer :: footer"></div>
 
-<!-- Bootstrap core JavaScript -->
-<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{/vendor/popper/popper.min.js}"></script>
-<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 
 <script type="text/javascript">
@@ -524,6 +512,12 @@
 <script  type="text/javascript" th:src="@{/scripts/checkdates.js}"></script>
 <script type="text/javascript" th:src="@{/scripts/apartment.js}"></script>
 <script async defer src="https://maps.google.com/maps/api/js?key=AIzaSyBEcboHJ3HmCOtpiaUMW_0mKw0C20qPVpk"></script>
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/popper/popper.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/scripts/reserves.js}" ></script>
+
 <script type="text/javascript">
     window.onload = function() {
         var gmarkers = [];
@@ -583,7 +577,6 @@
 </script>
 <script th:src="@{/scripts/lightbox.js}" ></script>
 <script th:src="@{/scripts/ask.js}" ></script>
-<script th:src="@{/scripts/reserves.js}" ></script>
 
 <script>
     var slideIndex = 1;
@@ -613,5 +606,6 @@
         dots[slideIndex-1].className += " w3-opacity-off";
     }
 </script>
+
 </body>
 </html>
