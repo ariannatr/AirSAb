@@ -234,6 +234,7 @@
                                     </div>
                                     </div>
                                 </div>
+
                                 <div id="ownerInfo" class="tab-pane fade">
                                     <label class="divider">Owner's Info </label>
                                     <div class="row">
@@ -277,9 +278,13 @@
                                                         </div>
                                                     </div>
                                                 </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <span class="clearfix borda"></span>
+
                                 <div id="ratings" class="tab-pane fade">
                                     <label class="divider"> Renters' Reviews</label>
                                     <div class="row">
@@ -288,39 +293,65 @@
                                             <li ><a class="fa fa-star" ><b><em>  <span th:text="${ap.rating}"> </span></em></b></a></li>
                                         </ul>
                                     </div>
-                                    <div th:if ="${(comments!=null)}">
-                                            <div th:each="comment : ${comments}" class="row">
-                                                <div class="col-sm-1">
-                                                    <div class="thumbnail">
-                                                        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-                                                    </div><!-- /thumbnail -->
-                                                </div><!-- /col-sm-1 -->
 
-                                                <div class="col-sm-5">
-                                                    <div class="panel panel-default">
-                                                        <div class="panel-heading">
-                                                            <strong th:text="${comment.renter}"> </strong>                                                         </div>
-                                                        <div class="panel-body">
-                                                            <span th:text="${comment.comment}"></span>
-                                                        </div><!-- /panel-body -->
-                                                    </div><!-- /panel panel-default -->
-                                                </div><!-- /col-sm-5 -->
-                                                <div class="rate">
-                                                    <input type="radio" id="1-star5" name="rating" value="5" checked/>
-                                                    <label for="1-star5" title="text">5 stars</label>
-                                                    <input type="radio" id="1-star4" name="rating" value="4" />
-                                                    <label for="1-star4" title="text">4 stars</label>
-                                                    <input type="radio" id="1-star3" name="rating" value="3" />
-                                                    <label for="1-star3" title="text">3 stars</label>
-                                                    <input type="radio" id="1-star2" name="rating" value="2" />
-                                                    <label for="1-star2" title="text">2 stars</label>
-                                                    <input type="radio" id="1-star1" name="rating" value="1" />
-                                                    <label for="1-star1" title="text">1 star</label>
+                                    <div class="row" th:if="${ reserve=='true'}" style="margin-top:40px;">
+                                        <div class="col-dm-6" align="center">
+                                            <div class="well well-sm">
+                                                <div class="text-right">
+                                                    <a class="btn btn-success btn-green"  href="#reviews-anchor" id="open-review-box">Leave a Review</a><!--href="#reviews-anchor"-->
+                                                </div>
+                                                <div class="row" id="post-review-box" style="display:none;">
+                                                    <div class="col-md-12" align="center">
+                                                        <form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${ap.id})}">
+                                                            <input required id="ratings-hidden" name="rating" type="hidden" value="0">
+                                                            <textarea  required class="form-control animated" cols="50" id="new-review" type="text" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
+
+                                                            <div class="text-right">
+                                                                <div class="stars starrr" data-rating="0"></div>
+                                                                <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
+                                                                    <span class="glyphicon glyphicon-remove"></span>Cancel</a>
+                                                                <button class="btn btn-success btn-lg" type="submit">Save</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div th:if ="${(comments!=null)}">
+                                        <div th:each="comment : ${comments}" class="row">
+                                            <div class="col-sm-1">
+                                                <div class="thumbnail">
+                                                    <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                                </div><!-- /thumbnail -->
+                                            </div><!-- /col-sm-1 -->
+
+                                            <div class="col-sm-5">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <strong th:text="${comment.renter}"> </strong>                                                         </div>
+                                                    <div class="panel-body">
+                                                        <span th:text="${comment.comment}"></span>
+                                                    </div><!-- /panel-body -->
+                                                </div><!-- /panel panel-default -->
+                                            </div><!-- /col-sm-5 -->
+                                            <div class="rate">
+                                                <input type="radio" id="1-star5" name="rating" value="5" checked/>
+                                                <label for="1-star5" title="text">5 stars</label>
+                                                <input type="radio" id="1-star4" name="rating" value="4" />
+                                                <label for="1-star4" title="text">4 stars</label>
+                                                <input type="radio" id="1-star3" name="rating" value="3" />
+                                                <label for="1-star3" title="text">3 stars</label>
+                                                <input type="radio" id="1-star2" name="rating" value="2" />
+                                                <label for="1-star2" title="text">2 stars</label>
+                                                <input type="radio" id="1-star1" name="rating" value="1" />
+                                                <label for="1-star1" title="text">1 star</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+
 
 
                             <span class="clearfix borda"></span>
@@ -447,7 +478,7 @@
                                 <label  class=" photo_upload" >Change photo3 </label>
                                 <input  type="file" name="uploadingFile3" >
                             </div>
-                            <div class="form-group" >
+                            <div class="form-group" align="center">
                                 <label  class="photo_upload" >Change photo4 </label>
                                 <input  type="file" name="uploadingFile4" >
                             </div>
@@ -542,6 +573,7 @@
 </script>
 <script th:src="@{/scripts/lightbox.js}" ></script>
 <script th:src="@{/scripts/ask.js}" ></script>
+<script th:src="@{/scripts/reserves.js}" ></script>
 
 <script>
     var slideIndex = 1;

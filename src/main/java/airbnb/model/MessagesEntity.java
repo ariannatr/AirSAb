@@ -33,11 +33,11 @@ public class MessagesEntity implements Serializable{
     @JoinColumn(name = "renterfrom",referencedColumnName = "users_username")
     private RenterEntity renterfrom;
 
-    public RenterEntity getRenter() {
+    public RenterEntity getRenterfrom() {
         return renterfrom;
     }
 
-    public void setRenter(RenterEntity renter) {
+    public void setRenterfrom(RenterEntity renter) {
         this.renterfrom = renter;
     }
 
@@ -45,11 +45,11 @@ public class MessagesEntity implements Serializable{
     @JoinColumn(name = "ownerto",referencedColumnName = "users_username")
     private OwnerEntity ownerto;
 
-    public OwnerEntity getOwner() {
+    public OwnerEntity getOwnerto() {
         return ownerto;
     }
 
-    public void setOwner(OwnerEntity owner) {
+    public void setOwnerto(OwnerEntity owner) {
         this.ownerto = owner;
     }
 

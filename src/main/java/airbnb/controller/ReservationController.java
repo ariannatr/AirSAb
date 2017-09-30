@@ -144,7 +144,7 @@ public class ReservationController {
     public ModelAndView makeReservation(@ModelAttribute("comments") @Valid CommentsEntity comments, @PathVariable("apartmentID") int apartmentID) throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = authenticationFacade.getAuthentication();
-        modelAndView.setViewName("redirect:/reserves");
+        modelAndView.setViewName("redirect:/apartment/"+apartmentID+"#ratings");
         if (!authentication.getName().equals("anonymousUser")) {
             ApartmentEntity apart = apartmentService.findById(apartmentID);
             RenterEntity renter = userService.findRenterByUsername(authentication.getName());

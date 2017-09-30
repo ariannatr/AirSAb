@@ -46,29 +46,11 @@ Licence URI: http://www.os-templates.com/template-terms
 
 <div class="container">
 
-    <!--<div class="sidebar one_quarter first">-->
-        <!--<div class="tab">-->
-            <!--<button type="button" class="tablinks  list-group-item" onclick="openCity(event, 'reservations')" th:id="${((param.tab != null)and (param.tab[0] == 'reservations')) ? 'my_active' : ''}">-->
-                <!--<i class="fa fa-calendar-check-o" style="width:30%" ></i> Reservations<span class="badge" th:text="${#lists.size(currRes)}"></span></button>-->
-            <!--<button type="button" class="tablinks  list-group-item" onclick="openCity(event, 'old_activities')" th:id="${((param.tab != null) and (param.tab[0] == 'old_activities')) ? 'my_active' : ''}">-->
-                <!--<i class="fa fa-calendar-minus-o" style="width:30%"></i> Older Reservations<span class="badge" th:text="${#lists.size(pastRes)}"></span> </button>-->
-
-        <!--</div>-->
         <div class="col-lg-12">
-            <!--<nav class="specialnavbar">-->
-            <!--<div>-->
-            <!--<ul>-->
-            <!--<li class="active" ><h5><a class="fa fa-info" href="#generalInfo"> <b><em> General Info</em></b></a></h5></li>-->
-            <!--<li class=""><h5><a class="fa fa-calendar" href="#ownerInfo" ><b><em>  Owner's Info</em></b></a></h5></li>-->
-            <!--<li class=""><h5><a class="fa fa-star" href="#ratings" id="ratings-link"><b><em>  Reviews</em></b></a></h5></li>-->
-            <!--</ul>-->
-            <!--</div>-->
-            <!--</nav>-->
+
             <ul class="nav nav-tabs">
                 <li class="active" style="width: 25%"><a data-toggle="tab" class="fa fa-calendar-check-o" href="#futureReservations"><b><em> Future Reservations</em></b></a></li>
                 <li style="width: 25%"><a data-toggle="tab" class="fa fa-calendar-minus-o" href="#pastReservations" ><b><em>  Past Reservations</em></b></a></li>
-                <!--<li style="width: 25%"><a data-toggle="tab" class="fa fa-star" href="#ratings"><b><em>  Reviews</em></b></a></li>-->
-                <!--<li style="width: 25%"><a data-toggle="tab" class="fa fa-star" href="#ratings"><b><em>  Reviews</em></b></a></li>-->
             </ul>
         </div>
 
@@ -100,7 +82,7 @@ Licence URI: http://www.os-templates.com/template-terms
                 </div>
                 <article >
                     <div class="txtwrap">
-                        <h4 class="heading"><i class="fa fa-home"> </i><span th:text="${currAparts[iterStat.index].name}"></span></h4>
+                        <li><a  th:href="@{/apartment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}"><h4 class="heading"> <i class="fa fa-home"> </i><span th:text="${currAparts[iterStat.index].name}"></span></h4></a></li>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div th:if="${(curr.approval==0)}">
@@ -132,38 +114,11 @@ Licence URI: http://www.os-templates.com/template-terms
                                     </ul>
                             </div>
                         </div>
-                        <div th:if="${( currAparts!=null and #lists.size(currAparts)!=0 )}">
-                            <footer><a th:href="@{/apartment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">Read  more.. &raquo;</a></footer>
-                        </div>
                     </div>
-                </article>
+                    </article>
+                </div>
                 <div th:if="${(approveOption!='true') and (mine=='false')}">
-                    <div class="row" style="margin-top:40px;">
-                        <div class="col-lg-6">
-                            <div class="well well-sm">
-                                <div class="text-right">
-                                    <a class="btn btn-success btn-green" href="#reviews-anchor" id="open-review-box">Leave a Review</a>
-                                </div>
-
-                                <div class="row" id="post-review-box" style="display:none;">
-                                    <div class="col-md-12">
-                                        <form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${currAparts[iterStat.index].id})}">
-                                            <input required id="ratings-hidden" name="rating" type="hidden" value="0">
-                                            <textarea required class="form-control animated" cols="50" id="new-review" type="text" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
-
-                                            <div class="text-right">
-                                                <div class="stars starrr" data-rating="0"></div>
-                                                <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
-                                                    <span class="glyphicon glyphicon-remove"></span>Cancel</a>
-                                                <button class="btn btn-success btn-lg" type="submit">Save</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+                        <footer><a th:href="@{/apartment/{apartmentID}#ratings(apartmentID=${currAparts[iterStat.index].id})}">Leave your Review.. &raquo;</a></footer>
                 </div>
                 <div th:if="${(approveOption=='true' and curr.approval==0)}">
                     <form  method="post" th:action="@{/approveReserve/{reserveID}(reserveID=${curr.id})}">
@@ -207,8 +162,8 @@ Licence URI: http://www.os-templates.com/template-terms
                         </div>
                         <article >
                             <div class="txtwrap">
-                                <h4 class="heading"><i class="fa fa-home"></i> <span th:text="${pastAparts[iterStat1.index].name}"> </span></h4>
                                 <ul class="nospace meta">
+                                    <li> <a th:href="@{/apartment/{apartmentID}(apartmentID=${pastAparts[iterStat1.index].id})}"><h4 class="heading"><i class="fa fa-home"></i> <span th:text="${pastAparts[iterStat1.index].name}"> </span></h4></a></li>
                                     <li><i class="fa fa-tag"></i> <a href="#"><span th:text="${pastAparts[iterStat1.index].area}"></span></a></li>
                                 </ul>
                             </div>
@@ -219,31 +174,7 @@ Licence URI: http://www.os-templates.com/template-terms
                         </article>
                     </div>
                     <div th:if="${(mine=='false')}">
-                        <div class="row" style="margin-top:40px;">
-                            <div class="col-md-6">
-                                <div class="well well-sm">
-                                    <div class="text-right">
-                                        <a class="btn btn-success btn-green" href="#reviews-anchor" id="open-review-box">Leave a Review</a>
-                                    </div>
-
-                                    <div class="row" id="post-review-box" style="display:none;">
-                                        <div class="col-md-12">
-                                            <form  method="post" th:action="@{/comment/{apartmentID}(apartmentID=${pastAparts[iterStat1.index].id})}">
-                                                <input required id="ratings-hidden" name="rating" type="hidden" value="0">
-                                                <textarea  required class="form-control animated" cols="50" id="new-review" type="text" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
-
-                                                <div class="text-right">
-                                                    <div class="stars starrr" data-rating="0"></div>
-                                                    <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
-                                                        <span class="glyphicon glyphicon-remove"></span>Cancel</a>
-                                                    <button class="btn btn-success btn-lg" type="submit">Save</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
+                        <footer><a th:href="@{/apartment/{apartmentID}#ratings(apartmentID=${pastAparts[iterStat11.index].id})}">Leave your Review.. &raquo;</a></footer>
                 </div>
             </div>
             </br>
@@ -259,7 +190,6 @@ Licence URI: http://www.os-templates.com/template-terms
         <!-- ################################################################################################ -->
     </div>
     </div>
-</div>
 </div>
 </div>
 <div th:replace="/fragments/footer :: footer"></div>

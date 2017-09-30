@@ -1,5 +1,7 @@
 package airbnb.service;
 
+import airbnb.model.ApartmentEntity;
+import airbnb.model.RenterEntity;
 import airbnb.model.ReservationEntity;
 import airbnb.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,4 +27,12 @@ public class ReservationServiceImpl implements ReservationService {
     public ReservationEntity findByReservationId(Integer id){
         return reservationRepository.findById(id);
     }
+
+    @Override
+    public boolean hasReserved(RenterEntity renter, ApartmentEntity apartment){
+        if(!reservationRepository.findAllByApartmentAndRenter(apartment,renter).isEmpty())
+            return true;
+        return false;
+    }
+
 }

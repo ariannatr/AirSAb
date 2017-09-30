@@ -91,8 +91,8 @@ public class MessagesController {
     {
         MessagesEntity messagesEntity=new MessagesEntity();
         messagesEntity.setQuestion(Question);
-        messagesEntity.setOwner(owner);
-        messagesEntity.setRenter(renter);
+        messagesEntity.setOwnerto(owner);
+        messagesEntity.setRenterfrom(renter);
         messagesEntity.setApart_id(apartmentID_);
         messagesEntity.setApart_name(apartment_name);
         messagesRepository.save(messagesEntity);
@@ -105,8 +105,8 @@ public class MessagesController {
         renterRepository.save(renter);
     }
 
-    @RequestMapping(value={"/messages"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
-    public ModelAndView apartments(@RequestParam("pageSize") Optional<Integer> pageSize,
+    @RequestMapping(value={"/messagesOwner"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
+    public ModelAndView messagesOwner(@RequestParam("pageSize") Optional<Integer> pageSize,
                                    @RequestParam("page") Optional<Integer> page){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/messages");
@@ -115,12 +115,6 @@ public class MessagesController {
             modelAndView.addObject("uname", authentication.getName());
             UsersEntity userS = userService.findByUsername(authentication.getName());
             modelAndView.addObject("type", String.valueOf(userS.getType()));
-            if(userS.getType()==1 || userS.getType()==3) {
-                OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
-                if (owner.getApproval() == 0)
-                    modelAndView.addObject("approval", "false");
-            }
-
         }
         int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
         // Evaluate page. If requested parameter is null or less than 0 (to
@@ -129,51 +123,50 @@ public class MessagesController {
         int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
 
         Pager pager=null;
-        Set <MessagesEntity> allbyuser=new HashSet<>(0);
+        OwnerEntity owner=userService.findOwnerByUsername(authentication.getName());
+        Page<MessagesEntity> msg=messagesRepository.findByAllByOwner(owner,new PageRequest(evalPage, evalPageSize));
 
-        UsersEntity userS = userService.findByUsername(authentication.getName());
-        if((userS.getType()==2 ) || (userS.getType()==3)){
-            RenterEntity renter=userService.findRenterByUsername(authentication.getName());
-            allbyuser.addAll(renter.getMessages());
-        }
-        if((userS.getType()==1 ) || (userS.getType()==3)){
-            OwnerEntity owner=userService.findOwnerByUsername(authentication.getName());
-            allbyuser.addAll(owner.getMessages());
-        }
-
-        ArrayList<MessagesEntity> sorted=new ArrayList(allbyuser);
-        Collections.sort(sorted, new Comparator<MessagesEntity>(){
-            @Override
-            public int compare(MessagesEntity o1, MessagesEntity o2) {
-                int c_id=o2.getId() -o1.getId();
-                if (o1.getResponse() == null) {
-                    return (o2.getResponse() == null) ? 0 : -1;
-                }
-                if (o2.getResponse() == null) {
-                    return 1;
-                }
-                return c_id;
-
-            }
-        });
-
-        ArrayList<String> bysender=new ArrayList<>(0);
-        ArrayList<String> toreceiver=new ArrayList<>(0);
-        for (MessagesEntity messagesEntity : sorted) {
-            bysender.add(messagesEntity.getRenter().getUsersUsername());
-            toreceiver.add(messagesEntity.getOwner().getUsersUsername());
-        }
-
-
-        Page<MessagesEntity> msg= new PageImpl<MessagesEntity>(sorted);
         pager= new Pager(msg.getTotalPages(), msg.getNumber(), BUTTONS_TO_SHOW);
         if(msg.getTotalElements()!=0){
             modelAndView.addObject("pager", pager);
             modelAndView.addObject("items", msg);
-            modelAndView.addObject("items2", bysender);
-            modelAndView.addObject("items3", toreceiver);
+            modelAndView.addObject("sender","false");
         }
-        modelAndView.addObject("url","messages");
+        modelAndView.addObject("url","messagesOwner");
+        modelAndView.addObject("selectedPageSize", evalPageSize);
+        modelAndView.addObject("pageSizes", PAGE_SIZES);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value={"/messagesRenter"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
+    public ModelAndView messagesRenter(@RequestParam("pageSize") Optional<Integer> pageSize,
+                                      @RequestParam("page") Optional<Integer> page){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/messages");
+        Authentication authentication = authenticationFacade.getAuthentication();
+        if (!authentication.getName().equals("anonymousUser")) {
+            modelAndView.addObject("uname", authentication.getName());
+            UsersEntity userS = userService.findByUsername(authentication.getName());
+            modelAndView.addObject("type", String.valueOf(userS.getType()));
+        }
+        int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
+        // Evaluate page. If requested parameter is null or less than 0 (to
+        // prevent exception), return initial size. Otherwise, return value of
+        // param. decreased by 1.
+        int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
+
+        Pager pager=null;
+        RenterEntity renter=userService.findRenterByUsername(authentication.getName());
+        Page<MessagesEntity> msg=messagesRepository.findAllByRenter(renter,new PageRequest(evalPage, evalPageSize));
+
+        pager= new Pager(msg.getTotalPages(), msg.getNumber(), BUTTONS_TO_SHOW);
+        if(msg.getTotalElements()!=0){
+            modelAndView.addObject("pager", pager);
+            modelAndView.addObject("items", msg);
+            modelAndView.addObject("sender","true");
+        }
+        modelAndView.addObject("url","messagesRenter");
         modelAndView.addObject("selectedPageSize", evalPageSize);
         modelAndView.addObject("pageSizes", PAGE_SIZES);
 
@@ -183,7 +176,7 @@ public class MessagesController {
 
 
     @RequestMapping(value="/response/{messageID}", method = RequestMethod.POST)
-    public ModelAndView response( @PathVariable String messageID, @RequestParam("response") String Response){
+    public ModelAndView response( @PathVariable String messageID, @RequestParam("response") String Response,@RequestParam("url") String url){
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = authenticationFacade.getAuthentication();
         modelAndView.addObject("uname", authentication.getName());
@@ -199,13 +192,13 @@ public class MessagesController {
         System.out.println("responses");
 
 
-        modelAndView.setViewName("redirect:/messages");
+        modelAndView.setViewName("redirect:/"+url);
         return modelAndView;
     }
 
     @Transactional
     @RequestMapping(value="/remove/{messageID}", method = RequestMethod.POST)
-    public ModelAndView remove( @PathVariable String messageID){
+    public ModelAndView remove( @PathVariable String messageID,@RequestParam("url") String url){
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = authenticationFacade.getAuthentication();
         modelAndView.addObject("uname", authentication.getName());
@@ -217,9 +210,8 @@ public class MessagesController {
 
         messagesRepository.deleteById(messageID_);
 
-
         System.out.println("removed");
-        modelAndView.setViewName("redirect:/messages");
+        modelAndView.setViewName("redirect:/"+url);
         return modelAndView;
     }
 }

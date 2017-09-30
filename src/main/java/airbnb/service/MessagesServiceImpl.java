@@ -37,8 +37,8 @@ public class MessagesServiceImpl implements MessagesService {
     public  void saveMessages(String message, RenterEntity renterEntity, Integer apart_id,String apart_name,OwnerEntity ownerEntity){
         MessagesEntity messagesEntity=new MessagesEntity();
         messagesEntity.setQuestion(message);
-        messagesEntity.setOwner(ownerEntity);
-        messagesEntity.setRenter(renterEntity);
+        messagesEntity.setOwnerto(ownerEntity);
+        messagesEntity.setRenterfrom(renterEntity);
         messagesEntity.setApart_id(apart_id);
         messagesEntity.setApart_name(apart_name);
         messagesRepository.save(messagesEntity);

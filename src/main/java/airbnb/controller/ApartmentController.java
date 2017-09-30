@@ -3,6 +3,7 @@ package airbnb.controller;
 import airbnb.authentication.IAuthenticationFacade;
 import airbnb.model.*;
 import airbnb.service.ApartmentService;
+import airbnb.service.ReservationService;
 import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,6 +39,9 @@ public class ApartmentController {
 
     @Autowired
     private ApartmentService apartmentService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @Qualifier("cookieService")
     @Autowired
@@ -112,6 +116,7 @@ public class ApartmentController {
         modelAndView.setViewName("/apartment");
         int user_type=-1;
         Authentication authentication = authenticationFacade.getAuthentication();
+        ApartmentEntity ap1=apartmentService.findById(apartmentID);
         if (!authentication.getName().equals("anonymousUser")) {
             modelAndView.addObject("uname", authentication.getName());
             UsersEntity userS= userService.findByUsername(authentication.getName());
@@ -119,15 +124,18 @@ public class ApartmentController {
             modelAndView.addObject("type",String.valueOf( userS.getType()));
             /*Set<ApartmentEntity> aps=owner.getApartments();
             ApartmentEntity ap1=aps.iterator().next();*/
+            RenterEntity renter;
             if(userS.getType()==1 || userS.getType()==3) {
                 OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
                 if (owner.getApproval() == 0)
                     modelAndView.addObject("approval", "false");
             }
-
-
+            if(userS.getType()==2 || userS.getType()==3) {
+                renter = userService.findRenterByUsername(authentication.getName());
+                if (reservationService.hasReserved(renter, ap1))
+                    modelAndView.addObject("reserve", "true");
+            }
         }
-        ApartmentEntity ap1=apartmentService.findById(apartmentID);
         OwnerEntity ownerEntity=ap1.getOwner();
         Set<CommentsEntity> comments=ap1.getComments();
         UsersEntity user_owner=userService.findByUsername(ownerEntity.getUsersUsername());
