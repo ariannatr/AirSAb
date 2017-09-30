@@ -21,6 +21,7 @@ public interface ReservationRepository extends PagingAndSortingRepository<Reserv
     ArrayList<ReservationEntity> findAll();
 
     Page<ReservationEntity> findAllByRenter(RenterEntity renterEntity, Pageable pageable);
+
     ArrayList<ReservationEntity> findAllByRenter(RenterEntity renterEntity);
 
     Set<ReservationEntity> findAllByApartmentOwner(OwnerEntity ownerEntity);

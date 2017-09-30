@@ -2,6 +2,7 @@ package airbnb.controller;
 
 import airbnb.authentication.IAuthenticationFacade;
 import airbnb.model.*;
+import airbnb.repository.RenterRepository;
 import airbnb.repository.ReservationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,6 +45,10 @@ public class MainController {
     @Autowired
     private ReservationRepository reservationRepository;
 
+    @Autowired
+    private RenterRepository renterRepository;
+
+
     @RequestMapping(value={"/", "/index"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
     public ModelAndView index(){
         ModelAndView modelAndView = new ModelAndView();
@@ -64,15 +69,15 @@ public class MainController {
 
                 ArrayList<UsersEntity> renterList = userService.findAllRenters();
                 Recommend recommend=new Recommend();
-              /*  LinkedHashSet<ApartmentEntity> ap_recoms;
+                LinkedHashSet<ApartmentEntity> ap_recoms;
                 if(!userService.checkforRenterActivity(renter))
-                    ap_recoms= recommend.getRecommendationsRes(renter,renterList);
+                    ap_recoms= getRecommendationsRes(renter,renterList);
                 else
-                    ap_recoms= recommend.getRecommendationsCookie(renter,renterList);
+                    ap_recoms= getRecommendationsCookie(renter,renterList);
                 for(ApartmentEntity ap:ap_recoms)
                     System.out.println(ap.getName());
                 if(ap_recoms.size()>0)
-                    modelAndView.addObject("recommendations",ap_recoms); */
+                    modelAndView.addObject("recommendations",ap_recoms);
             }
         }
 
@@ -161,8 +166,8 @@ public class MainController {
         // System.out.println("Psaxnw to "+uploadingdir+imageName);
         return Files.readAllBytes(serverFile.toPath());
     }
-/**
-    public LinkedHashSet<ApartmentEntity> getRecommendations(RenterEntity renterEntity,ArrayList<UsersEntity> renterList) {
+
+    public LinkedHashSet<ApartmentEntity> getRecommendationsRes(RenterEntity renterEntity,ArrayList<UsersEntity> renterList) {
         LinkedHashSet<ApartmentEntity> rec = new LinkedHashSet<ApartmentEntity>();
         Set<ReservationEntity> res = renterEntity.getReservationsByUsersUsername();
         //  ArrayList<UsersEntity> renterList = userService.findAllRenters();
@@ -257,5 +262,119 @@ public class MainController {
             }
         }
         return rec;
-    }*/
+    }
+
+
+
+public LinkedHashSet<ApartmentEntity> getRecommendationsCookie(RenterEntity renterEntity, ArrayList<UsersEntity> renterList) {
+    LinkedHashSet<ApartmentEntity> rec = new LinkedHashSet<ApartmentEntity>();
+    Set<CookieApEntity> res = renterEntity.getCookieAp();
+    //  ArrayList<RenterEntity> renters=renterRepository.findAll();
+
+    HashMap<UsersEntity, Integer> to_Rec = new HashMap<UsersEntity, Integer>();
+    for (UsersEntity u : renterList) {
+        Integer amount = 0;
+        //System.out.println("Epestrepsa aut "+u.getRenterByUsername());
+        RenterEntity renter=renterRepository.findByUsersUsername(u.getUsername());
+        ArrayList<ReservationEntity> allu=reservationRepository.findAllByRenter(renter);
+        for (ReservationEntity ur : allu) {
+            for (CookieApEntity myr : res) {
+                if (myr.getApartmentid() == ur.getApartment().getId()) {
+                    if(myr.getTimes()>1)
+                        amount+=2;
+                    else
+                        amount++;
+                }
+            }
+        }
+        to_Rec.put(u, amount);
+    }
+
+    Integer i1 = 0;
+    Integer i2 = 0;
+    Integer i3 = 0;
+    Integer i4 = 0;
+    Integer i5 = 0;
+    UsersEntity test_user = new UsersEntity();
+    HashMap<UsersEntity, Integer> train_set = new HashMap<UsersEntity, Integer>();
+    for (HashMap.Entry<UsersEntity, Integer> entry : to_Rec.entrySet()) {
+        if (entry.getValue() > i1) {
+            i1 = entry.getValue();
+            test_user = entry.getKey();
+        }
+    }
+    train_set.put(test_user, i1);
+    to_Rec.remove(test_user, i1);
+    for (HashMap.Entry<UsersEntity, Integer> entry : to_Rec.entrySet()) {
+        if (entry.getValue() > i2) {
+            i2 = entry.getValue();
+            test_user = entry.getKey();
+        }
+    }
+    train_set.put(test_user, i2);
+    to_Rec.remove(test_user, i2);
+    for (HashMap.Entry<UsersEntity, Integer> entry : to_Rec.entrySet()) {
+        if (entry.getValue() > i3) {
+            i3 = entry.getValue();
+            test_user = entry.getKey();
+        }
+    }
+    train_set.put(test_user, i3);
+    to_Rec.remove(test_user, i3);
+    for (HashMap.Entry<UsersEntity, Integer> entry : to_Rec.entrySet()) {
+        if (entry.getValue() > i4) {
+            i4 = entry.getValue();
+            test_user = entry.getKey();
+        }
+    }
+    train_set.put(test_user, i4);
+    to_Rec.remove(test_user, i4);
+    for (HashMap.Entry<UsersEntity, Integer> entry : to_Rec.entrySet()) {
+        if (entry.getValue() > i5) {
+            i5 = entry.getValue();
+            test_user = entry.getKey();
+        }
+    }
+    train_set.put(test_user, i5);
+    to_Rec.remove(test_user, i5);
+    int k = 0;
+
+    Set<CookieSearchEntity> res2=renterEntity.getCookieSearch();
+    for (HashMap.Entry<UsersEntity, Integer> entry : train_set.entrySet()) {
+        UsersEntity u = entry.getKey();
+        ArrayList<ReservationEntity> allu=reservationRepository.findAllByRenter(u.getRenterByUsername());
+        for (ReservationEntity ur : allu) {
+            for (CookieSearchEntity bb : res2) {
+
+             //   String[] words=bb.getLocation().split(";");
+                int score=0;
+
+                   /* Set<CommentsEntity> comments = ur.getApartment().getComments();
+                    for (CommentsEntity com : comments) {
+                        Set<CommentsEntity> caat = bb.getApartment().getComments();
+                        for (CommentsEntity ct : caat) {
+                            if  ((sentiment.getsentiment(ct.getComment())==sentiment.getsentiment(com.getComment())) || (abs(ct.getRating()-com.getRating()) <=1) ) {
+                                //System.out.println("passed that");*/
+                if (!(ur.getApartmentOwner().getUsersUsername()).equals(renterEntity.getUsersUsername())
+                        && ur.getApartment().getCapacity() >= bb.getNum()) {
+
+                    if(   bb.getLocation().toLowerCase().contains(ur.getApartment().getCountry().toLowerCase()))
+                        score+=2;
+                    if(   bb.getLocation().toLowerCase().contains(ur.getApartment().getTown().toLowerCase()))
+                        score+=1;
+                    if(    bb.getLocation().toLowerCase().contains(ur.getApartment().getArea().toLowerCase()))
+                        score+=1;
+                    if (k < 6 && score>=2) {
+                        rec.add(ur.getApartment());
+                        k++;
+                    }
+                }
+            }
+        }
+    }
+    //}
+    //}
+    //}
+    return rec;
+}
 }

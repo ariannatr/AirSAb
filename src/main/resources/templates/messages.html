@@ -27,12 +27,12 @@
     </div>
 
     <div class="container" >
-        <div class="col-sm-9">
-            <div class="row>">
+        <!--<div class="col-sm-9">-->
+            <!--<div class="row>">-->
                 <div class="parent-wrapper"th:if ="${(items!=null)}">
                     <div class="parent">
                         <div class= "child" th:each="msg ,msgStat: ${items} " style="box-shadow: 5px 5px 15px #888888;">
-                            <section class="col-sm-12" >
+                            <section >
                                 <article class="message-result">
                                     <div class="row ">
                                         <!--div class="col-sm-12"-->
@@ -89,16 +89,7 @@
                     <span class="alert alert-warning" type="" style="text-align: center;">There are no messages !</span>
                 </div>
             </div>
-        </div>
-
-
-
-
-
-
-
-
-    </div>
+        <!--</div>-->
 
     <div th:replace="/fragments/footer :: footer"></div>
     <!-- Bootstrap core JavaScript -->

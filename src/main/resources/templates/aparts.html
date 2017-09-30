@@ -43,31 +43,32 @@ Licence URI: http://www.os-templates.com/template-terms
                     <section class="col-xs-12 col-sm-9 col-md-12">
                         <article class="search-result">
                             <div class="row">
-                              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="col-lg-12">
                                   <h2 class="heading"><a th:href="@{/apartment/{apartID}(apartID=${apart.id})}" th:text="${apart.name}">Voluptatem, exercitationem, suscipit, distinctio</a></h2>
                               </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
+                                <div class="col-lg-12">
                                 <div th:if="${(apart.photo!= '')}">
                                     <img alt="Apartment Pic"  th:src ="${apart.photo}" style="width:300px;height:150px"/>
                                 </div>
                                 <div th:if="${(apart.photo== '')}">
                                     <img th:src="@{/images/no_image.png}" style="width:300px;height:150px" />
                                 </div>
-
+                                </div>
                             </div>
                             <!--<a href="#" th:title="${event.name}" class="thumbnail"><img th:src="@{images/demo/event1.jpg}" alt="Lorem ipsum" /></a>-->
-
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 excerpet border">
+                            <div class="row">
+                        <div class="col-lg-12 excerpet border">
                             <!--<h4 class="heading"><span th:text="${event.date}"></span><span th:text="${event.price}"></span></h4>-->
                             <p th:text="${apart.description}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
                         </div>
+                            </div>
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="col-lg-12">
                                 <ul class="meta-search">
-                                    <li><i class="fa fa-user"></i> <a href="#"> <span th:text="${ owner.name}" ></span> <span th:text="${ owner.surname }"></span></a></li>
+                                    <li><i class="fa fa-user"></i>  <span th:text="${ owner.name}" ></span> <span th:text="${ owner.surname }"></span></li>
                                 <!--<li><i class="glyphicon glyphicon-calendar"></i> <span>02/15/2014</span></li>-->
                                 <!--<li><i class="glyphicon glyphicon-time"></i> <span>4:28 pm</span></li>-->
                                     <li><span th:text="${apart.country}"></span>,<span th:text="${apart.town}"></span>,<span th:text="${apart.area}"></span></li>
@@ -75,13 +76,12 @@ Licence URI: http://www.os-templates.com/template-terms
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><span th:text="${apart.price}"></span><span>€</span></div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"> <span class="plus"><a th:href="@{/apartment/{apartID}(apartID=${apart.id})}"> More .. <i class="glyphicon glyphicon-plus"></i></a></span></div>
-                            </div>
+                                <div class="col-lg-6"><span th:text="${apart.price}"></span><span>€</span></div>
+                                <div class="col-lg-6"> <span class="plus"><a th:href="@{/apartment/{apartID}(apartID=${apart.id})}"> More .. <i class="glyphicon glyphicon-plus"></i></a></span></div>
                             <span class="clearfix borda"></span>
-                        </div>
+
+                            </div>
                     <span class="clearfix borda"></span>
                 </article>
             </section>

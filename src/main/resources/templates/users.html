@@ -25,7 +25,7 @@
     <header class="masthead">
         <div class="overlay" >
 
-                <div th:if="${(requests == null)}">
+                <div th:if="${(requests == null and items!=null)}">
                     <div id="allusers"  class="well" style="display:block;">
 
                         <!--/*Table with info about each user*/-->
@@ -62,6 +62,7 @@
 
                     </div>
                 </div>
+
                 <div th:if="${(requests != null) and (requests == 'true')}">
                     <div th:if="${(items==null)}">
                         <div class="alert alert-success" style="text-align: center;"> There are no owners' requests ! <br>  </div>
