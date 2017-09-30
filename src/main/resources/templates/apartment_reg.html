@@ -68,8 +68,10 @@
                 <label class="divider">Important Info</label>
                 <br>
 
-                <input type="text" name="startdate" id="datepicker" style="width:45%" placeholder="Start Date" data-date-format='yyyy-mm-dd'>
-                <input  type="text" name="finaldate" id="datepicker" style="width:45%" placeholder="Final Date" data-date-format='yyyy-mm-dd'>
+                <input type="text" name="startdate" id="datepicker1" style="width:45%" placeholder="Start Date" data-date-format='yyyy-mm-dd'>
+                <input  type="text" name="finaldate" id="datepicker2" style="width:45%" placeholder="Final Date" data-date-format='yyyy-mm-dd'>
+                <p id="datesError" style="display:none;width:100%;" class="alert-danger">Final Date needs to be after Start Date</p>
+
                 <input name="price" id="price" placeholder="Price /day" min="1" required="required" type="number"/>
                 <input name="capacity" placeholder="Capacity" required="required" type="number" min="1">
                 <input name="minimumres" placeholder="Minimum reservation's days" min="1" required="required" type="number"/>
@@ -109,7 +111,7 @@
                     <input id="fileInput" type="file" name="uploadingFile" >
                 </div>
 
-                <input type="submit" value="Submit" class="btn  btn-sm" />
+                <input type="submit" id="tokoumpi" value="Submit" class="btn  btn-sm" />
             </form>
 
         </div>
@@ -126,14 +128,22 @@
 
 <script type="text/javascript">
     jQuery(function(){
-        jQuery($(":input[id^='datepicker']")).datepicker({
+        var dateToday = new Date();
+        jQuery($('#datepicker1')).datepicker({
             dateFormat: 'yyyy-MM-dd',
             inline: true,
-            showOtherMonths: true
+            showOtherMonths: true,
+            minDate: dateToday
+        });
+        jQuery($('#datepicker2')).datepicker({
+            dateFormat: 'yyyy-MM-dd',
+            inline: true,
+            showOtherMonths: true,
+            minDate: 0
         });
     });
 </script>
-
+<script  type="text/javascript" th:src="@{/scripts/checkdates.js}"></script>
 <script async defer src="https://maps.google.com/maps/api/js?key=AIzaSyBEcboHJ3HmCOtpiaUMW_0mKw0C20qPVpk"></script>
 <script type="text/javascript">
     window.onload = function() {
@@ -193,6 +203,7 @@
     };
 </script>
 <script  type="text/javascript" th:src="@{/scripts/apart_reg.js}"></script>
+
 </body>
 </html>
 

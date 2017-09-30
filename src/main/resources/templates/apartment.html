@@ -428,9 +428,10 @@
                             </table>
                             <table>
                                 <tr>
-                                    <td><strong>Start Date</strong><br> <input type="text" name="startdate" id="datepicker"  th:placeholder="${ap.startdate}" data-date-format='yyyy-mm-dd'/></td>
-                                    <td><strong>Final Date</strong><br> <input  type="text" name="finaldate" id="datepicker" th:placeholder="${ap.finaldate}" data-date-format='yyyy-mm-dd'/></td>
+                                    <td><strong>Start Date</strong><br> <input type="text" name="startdate" id="datepicker1"  th:placeholder="${ap.startdate}" data-date-format='yyyy-mm-dd'/></td>
+                                    <td><strong>Final Date</strong><br> <input  type="text" name="finaldate" id="datepicker2" th:placeholder="${ap.finaldate}" data-date-format='yyyy-mm-dd'/></td>
                                 </tr>
+                                <p id="datesError" style="display:none;width:100%;" class="alert-danger">Final Date needs to be after Start Date</p>
                                 <tr>
                                     <td><strong>Price per day</strong><br> <input name="price" id="price" th:value="${ap.price}" th:placeholder="${ap.price}" min="1"  type="number"/></td>
                                     <td><strong>Minimum reservation</strong><br><input name="minimumres" th:value="${ap.minimumres}" th:placeholder="${ap.minimumres}" min="1"  type="number"/></td>
@@ -483,7 +484,7 @@
                                 <input  type="file" name="uploadingFile4" >
                             </div>
                             <br>
-                            <button type="submit" id="change" value="Update" class="btn  btn-outline-warning " >Update</button>
+                            <button type="submit" id="tokoumpi" value="Update" class="btn  btn-outline-warning " >Update</button>
                             <button id="backnow" class="btn btn-outline-secondary" data-wow-delay="0.5s" onclick="back()">Back</button>
                         </form>
                     </div>
@@ -505,13 +506,22 @@
 
 <script type="text/javascript">
     jQuery(function(){
-        jQuery($(":input[id^='datepicker']")).datepicker({
+        var dateToday = new Date();
+        jQuery($('#datepicker1')).datepicker({
             dateFormat: 'yyyy-MM-dd',
             inline: true,
-            showOtherMonths: true
+            showOtherMonths: true,
+            minDate: dateToday
+        });
+        jQuery($('#datepicker2')).datepicker({
+            dateFormat: 'yyyy-MM-dd',
+            inline: true,
+            showOtherMonths: true,
+            minDate: 0
         });
     });
 </script >
+<script  type="text/javascript" th:src="@{/scripts/checkdates.js}"></script>
 <script type="text/javascript" th:src="@{/scripts/apartment.js}"></script>
 <script async defer src="https://maps.google.com/maps/api/js?key=AIzaSyBEcboHJ3HmCOtpiaUMW_0mKw0C20qPVpk"></script>
 <script type="text/javascript">
