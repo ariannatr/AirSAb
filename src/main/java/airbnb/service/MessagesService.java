@@ -5,7 +5,6 @@ import airbnb.model.RenterEntity;
 import airbnb.model.OwnerEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.hibernate.validator.internal.util.logging.Messages;
 import org.springframework.stereotype.Service;
 
 /**

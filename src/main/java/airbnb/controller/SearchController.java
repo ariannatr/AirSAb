@@ -1,11 +1,9 @@
 package airbnb.controller;
 
 import airbnb.authentication.IAuthenticationFacade;
-import airbnb.model.ApartmentEntity;
-import airbnb.model.OwnerEntity;
-import airbnb.model.Pager;
-import airbnb.model.UsersEntity;
+import airbnb.model.*;
 import airbnb.service.ApartmentService;
+import airbnb.service.CookieService;
 import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,6 +38,9 @@ public class SearchController {
     @Autowired
     private IAuthenticationFacade authenticationFacade;
 
+    @Autowired
+    private CookieService cookieService;
+
     public static final String uploadingdir = System.getProperty("user.dir") + "/uploadingdir/";
 
 
@@ -58,6 +59,13 @@ public class SearchController {
             modelAndView.addObject("uname", authentication.getName());
             UsersEntity userS = userService.findByUsername(authentication.getName());
             modelAndView.addObject("type", String.valueOf(userS.getType()));
+
+            if(userS.getType()>=2)
+            {
+                RenterEntity renterEntity=userService.findRenterByUsername(authentication.getName());
+                if(userService.checkforRenterActivity(renterEntity))
+                    cookieService.saveCookieSearch(renterEntity,people,country,town,area);
+            }
 
 
         }

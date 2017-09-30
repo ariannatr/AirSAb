@@ -17,6 +17,8 @@ public class RenterEntity implements Serializable{
     private Set<ReservationEntity> reservationsByUsersUsername=new HashSet<>(0);
     private Set<MessagesEntity> messages=new HashSet<>(0);
     private Set<CommentsEntity> comments=new HashSet<>(0);
+    private Set<CookieApEntity> cookieap=new HashSet<>(0);
+    private Set<CookieSearchEntity> cookiesearch=new HashSet<>(0);
 
     @Id
     @Column(name = "users_username")
@@ -79,5 +81,24 @@ public class RenterEntity implements Serializable{
 
     public void setComments(Set<CommentsEntity> comments) {
         this.comments = comments;
+    }
+
+
+    @OneToMany(mappedBy = "renter")
+    public Set<CookieApEntity> getCookieAp() {
+        return cookieap;
+    }
+
+    public void setCookieAp(Set<CookieApEntity> cookies) {
+        this.cookieap = cookies;
+    }
+
+    @OneToMany(mappedBy = "renter")
+    public Set<CookieSearchEntity> getCookieSearch() {
+        return cookiesearch;
+    }
+
+    public void setCookieSearch(Set<CookieSearchEntity> cookies) {
+        this.cookiesearch = cookies;
     }
 }

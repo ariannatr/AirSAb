@@ -3,11 +3,9 @@ package airbnb.controller;
 import airbnb.authentication.IAuthenticationFacade;
 import airbnb.model.*;
 import airbnb.repository.ReservationRepository;
-import airbnb.service.ApartmentService;
-import airbnb.service.CommentsService;
-import airbnb.service.ReservationService;
-import airbnb.service.UsersService;
+import airbnb.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -47,6 +45,10 @@ public class ReservationController {
     @Autowired
     private ApartmentService apartmentService;
 
+    @Qualifier("cookieService")
+    @Autowired
+    private CookieService cookieService;
+
     @RequestMapping(value = "/reservation/{apartmentID}", method = RequestMethod.POST)
     public ModelAndView makeReservation(@ModelAttribute("reservation") @Valid ReservationEntity reservation,@PathVariable("apartmentID") int apartmentID) throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
@@ -74,6 +76,7 @@ public class ReservationController {
             else {
                 modelAndView.addObject("success", "true");
                 System.out.println("ola good");
+
             }
         }
         else{
@@ -146,6 +149,10 @@ public class ReservationController {
             ApartmentEntity apart = apartmentService.findById(apartmentID);
             RenterEntity renter = userService.findRenterByUsername(authentication.getName());
             commentsService.saveComment(comments,renter,apart);
+
+            //need to remove cookie
+            cookieService.removeAllCookieApbyRenter(renter);
+            cookieService.removeAllCookieSearchbyRenter(renter);
         }
         else{
             System.out.println("You are not allowed to make a reservation");

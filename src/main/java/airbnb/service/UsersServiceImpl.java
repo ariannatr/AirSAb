@@ -245,4 +245,14 @@ public class UsersServiceImpl implements UsersService {
     {
         return userRepository.findAllByType(2,3);
     }
+
+
+
+    public Boolean checkforRenterActivity(RenterEntity renterEntity)
+    {
+        if((renterEntity.getReservationsByUsersUsername().size()==0) || (renterEntity.getComments().size()==0))
+            return  true;
+        else
+            return false;
+    }
 }

@@ -5,6 +5,7 @@ import airbnb.model.*;
 import airbnb.service.ApartmentService;
 import airbnb.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import airbnb.service.CookieService;
 
 import javax.validation.Valid;
 import java.io.File;
@@ -36,6 +38,10 @@ public class ApartmentController {
 
     @Autowired
     private ApartmentService apartmentService;
+
+    @Qualifier("cookieService")
+    @Autowired
+    private CookieService cookieService;
 
     @Autowired
     private IAuthenticationFacade authenticationFacade;
@@ -134,6 +140,13 @@ public class ApartmentController {
         }
         if(!authentication.getName().equals("anonymousUser") && !ap1.getOwner().getUsersUsername().equals(authentication.getName())&&( user_type==2 || user_type==3)){
             modelAndView.addObject("renter","true");
+
+            //gia erwthma10
+            RenterEntity renterEntity=userService.findRenterByUsername(authentication.getName());
+            if(userService.checkforRenterActivity(renterEntity))
+            {
+                cookieService.saveCookieAp(renterEntity,apartmentID);
+            }
         }
         modelAndView.addObject("ap_type",apartmentService.getType(ap1));
         ArrayList<String> features=apartmentService.getFeatures(ap1);

@@ -63,11 +63,16 @@ public class MainController {
                 RenterEntity renter=userS.getRenterByUsername();
 
                 ArrayList<UsersEntity> renterList = userService.findAllRenters();
-                LinkedHashSet<ApartmentEntity> ap_recoms= getRecommendations(renter,renterList);
+                Recommend recommend=new Recommend();
+              /*  LinkedHashSet<ApartmentEntity> ap_recoms;
+                if(!userService.checkforRenterActivity(renter))
+                    ap_recoms= recommend.getRecommendationsRes(renter,renterList);
+                else
+                    ap_recoms= recommend.getRecommendationsCookie(renter,renterList);
                 for(ApartmentEntity ap:ap_recoms)
                     System.out.println(ap.getName());
                 if(ap_recoms.size()>0)
-                    modelAndView.addObject("recommendations",ap_recoms);
+                    modelAndView.addObject("recommendations",ap_recoms); */
             }
         }
 
@@ -156,7 +161,7 @@ public class MainController {
         // System.out.println("Psaxnw to "+uploadingdir+imageName);
         return Files.readAllBytes(serverFile.toPath());
     }
-
+/**
     public LinkedHashSet<ApartmentEntity> getRecommendations(RenterEntity renterEntity,ArrayList<UsersEntity> renterList) {
         LinkedHashSet<ApartmentEntity> rec = new LinkedHashSet<ApartmentEntity>();
         Set<ReservationEntity> res = renterEntity.getReservationsByUsersUsername();
@@ -252,5 +257,5 @@ public class MainController {
             }
         }
         return rec;
-    }
+    }*/
 }
