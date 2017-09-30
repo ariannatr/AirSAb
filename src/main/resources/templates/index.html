@@ -43,10 +43,11 @@
                         <input name="country" type="text" style="width: 30%;" placeholder="Country" >
                         <input name="town" type="text" style="width: 30%;" placeholder="Town" >
                         <input name="area" type="text" style="width: 30%;" placeholder="Area" > <br>
-                        <input name="arrivalDate" type="text"  id="datepicker" style="width: 40%;" placeholder="Arrival Date" data-date-format='yyyy-mm-dd' >
-                        <input name="departureDate" type="text" id="datepicker" style="width: 40%;" placeholder="Departure Date" data-date-format='yyyy-mm-dd' > <br>
+                        <input name="arrivalDate" type="text"  id="datepicker1" style="width: 40%;" placeholder="Arrival Date" data-date-format='yyyy-mm-dd' >
+                        <input name="departureDate" type="text" id="datepicker2" style="width: 40%;" placeholder="Departure Date" data-date-format='yyyy-mm-dd' > <br>
+                        <p id="datesError" style="display:none;width:100%;" class="alert-danger">Departure Date needs to be after Arrival Date</p>
                         <input name="people" type="number"  min="1" style="width: 50%;" placeholder="Persons">
-                        <input type="submit" value="Submit" class="btn  btn-sm" />
+                        <input type="submit" id="tokoumpi" value="Submit" class="btn  btn-sm" />
                     </form>
                     <br>
                     <button id="backnow" class="btn btn-outline-secondary " data-wow-delay="0.5s">Back</button>
@@ -185,12 +186,24 @@
 
 <script type="text/javascript">
 jQuery(function(){
-    jQuery($(":input[id^='datepicker']")).datepicker({
-        inline: true,
-        showOtherMonths: true
+    jQuery(function(){
+        var dateToday = new Date();
+        jQuery($('#datepicker1')).datepicker({
+            dateFormat: 'yyyy-MM-dd',
+            inline: true,
+            showOtherMonths: true,
+            minDate: dateToday
+        });
+        jQuery($('#datepicker2')).datepicker({
+            dateFormat: 'yyyy-MM-dd',
+            inline: true,
+            showOtherMonths: true,
+            minDate: 0
+        });
     });
 });
 </script>
+    <script  type="text/javascript" th:src="@{/scripts/checkdates.js}"></script>
 
 </body>
 
