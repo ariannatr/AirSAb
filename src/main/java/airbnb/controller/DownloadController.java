@@ -31,6 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Σταυρίνα on 25/9/2017.
@@ -175,7 +176,7 @@ public class DownloadController {
         }
     }
 
-    private void createApartmentsFile(ArrayList<ApartmentEntity> aparts,  File file)throws ParserConfigurationException ,TransformerException{
+    private void createApartmentsFile(List<ApartmentEntity> aparts, File file)throws ParserConfigurationException ,TransformerException{
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         Document doc = docBuilder.newDocument();

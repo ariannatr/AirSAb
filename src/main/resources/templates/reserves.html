@@ -115,15 +115,15 @@ Licence URI: http://www.os-templates.com/template-terms
                             </div>
                         </div>
                     </div>
-                    </article>
-                </div>
-                <div th:if="${(approveOption!='true') and (mine=='false')}">
+                    <div th:if="${(approveOption!='true') and (mine=='false')}">
                         <footer><a th:href="@{/apartment/{apartmentID}#ratings(apartmentID=${currAparts[iterStat.index].id})}">Leave your Review.. &raquo;</a></footer>
-                </div>
-                <div th:if="${(approveOption=='true' and curr.approval==0)}">
-                    <form  method="post" th:action="@{/approveReserve/{reserveID}(reserveID=${curr.id})}">
-                        <button type="submit">Approve</button>
-                    </form>
+                    </div>
+                    <div th:if="${(approveOption=='true' and curr.approval==0)}">
+                        <form  method="post" th:action="@{/approveReserve/{reserveID}(reserveID=${curr.id})}">
+                            <button type="submit">Approve</button>
+                        </form>
+                    </div>
+                    </article>
                 </div>
             </div>
         </div>
@@ -170,11 +170,11 @@ Licence URI: http://www.os-templates.com/template-terms
 
                              <footer><a th:href="@{/apartment/{apartmentID}(apartmentID=${pastAparts[iterStat1.index].id})}">Read  more.. &raquo;</a></footer>
                             </div>
+                            <div th:if="${(mine=='false' and  pastAparts!=null and #lists.size(pastAparts)!=0 )}">
+                                <footer><a th:href="@{/apartment/{apartmentID}#ratings(apartmentID=${pastAparts[iterStat1.index].id})}">Leave your Review.. &raquo;</a></footer>
+                            </div>
                         </article>
                     </div>
-                    <div th:if="${(mine=='false')}">
-                        <footer><a th:href="@{/apartment/{apartmentID}#ratings(apartmentID=${pastAparts[iterStat1.index].id})}">Leave your Review.. &raquo;</a></footer>
-                </div>
             </div>
             </br>
 

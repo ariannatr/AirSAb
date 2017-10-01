@@ -4,6 +4,7 @@ import airbnb.model.*;
 import airbnb.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -213,8 +214,8 @@ public class ApartmentServiceImpl implements ApartmentService {
 
     @Override
     public Page<ApartmentEntity> findAparts(Optional<String> arrivalDate,Optional<String> departureDate,Optional<Integer> people,Optional<String> town,Optional<String> area,Optional<String> country,Optional<Integer>heating,Optional<Float> maxPrice,Optional<Integer> kitchen,Optional<Integer> tv,Optional<Integer> type,Optional<Integer> elevator,Optional<Integer> ac,Optional<Integer> internet,Optional<Integer> parking,Pageable pageable) throws ParseException {
-        Page<ApartmentEntity> aparts = null;
-        aparts=findAparts(country,town,area,arrivalDate,departureDate,people,pageable);
+        List<ApartmentEntity> aparts = null;
+        aparts=findAparts(country,town,area,arrivalDate,departureDate,people);
         if (heating.isPresent()) {
             Iterator<ApartmentEntity> list = aparts.iterator();
             while (list.hasNext()) {
@@ -278,23 +279,18 @@ public class ApartmentServiceImpl implements ApartmentService {
                     list.remove();
             }
         }
-        Page<ApartmentEntity> dtoPage = aparts.map(new Converter<ApartmentEntity, ApartmentEntity>() {
-            @Override
-            public ApartmentEntity convert(ApartmentEntity entity) {
-                ApartmentEntity dto = entity;
-                // Conversion logic
-                return dto;
-            }
-        });
-        return dtoPage;
+        int start = pageable.getOffset();
+        int end = (start + pageable.getPageSize()) > aparts.size() ? aparts.size() : (start + pageable.getPageSize());
+        Page<ApartmentEntity> nea= new PageImpl(aparts.subList(start,end),pageable,aparts.size());
+        return nea;
     }
 
     @Override
     public Page<ApartmentEntity> findAparts(Optional<String> country,Optional<String> town,Optional<String> area,Optional<String> arrivalDate,Optional<String> departureDate,Optional< Integer> people, Pageable pageable) throws ParseException {
-        Page<ApartmentEntity> aparts = null;
+        List<ApartmentEntity> aparts = null;
         boolean nofilter = true;
         if (country.isPresent() && !country.get().replaceAll(" ","").equals("")) {
-            aparts = apartmentRepository.findAllByCountry(country.get(), pageable);
+            aparts = apartmentRepository.findAllByCountry(country.get());
             nofilter = false;
         }
         if (town.isPresent() && !town.get().replaceAll(" ","").equals("")  && nofilter==false) {
@@ -307,7 +303,7 @@ public class ApartmentServiceImpl implements ApartmentService {
         }
         if (town.isPresent() && !town.get().replaceAll(" ","").equals("") && nofilter==true) {
             nofilter = false;
-            aparts = apartmentRepository.findAllByTown(town.get(), pageable);
+            aparts = apartmentRepository.findAllByTown(town.get());
 
         }
         if (area.isPresent() && !area.get().replaceAll(" ","").equals("") && nofilter==false) {
@@ -320,7 +316,7 @@ public class ApartmentServiceImpl implements ApartmentService {
         }
         if (area.isPresent() && !area.get().replaceAll(" ","").equals("") && nofilter==true) {
             nofilter = false;
-            aparts = apartmentRepository.findAllByArea(area.get(), pageable);
+            aparts = apartmentRepository.findAllByArea(area.get());
         }
 
         if (people.isPresent() && nofilter==false) {
@@ -333,7 +329,7 @@ public class ApartmentServiceImpl implements ApartmentService {
         }
         if (people.isPresent() && nofilter==true) {
             nofilter = false;
-            aparts = apartmentRepository.findAllByCapacityIsGreaterThanEqual(people.get(), pageable);
+            aparts = apartmentRepository.findAllByCapacityIsGreaterThanEqual(people.get());
         }
         if(arrivalDate.isPresent() && departureDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && !departureDate.get().replaceAll(" ","").equals("") && nofilter==false){
             nofilter = false;
@@ -346,7 +342,7 @@ public class ApartmentServiceImpl implements ApartmentService {
         }
         else if(arrivalDate.isPresent() && departureDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && !departureDate.get().replaceAll(" ","").equals("") && nofilter==true)
         {
-            aparts=apartmentRepository.findAll(pageable);
+            aparts=apartmentRepository.findAll();
             nofilter = false;
             Iterator<ApartmentEntity> list = aparts.iterator();
             while (list.hasNext())
@@ -356,8 +352,6 @@ public class ApartmentServiceImpl implements ApartmentService {
                     list.remove();
                 }
             }
-            System.out.println("exoume "+aparts.getTotalElements()+" stoixeia");
-            System.out.println("exoume "+aparts.getNumberOfElements()+" stoixeia");
         }
         else if (arrivalDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && nofilter==false) {
             nofilter = false;
@@ -369,7 +363,7 @@ public class ApartmentServiceImpl implements ApartmentService {
         }
         else if (arrivalDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && nofilter==true) {
             nofilter = false;
-            aparts = apartmentRepository.findAllByStartDate(arrivalDate.get(), pageable);
+            aparts = apartmentRepository.findAllByStartDate(arrivalDate.get());
         }
         else if (departureDate.isPresent() && !departureDate.get().replaceAll(" ","").equals("") && nofilter==false) {
             nofilter = false;
@@ -381,20 +375,117 @@ public class ApartmentServiceImpl implements ApartmentService {
         }
         else if (departureDate.isPresent() && !departureDate.get().replaceAll(" ","").equals("") && nofilter==true) {
             nofilter = false;
-            aparts = apartmentRepository.findAllByFinalDate(departureDate.get(), pageable);
+            aparts = apartmentRepository.findAllByFinalDate(departureDate.get());
 
         }
         if(nofilter==true)
-            aparts=apartmentRepository.findAllOrderByPrice(pageable);
-        Page<ApartmentEntity> dtoPage = aparts.map(new Converter<ApartmentEntity, ApartmentEntity>() {
-            @Override
-            public ApartmentEntity convert(ApartmentEntity entity) {
-                ApartmentEntity dto = entity;
-                // Conversion logic
-                return dto;
+        {
+            return apartmentRepository.findAllOrderByPrice(pageable);
+        }
+        int start = pageable.getOffset();
+        int end = (start + pageable.getPageSize()) > aparts.size() ? aparts.size() : (start + pageable.getPageSize());
+        Page<ApartmentEntity> nea= new PageImpl(aparts.subList(start,end),pageable,aparts.size());
+        return nea;
+    }
+
+    public List<ApartmentEntity> findAparts(Optional<String> country,Optional<String> town,Optional<String> area,Optional<String> arrivalDate,Optional<String> departureDate,Optional< Integer> people) throws ParseException {
+        List<ApartmentEntity> aparts = null;
+        boolean nofilter = true;
+        if (country.isPresent() && !country.get().replaceAll(" ","").equals("")) {
+            aparts = apartmentRepository.findAllByCountry(country.get());
+            nofilter = false;
+        }
+        if (town.isPresent() && !town.get().replaceAll(" ","").equals("")  && nofilter==false) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (!list.next().getTown().equals(town.get()))
+                    list.remove();
             }
-        });
-        return dtoPage;
+        }
+        if (town.isPresent() && !town.get().replaceAll(" ","").equals("") && nofilter==true) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByTown(town.get());
+
+        }
+        if (area.isPresent() && !area.get().replaceAll(" ","").equals("") && nofilter==false) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (!list.next().getArea().equals(area.get()))
+                    list.remove();
+            }
+        }
+        if (area.isPresent() && !area.get().replaceAll(" ","").equals("") && nofilter==true) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByArea(area.get());
+        }
+
+        if (people.isPresent() && nofilter==false) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if (list.next().getCapacity() < people.get())
+                    list.remove();
+            }
+        }
+        if (people.isPresent() && nofilter==true) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByCapacityIsGreaterThanEqual(people.get());
+        }
+        if(arrivalDate.isPresent() && departureDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && !departureDate.get().replaceAll(" ","").equals("") && nofilter==false){
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext())
+            {
+                if(available(arrivalDate.get(),departureDate.get(),list.next())<0)
+                    list.remove();
+            }
+        }
+        else if(arrivalDate.isPresent() && departureDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && !departureDate.get().replaceAll(" ","").equals("") && nofilter==true)
+        {
+            aparts=apartmentRepository.findAllOrderByPrice();
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext())
+            {
+                if(available(arrivalDate.get(),departureDate.get(),list.next())<0)
+                {
+                    list.remove();
+                }
+            }
+        }
+        else if (arrivalDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && nofilter==false)
+        {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if(list.next().getStartdate().compareTo(arrivalDate.get())>0)
+                    list.remove();
+            }
+        }
+        else if (arrivalDate.isPresent() && !arrivalDate.get().replaceAll(" ","").equals("") && nofilter==true) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByStartDate(arrivalDate.get());
+        }
+        else if (departureDate.isPresent() && !departureDate.get().replaceAll(" ","").equals("") && nofilter==false) {
+            nofilter = false;
+            Iterator<ApartmentEntity> list = aparts.iterator();
+            while (list.hasNext()) {
+                if(list.next().getFinaldate().compareTo(departureDate.get())<0)
+                    list.remove();
+            }
+        }
+        else if (departureDate.isPresent() && !departureDate.get().replaceAll(" ","").equals("") && nofilter==true) {
+            nofilter = false;
+            aparts = apartmentRepository.findAllByFinalDate(departureDate.get());
+
+        }
+        if(nofilter==true)
+        {
+            return apartmentRepository.findAllOrderByPrice();
+        }
+        return aparts;
     }
 
     @Override
@@ -532,7 +623,7 @@ public class ApartmentServiceImpl implements ApartmentService {
         return apartmentRepository.findAll(pageable);
     }
 
-    public ArrayList<ApartmentEntity> findAll(){
+    public List<ApartmentEntity> findAll(){
         return apartmentRepository.findAll();
     }
 

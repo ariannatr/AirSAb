@@ -10,12 +10,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.text.ParseException;
-import java.util.ArrayList;
+import java.util.*;
 
 import java.security.acl.Owner;
-import java.util.Date;
-import java.util.Optional;
-import java.util.Set;
 
 
 @Service("apartmentService")
@@ -37,7 +34,7 @@ public interface ApartmentService {
     public void removephoto(ApartmentEntity apartmentEntity, Integer num);
     public Page<ApartmentEntity> findAllPageable(Pageable pageable);
 
-    public ArrayList<ApartmentEntity> findAll();
+    public List<ApartmentEntity> findAll();
     public Page<ReservationEntity> findAllReservations(Pageable pageable);
     public Page<ReservationEntity> findAllReservationsByRenter(RenterEntity renter,Pageable pageable);
 
