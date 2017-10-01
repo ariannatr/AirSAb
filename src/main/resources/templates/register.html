@@ -44,7 +44,7 @@
                         <input  name="name" id="name" required="required" placeholder="Name"   type="text"/>
                         <input  name="surname" id="surname" required="required" placeholder="Surname"  type="text" />
                         <input  name="email" id="email" required="required"   placeholder="Email"  type="email" />
-                        <input  name="telephone" id="telephone" required="required"  placeholder="Telephone"   type="text" />
+                        <input  name="telephone" id="telephone" required="required" pattern="\d{10}" placeholder="Telephone"   type="text" />
 
                         <label class="btn btn-sm">Owner <input type="checkbox"  id="ownertype" name="owner" value="1" onclick="validate()" /> </label>
                         <label class="btn btn-sm">Renter<input type="checkbox"  id="rentertype" name="renter" value="2" onclick="validate2()"/></label>

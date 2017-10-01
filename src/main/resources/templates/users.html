@@ -73,18 +73,28 @@
                             <!--/*Table with info approvals*/-->
                             <div >
                                 <p class="table-title" style="color: black!important;"> Owners' Requests</p>
-                                <div  style="background-color:#e6eaf2; opacity:0.8; width:50%; margin:0 auto;">
+                                <div  style="background-color:#e6eaf2; opacity:0.8; width:75%; margin:0 auto;">
                                     <table class="table table-condensed" style="color: black!important;">
                                         <thead>
                                         <tr>
                                             <th>Username</th>
+                                            <th>Name</th>
+                                            <th>Surname</th>
+                                            <th>E-Mail</th>
+                                            <th>Telephone</th>
+                                            <th>Type</th>
                                             <th style="width: 30px;"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr th:each="user : ${items}">
+                                        <tr th:each="user,userStat : ${items}">
                                             <form method="POST" th:action="@{/accept/{userID}(userID=${user.usersUsername})}">
                                                 <td th:text="${user.usersUsername}">Username</td>
+                                                <td> <span th:text="${items2[__${userStat .index}__].name}">N</span></td>
+                                                <td ><span th:text="${items2[__${userStat .index}__].surname}">S</span></td>
+                                                <td><span th:text="${items2[__${userStat .index}__].email}">E</span></td>
+                                                <td><span th:text="${items2[__${userStat .index}__].telephone}">T</span></td>
+                                                <td><span th:text="${items2[__${userStat .index}__].type}">T</span></td>
                                                 <td><button class="btn btn-info" type="submit">Approve</button></td>
                                             </form>
                                         </tr>

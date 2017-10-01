@@ -127,21 +127,20 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 
 <script type="text/javascript">
-    jQuery(function(){
         var dateToday = new Date();
-        jQuery($('#datepicker1')).datepicker({
+        ($('#datepicker1')).datepicker({
             dateFormat: 'yyyy-MM-dd',
             inline: true,
             showOtherMonths: true,
             minDate: dateToday
         });
-        jQuery($('#datepicker2')).datepicker({
+        ($('#datepicker2')).datepicker({
             dateFormat: 'yyyy-MM-dd',
             inline: true,
             showOtherMonths: true,
             minDate: 0
         });
-    });
+
 </script>
 <script  type="text/javascript" th:src="@{/scripts/checkdates.js}"></script>
 <script async defer src="https://maps.google.com/maps/api/js?key=AIzaSyBEcboHJ3HmCOtpiaUMW_0mKw0C20qPVpk"></script>

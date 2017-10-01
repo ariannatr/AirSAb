@@ -366,9 +366,9 @@
 
                                             <form method="POST" th:action="@{/reservation/{apartmentID}(apartmentID=${ap.id})}">
                                                 <label >From :</label>
-                                                <input name="startdate" type="text"  id="datepicker1" style="width: 40%;" placeholder="Arrival Date" data-date-format='yyyy-mm-dd' >
+                                                <input name="startdate" type="text"  id="datepicker3" style="width: 40%;" placeholder="Arrival Date" data-date-format='yyyy-mm-dd' >
                                                 <label> To: </label>
-                                                <input name="finaldate" type="text" id="datepicker2" style="width: 40%;" placeholder="Departure Date" data-date-format='yyyy-mm-dd' > <br>
+                                                <input name="finaldate" type="text" id="datepicker4" style="width: 40%;" placeholder="Departure Date" data-date-format='yyyy-mm-dd' > <br>
                                                 <button id="rent" type="submit" class="btn btn-outline-warning " >Make a reservation</button>
                                                 <br>
                                             </form>
@@ -493,21 +493,33 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 
 <script type="text/javascript">
-    jQuery(function(){
+
         var dateToday = new Date();
-        jQuery($('#datepicker1')).datepicker({
+        ($('#datepicker1')).datepicker({
             dateFormat: 'yyyy-MM-dd',
             inline: true,
             showOtherMonths: true,
             minDate: dateToday
         });
-        jQuery($('#datepicker2')).datepicker({
+        ($('#datepicker2')).datepicker({
             dateFormat: 'yyyy-MM-dd',
             inline: true,
             showOtherMonths: true,
             minDate: 0
         });
-    });
+        ($('#datepicker3')).datepicker({
+            dateFormat: 'yyyy-MM-dd',
+            inline: true,
+            showOtherMonths: true,
+            minDate: 0
+        });
+        jQuery($('#datepicker4')).datepicker({
+            dateFormat: 'yyyy-MM-dd',
+            inline: true,
+            showOtherMonths: true,
+            minDate: 0
+        });
+
 </script >
 <script  type="text/javascript" th:src="@{/scripts/checkdates.js}"></script>
 <script type="text/javascript" th:src="@{/scripts/apartment.js}"></script>

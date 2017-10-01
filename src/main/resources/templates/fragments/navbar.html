@@ -41,9 +41,9 @@
                             <a style="color:#dba63d;" class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false"><span th:text="${uname}"></span></a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" th:if ="${(type == '1') or (type=='3')}" th:href="@{/messagesOwner}">Received Messages</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" th:if ="${(type == '2') or (type=='3')}" th:href="@{/messagesRenter}">Send Messages</a>
-                                <div class="dropdown-divider"></div>
+                                <div th:if ="${(type == '1') or (type=='3')}" class="dropdown-divider"></div>
+                                <a class="dropdown-item" th:if ="${(type == '2') or (type=='3')}" th:href="@{/messagesRenter}">Sent Messages</a>
+                                <div  th:if ="${(type == '2') or (type=='3')}" class="dropdown-divider"></div>
                                 <a class="dropdown-item" th:href="@{/profile}" >Profile/Update</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" th:href="@{/logout}">Logout</a>

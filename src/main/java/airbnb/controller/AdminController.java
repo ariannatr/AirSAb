@@ -172,6 +172,15 @@ public class AdminController {
         if(users.getTotalElements()!=0){
             modelAndView.addObject("pager", pager);
             modelAndView.addObject("items", users);
+
+            ArrayList<UsersEntity> usersinfo=new ArrayList<UsersEntity>(0);
+            for( OwnerEntity ownerEntity:users)
+            {
+                usersinfo.add(ownerEntity.getUsersByUsersUsername());
+            }
+
+            modelAndView.addObject("items2",usersinfo);
+
         }
         //List<UsersEntity> users=userService.find
         modelAndView.addObject("requests","true");
