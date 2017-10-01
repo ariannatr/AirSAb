@@ -103,7 +103,10 @@ public class MainController {
                         ArrayList<ApartmentEntity> apartments_torecommend=findRecommendations1(renter,neighbors);
                         apartments_torecommend=removedoubles(apartments_torecommend);
                           if(apartments_torecommend.size()>0)
+                          {
+                              System.out.println(" proteinomena "+apartments_torecommend);
                             modelAndView.addObject("recommendations",apartments_torecommend);
+                          }
                     }
                 }
                 else {
@@ -112,8 +115,10 @@ public class MainController {
                     {
                         ArrayList<ApartmentEntity> apartments_torecommend=findRecommendations2(renter,neighbors);
                         apartments_torecommend=removedoubles(apartments_torecommend);
-                        if(apartments_torecommend.size()>0)
-                            modelAndView.addObject("recommendations",apartments_torecommend);
+                        if(apartments_torecommend.size()>0) {
+                            System.out.println(" proteinomena " + apartments_torecommend);
+                            modelAndView.addObject("recommendations", apartments_torecommend);
+                        }
                     }
                 }
             }
@@ -222,11 +227,13 @@ public class MainController {
             else
             {
                 nindex=neighbor.getInstance().getSecondMaxIndex();
-                apartmentEntity=apartmentService.findById(nindex+1);
-                res=reservationRepository.findAllByApartmentAndRenter(apartmentEntity,renterEntity);
-                if(res.size()==0)
-                    apids.add(apartmentEntity);		//bc index starts from 0 where ids start from 1
-                //else no recommendation from that neighbor
+                if(nindex!=-1) {
+                    apartmentEntity = apartmentService.findById(nindex + 1);
+                    res = reservationRepository.findAllByApartmentAndRenter(apartmentEntity, renterEntity);
+                    if (res.size() == 0)
+                        apids.add(apartmentEntity);        //bc index starts from 0 where ids start from 1
+                    //else no recommendation from that neighbor
+                }
             }
         }
         return apids;
@@ -243,12 +250,17 @@ public class MainController {
             {
                 //2 p exei mpei perissoteres fores o renterEntity
                 ArrayList<CookieApEntity> cookieApEntityArrayList=cookieService.findByRenterOrderByTimesDesc(renterEntity);
-                apartmentEntity=apartmentService.findById(cookieApEntityArrayList.get(0).getApartmentid());
-                if(!apartmentEntity.getOwner().getUsersUsername().equals(renterEntity.getUsersUsername()))
-                    apids.add(apartmentEntity);
-                apartmentEntity=apartmentService.findById(cookieApEntityArrayList.get(1).getApartmentid());
-                if(!apartmentEntity.getOwner().getUsersUsername().equals(renterEntity.getUsersUsername()))
-                    apids.add(apartmentEntity);
+                if(cookieApEntityArrayList.size()>0)
+                {
+                    apartmentEntity=apartmentService.findById(cookieApEntityArrayList.get(0).getApartmentid());
+                    if(!apartmentEntity.getOwner().getUsersUsername().equals(renterEntity.getUsersUsername()))
+                        apids.add(apartmentEntity);
+                }
+                if(cookieApEntityArrayList.size()>1) {
+                    apartmentEntity = apartmentService.findById(cookieApEntityArrayList.get(1).getApartmentid());
+                    if (!apartmentEntity.getOwner().getUsersUsername().equals(renterEntity.getUsersUsername()))
+                        apids.add(apartmentEntity);
+                }
             }
             else //neighbor with reservations
             {
@@ -286,11 +298,10 @@ public class MainController {
 
     private  ArrayList<ApartmentEntity> removedoubles(ArrayList<ApartmentEntity> apartments)
     {
-
         Set<ApartmentEntity> hs = new HashSet<ApartmentEntity>(apartments);
         hs.addAll(apartments);
-        apartments.clear();
-        apartments.addAll(hs);
-        return  apartments;
+        ArrayList<ApartmentEntity> aa= new ArrayList<>();
+        aa.addAll(hs);
+        return  aa;
     }
 }

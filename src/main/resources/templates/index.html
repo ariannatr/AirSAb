@@ -71,8 +71,8 @@
     </section>
 
 
-    <section th:if="${(recommendations != null)}">
-        <div class="container" th:if="${(recommendations != null)}">
+    <section th:if="${(recommendations != null and #lists.size(recommendations)!=0)}">
+        <div class="container" th:if="${(recommendations != null and #lists.size(recommendations)!=0)}">
             <h3 style="text-align: center"> Check these </h3>
             <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width:50%;display: block;margin-left: auto;margin-right: auto ">
                 <!-- Indicators -->
@@ -85,10 +85,10 @@
                 <div class="carousel-inner"  >
 
                     <div class="item active" >
-                        <div th:if="${recommendations[0].photo == ''}">
+                        <div th:if="${(#lists.size(recommendations)!=0 and recommendations[0].photo == '')}">
                             <a th:href="@{/apartment/{apartmentID}(apartmentID=${recommendations[0].id})}" >  <img style="display: block;margin-left: auto;margin-right: auto ;width: 100%" th:src="@{/images/no_image.png}"  /></a>
                         </div>
-                        <div th:if="${recommendations[0].photo != ''}">
+                        <div th:if="${(#lists.size(recommendations)!=0 and recommendations[0].photo != '')}">
                             <a th:href="@{/apartment/{apartmentID}(apartmentID=${recommendations[0].id})}" >  <img style="display: block;margin-left: auto;margin-right: auto;width: 100%" th:src="${recommendations[0].photo}" alt="apartment pic" /></a>
                         </div>
                         <div class="carousel-caption">

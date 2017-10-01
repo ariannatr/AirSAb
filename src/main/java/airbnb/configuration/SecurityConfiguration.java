@@ -2,6 +2,7 @@ package airbnb.configuration;
 
 
 import airbnb.authentication.MyDBAythenticationService;
+import airbnb.model.UsersEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -32,9 +33,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
         auth.userDetailsService(myDBAythenticationService).passwordEncoder(bCryptPasswordEncoder);
     }
 
