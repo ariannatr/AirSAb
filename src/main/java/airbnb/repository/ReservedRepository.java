@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,4 +19,7 @@ public interface ReservedRepository extends JpaRepository<ReservedEntity,Integer
 
     @Query("select r from ReservedEntity r where r.apartment=?1 and r.date=?2")
     Set<ReservedRepository> findByApartmentAndDate(ApartmentEntity apartmentEntity, String Date);
+
+    @Query("select r.date from ReservedEntity r where r.apartment=?1")
+    List<String> findDaysofApartment(ApartmentEntity apartmentEntity);
 }

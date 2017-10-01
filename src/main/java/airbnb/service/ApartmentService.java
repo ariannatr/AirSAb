@@ -41,4 +41,6 @@ public interface ApartmentService {
     public ArrayList<ReservationEntity> findAllReservations();
     public ArrayList<ReservationEntity> findAllReservationsByRenter(RenterEntity renter);
     public Set<ReservationEntity> findAllReservationByOwner(OwnerEntity owner);
+
+    public List<String> findReservedDays(ApartmentEntity apartmentEntity);
 }

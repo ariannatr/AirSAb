@@ -20,9 +20,7 @@ import airbnb.service.CookieService;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Σταυρίνα on 28/8/2017.
@@ -79,17 +77,6 @@ public class ApartmentController {
      //   ApartmentEntity app=apartmentService.findByUsername(authentication.getName());
        OwnerEntity owner = userService.findOwnerByUsername(authentication.getName());
 
-//        if (userExists != null) {
-//            System.out.println("this user already exists");
-//            redirectAttributes.addFlashAttribute("success","false");
-//            modelAndView.setViewName("redirect:/register");
-//        }
-//        else
-//        {
-//
-//
-//            System.out.println("apothikeuw ton xristi me username "+user.getUsername()+" kai type "+user.getType());
-//
         File theDir=new File(uploadingdir);
         if(!theDir.exists())
             theDir.mkdir();
@@ -136,6 +123,7 @@ public class ApartmentController {
                     modelAndView.addObject("reserve", "true");
             }
         }
+        List<String> reserved=apartmentService.findReservedDays(ap1);
         OwnerEntity ownerEntity=ap1.getOwner();
         Set<CommentsEntity> comments=ap1.getComments();
         UsersEntity user_owner=userService.findByUsername(ownerEntity.getUsersUsername());
@@ -148,7 +136,7 @@ public class ApartmentController {
         }
         if(!authentication.getName().equals("anonymousUser") && !ap1.getOwner().getUsersUsername().equals(authentication.getName())&&( user_type==2 || user_type==3)){
             modelAndView.addObject("renter","true");
-
+            modelAndView.addObject("disable",reserved);
             //gia erwthma10
             RenterEntity renterEntity=userService.findRenterByUsername(authentication.getName());
             if(userService.checkforRenterActivity(renterEntity))

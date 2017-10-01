@@ -649,4 +649,9 @@ public class ApartmentServiceImpl implements ApartmentService {
         return reservationRepository.findAllByApartmentOwner(owner);
     }
 
+    @Override
+    public List<String> findReservedDays(ApartmentEntity apartmentEntity){
+        return  reservedRepository.findDaysofApartment(apartmentEntity);
+    }
+
 }
