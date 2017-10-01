@@ -14,6 +14,7 @@
     <link th:href="@{/css/apartment_prof.css}" rel="stylesheet" type="text/css" media="all">
     <link th:href="@{/css/searchCss.css}" rel="stylesheet" type="text/css" media="all">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" media="all" />
+    <link th:href="@{/css/star-rating.css}" rel="stylesheet" type="text/css" media="all">
 
     <style>
         .mySlides {display:none}
@@ -323,23 +324,32 @@
                                             <div class="col-sm-5">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
-                                                        <strong th:text="${comment.renter}"> </strong>                                                         </div>
+                                                        <strong th:each="u:${comment.renter}" th:text="${u.usersUsername}"> </strong>                                                         </div>
                                                     <div class="panel-body">
                                                         <span th:text="${comment.comment}"></span>
                                                     </div><!-- /panel-body -->
                                                 </div><!-- /panel panel-default -->
                                             </div><!-- /col-sm-5 -->
-                                            <div class="rate">
-                                                <input type="radio" id="1-star5" name="rating" value="5" checked/>
-                                                <label for="1-star5" title="text">5 stars</label>
-                                                <input type="radio" id="1-star4" name="rating" value="4" />
-                                                <label for="1-star4" title="text">4 stars</label>
-                                                <input type="radio" id="1-star3" name="rating" value="3" />
-                                                <label for="1-star3" title="text">3 stars</label>
-                                                <input type="radio" id="1-star2" name="rating" value="2" />
-                                                <label for="1-star2" title="text">2 stars</label>
-                                                <input type="radio" id="1-star1" name="rating" value="1" />
-                                                <label for="1-star1" title="text">1 star</label>
+                                            <div class="rating-container" >
+                                                <label for="input-6" class="control-label"></label>
+                                                <input id="input-6" name="input-6" class="rating rating-loading" th:value="${comment.rating}" data-min="0" data-max="5" data-step="1" data-readonly="true">
+
+                                                <!--&#45;&#45;<input id="1-star5" name="rating" th:value="${comment.rating}" class="rating-loading" checked/>&ndash;&gt;-->
+                                                <!--<input th:if="${ comment.rating==5 }" type="radio" id="1-star5" name="rating" value="5" checked/>-->
+                                                <!--<input th:if="${ comment.rating!=5 }" type="radio" id="1-star5" name="rating" value="5" />-->
+                                                <!--<label for="1-star5" title="text">5 stars</label>-->
+                                                <!--<input th:if="${ comment.rating==4 }" type="radio" id="1-star4" name="rating" value="4" checked/>-->
+                                                <!--<input th:if="${ comment.rating!=4 }" type="radio" id="1-star4" name="rating" value="4" />-->
+                                                <!--<label for="1-star4" title="text">4 stars</label>-->
+                                                <!--<input th:if="${ comment.rating==3 }" type="radio" id="1-star3" name="rating" value="3" checked/>-->
+                                                <!--<input th:if="${ comment.rating!=3 }" type="radio" id="1-star3" name="rating" value="3" />-->
+                                                <!--<label for="1-star3" title="text">3 stars</label>-->
+                                                <!--<input th:if="${ comment.rating==2 }" type="radio" id="1-star2" name="rating" value="2" checked/>-->
+                                                <!--<input th:if="${ comment.rating!=2 }" type="radio" id="1-star2" name="rating" value="2" />-->
+                                                <!--<label for="1-star2" title="text">2 stars</label>-->
+                                                <!--<input th:if="${ comment.rating==1 }" type="radio" id="1-star1" name="rating" value="1" checked/>-->
+                                                <!--<input th:if="${ comment.rating!=1 }" type="radio" id="1-star1" name="rating" value="1" />-->
+                                                <!--<label for="1-star1" title="text">1 star</label>-->
                                             </div>
                                         </div>
                                     </div>
@@ -619,6 +629,6 @@
         dots[slideIndex-1].className += " w3-opacity-off";
     }
 </script>
-
+<script th:src="@{/scripts/star-rating.js}"></script>
 </body>
 </html>

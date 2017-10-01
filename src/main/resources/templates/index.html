@@ -93,7 +93,7 @@
                         </div>
                         <div class="carousel-caption">
                              <h3 th:text="${recommendations[0].country}">Los Angeles</h3>
-                             <p th:text="${recommendations[0].description}">[&hellip;]</p>
+                             <p style="white-space:nowrap; overflow:hidden;text-overflow:ellipsis;width:80%" th:text="${recommendations[0].description}">[&hellip;]</p>
                         </div>
                     </div>
 
@@ -108,7 +108,7 @@
                         </div>
                         <div class="carousel-caption">
                             <h3 th:text="${rec.country}">Los Angeles</h3>
-                            <p th:text="${rec.description}">[&hellip;]</p>
+                            <p  style="white-space:nowrap; overflow:hidden;text-overflow:ellipsis;width:80%" th:text="${rec.description}">[&hellip;]</p>
                         </div>
                     </div>
                 </div>
