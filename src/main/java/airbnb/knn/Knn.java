@@ -99,8 +99,10 @@ public class Knn {
 	
 	public static ArrayList<Neighbor> getNearestNeighbors(ArrayList<Neighbor> distances) {
 		ArrayList<Neighbor> neighbors = new ArrayList<Neighbor>();
-		
-		for(int i = 0; i < K; i++) {
+		int size=K;
+		if(size>distances.size())
+			size=distances.size();
+		for(int i = 0; i < size; i++) {
 			averageDistance += distances.get(i).getDistance();
 			neighbors.add(distances.get(i));
 		}
