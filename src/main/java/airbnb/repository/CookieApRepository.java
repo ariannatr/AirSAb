@@ -22,6 +22,8 @@ public interface CookieApRepository extends PagingAndSortingRepository<CookieApE
 
     CookieApEntity findByRenterAndApartmentid(RenterEntity renterEntity,Integer apartmentid);
 
+    ArrayList<CookieApEntity> findAllByRenterOrderByTimesDesc(RenterEntity renterEntity);
+
     @Transactional
     void deleteById(Integer id);
 }

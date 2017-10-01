@@ -30,5 +30,4 @@ public interface ReservationRepository extends PagingAndSortingRepository<Reserv
 
     Set<ReservationEntity> findAllByApartmentAndRenter(ApartmentEntity apartment,RenterEntity renter);
 
-
 }

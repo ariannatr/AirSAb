@@ -1,9 +1,14 @@
 package airbnb.controller;
 
 import airbnb.authentication.IAuthenticationFacade;
+import airbnb.knn.Instance;
+import airbnb.knn.Knn;
+import airbnb.knn.Neighbor;
 import airbnb.model.*;
 import airbnb.repository.RenterRepository;
 import airbnb.repository.ReservationRepository;
+import airbnb.service.ApartmentService;
+import airbnb.service.CookieService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +23,7 @@ import org.springframework.ui.Model;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +50,11 @@ public class MainController {
     @Autowired
     private RenterRepository renterRepository;
 
+    @Autowired
+    private ApartmentService apartmentService;
+
+    @Autowired
+    private CookieService cookieService;
 
     @RequestMapping(value={"/", "/index"}, method = RequestMethod.GET/*, produces= "application/javascript"*/)
     public ModelAndView index(){
@@ -67,20 +74,48 @@ public class MainController {
             {
                 RenterEntity renter=userS.getRenterByUsername();
 
-                ArrayList<UsersEntity> renterList = userService.findAllRenters();
+                ArrayList<RenterEntity> renterList = userService.findAllRentersEntity();
 
-                ArrayList<RenterEntity> renterList22 = userService.findAllRentersEntity();
-                Recommend recommend=new Recommend();
+                int apart_num=apartmentService.findAll().size();
+                System.out.println("Exw "+apart_num+" apartments in base");
+                Knn knn=new Knn();
+                /*----------------------------RECOMMEND--------------------------------------*/
 
+               /* Recommend recommend=new Recommend();
                 LinkedHashSet<ApartmentEntity> ap_recoms;
                 if(!userService.checkforRenterActivity(renter))
-                    ap_recoms= recommend.getRecommendationsRes(renter,renterList22);
+                    ap_recoms= recommend.getRecommendationsRes(renter,renterList);
                 else
-                    ap_recoms= recommend.getRecommendationsCookie(renter,renterList22);
+                    ap_recoms= recommend.getRecommendationsCookie(renter,renterList);
                 for(ApartmentEntity ap:ap_recoms)
                     System.out.println(ap.getName());
                 if(ap_recoms.size()>0)
-                    modelAndView.addObject("recommendations",ap_recoms);
+                    modelAndView.addObject("recommendations",ap_recoms);*/
+
+
+                /*---------------------------------KNN----------------------------------------*/
+
+
+                if(!userService.checkforRenterActivity(renter)) {
+                    ArrayList<Neighbor> neighbors=knn.doKnn(1,renter,renterList,apart_num);
+                    if(neighbors.size()!=0)
+                    {
+                        ArrayList<ApartmentEntity> apartments_torecommend=findRecommendations1(renter,neighbors);
+                        apartments_torecommend=removedoubles(apartments_torecommend);
+                          if(apartments_torecommend.size()>0)
+                            modelAndView.addObject("recommendations",apartments_torecommend);
+                    }
+                }
+                else {
+                    ArrayList<Neighbor> neighbors=knn.doKnn(2,renter,renterList,apart_num);
+                    if(neighbors.size()!=0)
+                    {
+                        ArrayList<ApartmentEntity> apartments_torecommend=findRecommendations2(renter,neighbors);
+                        apartments_torecommend=removedoubles(apartments_torecommend);
+                        if(apartments_torecommend.size()>0)
+                            modelAndView.addObject("recommendations",apartments_torecommend);
+                    }
+                }
             }
         }
 
@@ -171,4 +206,91 @@ public class MainController {
     }
 
 
+    ArrayList<ApartmentEntity> findRecommendations1(RenterEntity renterEntity, ArrayList<Neighbor> neighbors)
+    {
+        int i = 0;
+        int nindex;
+        ApartmentEntity apartmentEntity;
+        Set<ReservationEntity> res;
+        ArrayList <ApartmentEntity> apids=new ArrayList<ApartmentEntity>(0);
+        for(Neighbor neighbor : neighbors) {
+            nindex=neighbor.getInstance().getMaxIndex();
+            apartmentEntity=apartmentService.findById(nindex+1);
+            res=reservationRepository.findAllByApartmentAndRenter(apartmentEntity,renterEntity);
+            if( res.size()==0)                //if renter hasn't made a reservation on it yet
+                apids.add(apartmentEntity);		//bc index starts from 0 where ids start from 1
+            else
+            {
+                nindex=neighbor.getInstance().getSecondMaxIndex();
+                apartmentEntity=apartmentService.findById(nindex+1);
+                res=reservationRepository.findAllByApartmentAndRenter(apartmentEntity,renterEntity);
+                if(res.size()==0)
+                    apids.add(apartmentEntity);		//bc index starts from 0 where ids start from 1
+                //else no recommendation from that neighbor
+            }
+        }
+        return apids;
+    }
+
+
+    ArrayList<ApartmentEntity> findRecommendations2(RenterEntity renterEntity, ArrayList<Neighbor> neighbors)
+    {
+        ApartmentEntity apartmentEntity;
+        ArrayList <ApartmentEntity> apids=new ArrayList<ApartmentEntity>(0);
+        for(Neighbor neighbor : neighbors) {
+            RenterEntity renterNeighbor=userService.findRenterByUsername(neighbor.getInstance().getUuid());
+            if(renterNeighbor.getReservationsByUsersUsername().size()==0)       //neighbor with no reservations
+            {
+                //2 p exei mpei perissoteres fores o renterEntity
+                ArrayList<CookieApEntity> cookieApEntityArrayList=cookieService.findByRenterOrderByTimesDesc(renterEntity);
+                apartmentEntity=apartmentService.findById(cookieApEntityArrayList.get(0).getApartmentid());
+                if(!apartmentEntity.getOwner().getUsersUsername().equals(renterEntity.getUsersUsername()))
+                    apids.add(apartmentEntity);
+                apartmentEntity=apartmentService.findById(cookieApEntityArrayList.get(1).getApartmentid());
+                if(!apartmentEntity.getOwner().getUsersUsername().equals(renterEntity.getUsersUsername()))
+                    apids.add(apartmentEntity);
+            }
+            else //neighbor with reservations
+            {
+                //apartment me stoixeia p einai kai sto search tou user
+                Set<CookieSearchEntity> cookieSearchEntities=renterEntity.getCookieSearch();
+                Set<ReservationEntity> neighborReservations= renterNeighbor.getReservationsByUsersUsername();
+                int k=0;
+                for(ReservationEntity res:neighborReservations)
+                {
+                    for (CookieSearchEntity bb : cookieSearchEntities) {
+                        int score = 0;
+                        if (!(res.getApartmentOwner().getUsersUsername()).equals(renterEntity.getUsersUsername())
+                                && res.getApartment().getCapacity() >= bb.getNum()) {
+
+                            if (bb.getLocation().toLowerCase().contains(res.getApartment().getCountry().toLowerCase()))
+                                score += 2;
+                            if (bb.getLocation().toLowerCase().contains(res.getApartment().getTown().toLowerCase()))
+                                score += 1;
+                            if (bb.getLocation().toLowerCase().contains(res.getApartment().getArea().toLowerCase()))
+                                score += 1;
+                            if (k < 2 && score >= 2) {
+                                apids.add(res.getApartment());
+                                k++;
+                            }
+                        }
+                    }
+                }
+
+
+            }
+        }
+        return apids;
+    }
+
+
+    private  ArrayList<ApartmentEntity> removedoubles(ArrayList<ApartmentEntity> apartments)
+    {
+
+        Set<ApartmentEntity> hs = new HashSet<ApartmentEntity>(apartments);
+        hs.addAll(apartments);
+        apartments.clear();
+        apartments.addAll(hs);
+        return  apartments;
+    }
 }

@@ -53,6 +53,7 @@ public class CookieServiceImpl implements CookieService{
 
     }
 
+    @Override
     public void removeAllCookieApbyRenter(RenterEntity renter)
     {
         ArrayList<CookieApEntity> cookieApEntities=cookieApRepository.findAllByRenter(renter);
@@ -63,6 +64,7 @@ public class CookieServiceImpl implements CookieService{
         }
     }
 
+    @Override
     public  void saveCookieSearch(RenterEntity renterEntity, Optional<Integer> num, Optional<String> country, Optional<String> town, Optional<String> area)
     {
         if((!num.isPresent()) && (!country.isPresent()) && (!town.isPresent()) && (!area.isPresent()))
@@ -94,7 +96,7 @@ public class CookieServiceImpl implements CookieService{
 
     }
 
-
+    @Override
     public void removeAllCookieSearchbyRenter(RenterEntity renter)
     {
         ArrayList<CookieSearchEntity> cookieEntities=cookieSearchRepository.findAllByRenter(renter);
@@ -103,6 +105,12 @@ public class CookieServiceImpl implements CookieService{
             Integer c_id=cookieEntity.getId();
             cookieSearchRepository.deleteById(c_id);
         }
+    }
+
+    @Override
+    public ArrayList<CookieApEntity> findByRenterOrderByTimesDesc(RenterEntity renterEntity)
+    {
+        return  cookieApRepository.findAllByRenterOrderByTimesDesc(renterEntity);
     }
 }
 

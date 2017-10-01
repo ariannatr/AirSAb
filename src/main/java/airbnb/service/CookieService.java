@@ -4,6 +4,7 @@ import airbnb.model.CookieApEntity;
 import airbnb.model.RenterEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -16,4 +17,6 @@ public interface CookieService {
 
     public  void saveCookieSearch(RenterEntity renterEntity, Optional<Integer> num, Optional<String> country, Optional<String> town, Optional<String> area);
     public void removeAllCookieSearchbyRenter(RenterEntity renter);
+
+    public ArrayList<CookieApEntity> findByRenterOrderByTimesDesc(RenterEntity renterEntity);
 }
